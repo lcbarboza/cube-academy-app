@@ -12,6 +12,47 @@ Instructions for AI coding assistants using OpenSpec for spec-driven development
 - Validate: `openspec validate [change-id] --strict --no-interactive` and fix issues
 - Request approval: Do not start implementation until proposal is approved
 
+## Integrated Slash Commands
+
+OpenSpec integrates with project-specific slash commands for a complete workflow:
+
+| Stage | Command | Purpose |
+|-------|---------|---------|
+| **Ideation** | `/brainstorm <topic>` | Explore ideas before creating specs (uses `brainstorming` skill) |
+| **Proposal** | `/openspec-proposal <desc>` | Create formal spec proposal |
+| **Planning** | `/plan <feature>` | Create detailed implementation plan (uses `writing-plans` skill) |
+| **Implementation** | `/openspec-apply <id>` | Implement approved change with correct skills |
+| **Execution** | `/execute <plan>` | Execute plan task-by-task |
+| **Review** | `/review-frontend <files>` | Review code for best practices |
+| **Archive** | `/openspec-archive <id>` | Archive completed change |
+
+### Recommended Flow
+
+```
+Ambiguous idea?     → /brainstorm → clarify requirements
+                                  ↓
+Clear requirements? → /openspec-proposal → formal spec
+                                  ↓
+Approved spec?      → /plan → detailed tasks (or use tasks.md from proposal)
+                                  ↓
+Ready to code?      → /openspec-apply or /execute → implement with skills
+                                  ↓
+Code complete?      → /review-frontend → verify quality
+                                  ↓
+Deployed?           → /openspec-archive → update specs
+```
+
+### Skills Applied by Commands
+
+| Command | Skills Used |
+|---------|-------------|
+| `/brainstorm` | `brainstorming` |
+| `/plan` | `writing-plans` |
+| `/openspec-apply` | `typescript-advanced-types`, `nodejs-backend-patterns`, `vercel-react-best-practices` |
+| `/build-api` | `nodejs-backend-patterns`, `typescript-advanced-types` |
+| `/design-ui` | `frontend-design` |
+| `/review-frontend` | `vercel-react-best-practices`, `web-design-guidelines` |
+
 ## Three-Stage Workflow
 
 ### Stage 1: Creating Changes

@@ -16,3 +16,92 @@ Use `@/openspec/AGENTS.md` to learn:
 Keep this managed block so 'openspec update' can refresh the instructions.
 
 <!-- OPENSPEC:END -->
+
+# Cube Academy Development Workflow
+
+## Slash Commands
+
+Use these commands to follow the correct workflow with the right skills:
+
+### Ideation & Planning
+| Command | When to Use |
+|---------|-------------|
+| `/brainstorm <topic>` | **START HERE** for new features. Explores ideas collaboratively before any implementation. |
+| `/openspec-proposal <description>` | After brainstorming, create a formal spec proposal for significant changes. |
+| `/plan <feature>` | Create detailed implementation plan after design is validated. |
+
+### Implementation
+| Command | When to Use |
+|---------|-------------|
+| `/openspec-apply <change-id>` | Implement an approved OpenSpec change. |
+| `/execute <plan-file>` | Execute an implementation plan task-by-task. |
+| `/build-api <endpoint>` | Build backend API endpoints following Node.js patterns. |
+| `/design-ui <component>` | Design distinctive UI components. |
+
+### Quality & Review
+| Command | When to Use |
+|---------|-------------|
+| `/review-frontend <files>` | Review React code for performance and best practices. |
+| `/openspec-archive <change-id>` | Archive a deployed change and update specs. |
+
+### Utilities
+| Command | When to Use |
+|---------|-------------|
+| `/find-skill <query>` | Search for additional agent skills to install. |
+
+## Recommended Workflow
+
+```
+1. EXPLORE    → /brainstorm "new feature idea"
+                ↓ (collaborative Q&A, design exploration)
+                
+2. SPECIFY    → /openspec-proposal "validated design"
+                ↓ (formal spec with requirements & scenarios)
+                
+3. PLAN       → /plan "approved spec"
+                ↓ (detailed tasks with TDD steps)
+                
+4. IMPLEMENT  → /openspec-apply <change-id>
+                   or /execute <plan-file>
+                ↓ (task-by-task with commits)
+                
+5. REVIEW     → /review-frontend <files>
+                ↓ (performance & best practices)
+                
+6. ARCHIVE    → /openspec-archive <change-id>
+```
+
+## When to Use Each Path
+
+### Full OpenSpec Path (recommended for significant changes)
+Use when: new features, breaking changes, architecture shifts, multi-file changes
+```
+/brainstorm → /openspec-proposal → /openspec-apply → /openspec-archive
+```
+
+### Quick Implementation Path (for small, well-defined tasks)
+Use when: bug fixes, simple features, clear requirements
+```
+/brainstorm → /plan → /execute
+```
+
+### Direct Implementation (skip planning)
+Use when: trivial fixes, typos, formatting, config changes
+```
+Just do it directly, no commands needed.
+```
+
+## Available Skills
+
+These skills are automatically applied by the commands above:
+
+| Skill | Applied By | Purpose |
+|-------|------------|---------|
+| `brainstorming` | `/brainstorm` | Collaborative idea exploration |
+| `writing-plans` | `/plan` | Detailed implementation plans |
+| `nodejs-backend-patterns` | `/build-api` | Backend service patterns |
+| `typescript-advanced-types` | All code commands | Type-safe implementations |
+| `frontend-design` | `/design-ui` | Distinctive UI design |
+| `web-design-guidelines` | `/review-frontend` | UI/UX compliance |
+| `vercel-react-best-practices` | `/review-frontend` | React performance |
+| `find-skills` | `/find-skill` | Discover new skills |

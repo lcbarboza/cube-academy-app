@@ -13,6 +13,11 @@ The user has requested the following change proposal. Use the openspec instructi
 - Identify any vague or ambiguous details and ask the necessary follow-up questions before editing files.
 - Do not write any code during the proposal stage. Only create design documents (proposal.md, tasks.md, design.md, and spec deltas). Implementation happens in the apply stage after approval.
 
+**Pre-Proposal Check**
+If the request is vague or exploratory (lacks clear requirements, uses words like "maybe", "could", "explore", "think about"):
+- Suggest using `/brainstorm <topic>` first to clarify requirements
+- Example: "This seems like an exploratory idea. Would you like to run `/brainstorm <topic>` first to clarify the requirements before creating a formal proposal?"
+
 **Steps**
 1. Review `openspec/project.md`, run `openspec list` and `openspec list --specs`, and inspect related code or docs (e.g., via `rg`/`ls`) to ground the proposal in current behaviour; note any gaps that require clarification.
 2. Choose a unique verb-led `change-id` and scaffold `proposal.md`, `tasks.md`, and `design.md` (when needed) under `openspec/changes/<id>/`.
@@ -21,6 +26,25 @@ The user has requested the following change proposal. Use the openspec instructi
 5. Draft spec deltas in `changes/<id>/specs/<capability>/spec.md` (one folder per capability) using `## ADDED|MODIFIED|REMOVED Requirements` with at least one `#### Scenario:` per requirement and cross-reference related capabilities when relevant.
 6. Draft `tasks.md` as an ordered list of small, verifiable work items that deliver user-visible progress, include validation (tests, tooling), and highlight dependencies or parallelizable work.
 7. Validate with `openspec validate <id> --strict --no-interactive` and resolve every issue before sharing the proposal.
+
+**Skills to Reference in tasks.md**
+When writing tasks, reference the appropriate skills that should be used during implementation:
+- **React/Next.js code:** Reference `vercel-react-best-practices` skill
+- **TypeScript types:** Reference `typescript-advanced-types` skill
+- **Node.js backend:** Reference `nodejs-backend-patterns` skill
+- **UI components:** Reference `frontend-design` skill
+
+Example task with skill reference:
+```markdown
+- [ ] 1.3 Create UserProfile component
+  - Use `frontend-design` skill for distinctive UI
+  - Use `vercel-react-best-practices` for performance
+```
+
+**After Proposal**
+Once the proposal is validated and approved:
+- For implementation: Use `/openspec-apply <change-id>`
+- For detailed planning: Use `/plan` to create a more granular implementation plan
 
 **Reference**
 - Use `openspec show <id> --json --deltas-only` or `openspec show <spec> --type spec` to inspect details when validation fails.
