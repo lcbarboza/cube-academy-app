@@ -1,3 +1,4 @@
+import { CubeViewer } from '@/components/cube'
 import { Container } from '@/components/layout/Container'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/Button'
@@ -24,6 +25,11 @@ export function ScramblePage() {
             <h1 className="text-3xl font-bold text-neutral-900 mb-8 text-center">
               {t('scramble.title')}
             </h1>
+
+            {/* 3D Cube Visualization */}
+            <div className="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+              <CubeViewer scramble={scramble} height={320} />
+            </div>
 
             {/* Scramble Display */}
             <div className="bg-white rounded-xl shadow-md p-8 mb-6">
