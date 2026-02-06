@@ -1,3 +1,5 @@
+export { AnimatedLayer, getMoveAxis, getMoveAngle, isInLayer } from './AnimatedLayer'
+export { AnimatedRubiksCube } from './AnimatedRubiksCube'
 export { CubeViewer } from './CubeViewer'
 export { Cubie } from './Cubie'
 export { RubiksCube } from './RubiksCube'

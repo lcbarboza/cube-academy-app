@@ -19,6 +19,17 @@
     "title": "Gerador de Scramble",
     "sequence": "Sequência de embaralhamento",
     "generate": "Gerar Novo Scramble",
-    "instructions": "Aplique esta sequência de movimentos ao seu cubo para embaralhá-lo antes de resolver."
+    "instructions": "Aplique esta sequência de movimentos ao seu cubo para embaralhá-lo antes de resolver.",
+    "noMoves": "Nenhum movimento",
+    "move": "Movimento"
+  },
+  "player": {
+    "play": "Reproduzir",
+    "pause": "Pausar",
+    "reset": "Reiniciar",
+    "stepForward": "Próximo",
+    "stepBack": "Anterior",
+    "speed": "Velocidade",
+    "complete": "Completo"
   }
 }

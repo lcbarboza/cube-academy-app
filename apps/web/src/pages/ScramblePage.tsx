@@ -1,19 +1,49 @@
 import { CubeViewer } from '@/components/cube'
 import { Container } from '@/components/layout/Container'
 import { Header } from '@/components/layout/Header'
+import { PlayerControls, ScrambleDisplay } from '@/components/scramble'
 import { Button } from '@/components/ui/Button'
+import { useScramblePlayer } from '@/hooks/useScramblePlayer'
 import { generateScrambleString } from '@/lib/scramble'
 import { RefreshCw } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function ScramblePage() {
   const { t } = useTranslation()
   const [scramble, setScramble] = useState(() => generateScrambleString())
 
+  const player = useScramblePlayer(scramble)
+
+  // Use ref to avoid dependency on player.setScramble
+  const setScrambleRef = useRef(player.setScramble)
+  setScrambleRef.current = player.setScramble
+
+  // Update player when scramble changes
+  useEffect(() => {
+    setScrambleRef.current(scramble)
+  }, [scramble])
+
   const handleNewScramble = useCallback(() => {
     setScramble(generateScrambleString())
   }, [])
+
+  const handlePlayPause = useCallback(() => {
+    if (player.isPlaying) {
+      player.pause()
+    } else {
+      player.play()
+    }
+  }, [player])
+
+  const handleMoveClick = useCallback(
+    (index: number) => {
+      // Convert from 0-based move index to player index
+      // index 0 = after first move, so player index is 0
+      player.goToMove(index)
+    },
+    [player],
+  )
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -26,19 +56,42 @@ export function ScramblePage() {
               {t('scramble.title')}
             </h1>
 
-            {/* 3D Cube Visualization */}
+            {/* 3D Cube Visualization with Animation */}
             <div className="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
-              <CubeViewer scramble={scramble} height={320} />
+              <CubeViewer
+                cubeState={player.displayState}
+                currentMove={player.currentMove}
+                isAnimating={player.isAnimating}
+                speed={player.speed}
+                onAnimationComplete={player.onAnimationComplete}
+                height={320}
+              />
             </div>
 
-            {/* Scramble Display */}
-            <div className="bg-white rounded-xl shadow-md p-8 mb-6">
-              <p
-                className="font-mono text-xl md:text-2xl text-neutral-800 text-center leading-relaxed tracking-wide select-all"
-                aria-label={t('scramble.sequence')}
-              >
-                {scramble}
-              </p>
+            {/* Player Controls */}
+            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+              <PlayerControls
+                isPlaying={player.isPlaying}
+                isAnimating={player.isAnimating}
+                speed={player.speed}
+                currentIndex={player.currentIndex}
+                totalMoves={player.moves.length}
+                onPlayPause={handlePlayPause}
+                onStepForward={player.stepForward}
+                onStepBack={player.stepBack}
+                onReset={player.reset}
+                onSpeedChange={player.setSpeed}
+              />
+            </div>
+
+            {/* Scramble Display - Clickable Moves */}
+            <div className="bg-white rounded-xl shadow-md mb-6">
+              <ScrambleDisplay
+                moves={player.moves}
+                currentIndex={player.currentIndex}
+                isAnimating={player.isAnimating}
+                onMoveClick={handleMoveClick}
+              />
             </div>
 
             {/* Generate Button */}

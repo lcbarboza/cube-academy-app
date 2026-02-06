@@ -19,6 +19,17 @@
     "title": "Scramble Generator",
     "sequence": "Scramble sequence",
     "generate": "Generate New Scramble",
-    "instructions": "Apply this sequence of moves to your cube to scramble it before solving."
+    "instructions": "Apply this sequence of moves to your cube to scramble it before solving.",
+    "noMoves": "No moves",
+    "move": "Move"
+  },
+  "player": {
+    "play": "Play",
+    "pause": "Pause",
+    "reset": "Reset",
+    "stepForward": "Step forward",
+    "stepBack": "Step back",
+    "speed": "Speed",
+    "complete": "Complete"
   }
 }

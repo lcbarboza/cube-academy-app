@@ -1,4 +1,6 @@
 import { HomePage, ScramblePage } from '@/pages'
+import { DebugScramblePage } from '@/pages/DebugScramblePage'
+import { TestMovesPage } from '@/pages/TestMovesPage'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
@@ -7,6 +9,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/scramble" element={<ScramblePage />} />
+        <Route path="/test-moves" element={<TestMovesPage />} />
+        <Route path="/debug" element={<DebugScramblePage />} />
       </Routes>
     </BrowserRouter>
   )
