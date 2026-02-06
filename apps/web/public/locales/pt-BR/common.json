@@ -1,0 +1,17 @@
+{
+  "app": {
+    "name": "Cube Academy"
+  },
+  "welcome": {
+    "title": "Aprenda a Resolver o Cubo Mágico",
+    "description": "Tutoriais passo a passo, algoritmos e exercícios práticos para cubers de todos os níveis. Do iniciante ao avançado.",
+    "getStarted": "Começar Agora",
+    "learnMore": "Saiba Mais"
+  },
+  "nav": {
+    "tutorials": "Tutoriais",
+    "algorithms": "Algoritmos",
+    "practice": "Prática",
+    "progress": "Progresso"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "app": {
+    "name": "Cube Academy"
+  },
+  "welcome": {
+    "title": "Learn to Solve the Rubik's Cube",
+    "description": "Step-by-step tutorials, algorithms, and practice drills for cubers of all levels. From beginner to advanced.",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "nav": {
+    "tutorials": "Tutorials",
+    "algorithms": "Algorithms",
+    "practice": "Practice",
+    "progress": "Progress"
+  }
+}
