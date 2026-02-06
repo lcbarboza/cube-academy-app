@@ -9,9 +9,16 @@
     "learnMore": "Learn More"
   },
   "nav": {
+    "scramble": "Scramble",
     "tutorials": "Tutorials",
     "algorithms": "Algorithms",
     "practice": "Practice",
     "progress": "Progress"
+  },
+  "scramble": {
+    "title": "Scramble Generator",
+    "sequence": "Scramble sequence",
+    "generate": "Generate New Scramble",
+    "instructions": "Apply this sequence of moves to your cube to scramble it before solving."
   }
 }

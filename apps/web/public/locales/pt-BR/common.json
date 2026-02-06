@@ -9,9 +9,16 @@
     "learnMore": "Saiba Mais"
   },
   "nav": {
+    "scramble": "Scramble",
     "tutorials": "Tutoriais",
     "algorithms": "Algoritmos",
     "practice": "Prática",
     "progress": "Progresso"
+  },
+  "scramble": {
+    "title": "Gerador de Scramble",
+    "sequence": "Sequência de embaralhamento",
+    "generate": "Gerar Novo Scramble",
+    "instructions": "Aplique esta sequência de movimentos ao seu cubo para embaralhá-lo antes de resolver."
   }
 }
