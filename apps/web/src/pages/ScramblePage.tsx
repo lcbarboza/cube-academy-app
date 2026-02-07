@@ -2,6 +2,7 @@ import { CubeViewer } from '@/components/cube'
 import { Container } from '@/components/layout/Container'
 import { Header } from '@/components/layout/Header'
 import { PlayerControls, ScrambleDisplay } from '@/components/scramble'
+import { SEO, pageSEO } from '@/components/seo'
 import { Button } from '@/components/ui/Button'
 import { useScramblePlayer } from '@/hooks/useScramblePlayer'
 import { generateScrambleString } from '@/lib/scramble'
@@ -10,8 +11,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export function ScramblePage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [scramble, setScramble] = useState(() => generateScrambleString())
+
+  // Get SEO content for current language
+  const seoContent = pageSEO.scramble[i18n.language as keyof typeof pageSEO.scramble] || pageSEO.scramble.en
 
   const player = useScramblePlayer(scramble)
 
@@ -47,6 +51,13 @@ export function ScramblePage() {
 
   return (
     <div className="min-h-screen bg-neutral-50">
+      {/* SEO Meta Tags */}
+      <SEO
+        title={seoContent.title}
+        description={seoContent.description}
+        keywords={seoContent.keywords}
+        canonical="/scramble"
+      />
       <Header />
       <Container>
         <main className="py-12">

@@ -1,14 +1,26 @@
 import { Container } from '@/components/layout/Container'
 import { Header } from '@/components/layout/Header'
+import { SEO, pageSEO } from '@/components/seo'
 import { Button } from '@/components/ui/Button'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 export function HomePage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  
+  // Get SEO content for current language
+  const seoContent = pageSEO.home[i18n.language as keyof typeof pageSEO.home] || pageSEO.home.en
 
   return (
     <div className="min-h-screen bg-neutral-50">
+      {/* SEO Meta Tags */}
+      <SEO 
+        title={seoContent.title}
+        description={seoContent.description}
+        keywords={seoContent.keywords}
+        canonical="/home"
+      />
+      
       <Header />
       <Container>
         <main className="py-12">

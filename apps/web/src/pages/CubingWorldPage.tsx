@@ -1,4 +1,5 @@
 import { CubeViewer } from '@/components/cube'
+import { SEO, pageSEO } from '@/components/seo'
 import { Logo } from '@/components/ui'
 import { useScramble } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
@@ -14,6 +15,9 @@ const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 2, 4]
 export function CubingWorldPage() {
   const { t, i18n } = useTranslation()
   const { isDark, toggleTheme } = useTheme()
+  
+  // Get SEO content for current language
+  const seoContent = pageSEO.home[i18n.language as keyof typeof pageSEO.home] || pageSEO.home.en
   
   // Use shared scramble context
   const {
@@ -67,6 +71,14 @@ export function CubingWorldPage() {
 
   return (
     <div className="min-h-screen relative">
+      {/* SEO Meta Tags */}
+      <SEO 
+        title={seoContent.title}
+        description={seoContent.description}
+        keywords={seoContent.keywords}
+        canonical="/"
+      />
+      
       {/* Cosmic background */}
       <div className="cosmic-bg" />
 

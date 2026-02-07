@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a"/>
+      <stop offset="100%" style="stop-color:#050510"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e0e0e0"/>
+    </linearGradient>
+    <linearGradient id="left" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b00"/>
+      <stop offset="100%" style="stop-color:#cc5500"/>
+    </linearGradient>
+    <linearGradient id="right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0088ff"/>
+      <stop offset="100%" style="stop-color:#0066cc"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="192" height="192" rx="32" fill="url(#bg)"/>
+  
+  <g transform="translate(96, 90)">
+    <polygon points="0,-50 42,-28 0,-6 -42,-28" fill="url(#top)" stroke="#666" stroke-width="0.8"/>
+    <line x1="-14" y1="-36" x2="14" y2="-21" stroke="#bbb" stroke-width="1"/>
+    <line x1="14" y1="-36" x2="-14" y2="-21" stroke="#bbb" stroke-width="1"/>
+    
+    <polygon points="-42,-28 0,-6 0,36 -42,14" fill="url(#left)" stroke="#555" stroke-width="0.8"/>
+    <line x1="-28" y1="-12" x2="-14" y2="4" stroke="#aa4400" stroke-width="1"/>
+    <line x1="-28" y1="4" x2="-14" y2="20" stroke="#aa4400" stroke-width="1"/>
+    
+    <polygon points="42,-28 42,14 0,36 0,-6" fill="url(#right)" stroke="#555" stroke-width="0.8"/>
+    <line x1="14" y1="-12" x2="28" y2="4" stroke="#004499" stroke-width="1"/>
+    <line x1="14" y1="4" x2="28" y2="20" stroke="#004499" stroke-width="1"/>
+    
+    <line x1="0" y1="-50" x2="42" y2="-28" stroke="#00fff2" stroke-width="2" opacity="0.8"/>
+    <line x1="0" y1="-50" x2="-42" y2="-28" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
+  </g>
+  
+  <text x="96" y="160" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="800" fill="#00fff2" letter-spacing="0.1em">CUBING</text>
+</svg>

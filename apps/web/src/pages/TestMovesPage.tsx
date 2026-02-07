@@ -1,5 +1,6 @@
 import { CubeViewer } from '@/components/cube'
 import { Container } from '@/components/layout/Container'
+import { SEO } from '@/components/seo'
 import { useScramblePlayer } from '@/hooks/useScramblePlayer'
 import { createSolvedCube } from '@/lib/cube-state'
 import { Check, RotateCcw, X } from 'lucide-react'
@@ -99,6 +100,9 @@ export function TestMovesPage() {
 
   return (
     <div className="min-h-screen bg-neutral-50 py-8">
+      {/* SEO - noindex for test pages */}
+      <SEO title="Test Moves" noIndex />
+      
       <Container>
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-6">

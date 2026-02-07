@@ -1,5 +1,6 @@
 import { CubeViewer } from '@/components/cube'
 import { SolveHistoryPanel } from '@/components/history'
+import { SEO, pageSEO } from '@/components/seo'
 import { TimerDisplay } from '@/components/timer'
 import { Logo } from '@/components/ui'
 import { useScramble, useSolveHistory } from '@/contexts'
@@ -15,6 +16,9 @@ export function TimerPage() {
   const { isDark, toggleTheme } = useTheme()
   const { addSolve, stats } = useSolveHistory()
   const [isHistoryExpanded, setIsHistoryExpanded] = useState(false)
+  
+  // Get SEO content for current language
+  const seoContent = pageSEO.timer[i18n.language as keyof typeof pageSEO.timer] || pageSEO.timer.en
 
   // Use shared scramble context
   const {
@@ -73,6 +77,14 @@ export function TimerPage() {
 
   return (
     <div className="h-screen flex flex-col relative" onKeyDown={handleKeyDown}>
+      {/* SEO Meta Tags */}
+      <SEO 
+        title={seoContent.title}
+        description={seoContent.description}
+        keywords={seoContent.keywords}
+        canonical="/timer"
+      />
+      
       {/* Cosmic background */}
       <div className="cosmic-bg" />
 

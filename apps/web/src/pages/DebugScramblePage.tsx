@@ -1,5 +1,6 @@
 import { CubeViewer } from '@/components/cube'
 import { Container } from '@/components/layout/Container'
+import { SEO } from '@/components/seo'
 import { useScramblePlayer } from '@/hooks/useScramblePlayer'
 import {
   type CubeState,
@@ -91,6 +92,9 @@ export function DebugScramblePage() {
 
   return (
     <div className="min-h-screen bg-neutral-50 py-8">
+      {/* SEO - noindex for debug pages */}
+      <SEO title="Debug Scramble" noIndex />
+      
       <Container>
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold mb-6">Debug Scramble</h1>

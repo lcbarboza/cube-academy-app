@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="bgApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a"/>
+      <stop offset="100%" style="stop-color:#050510"/>
+    </linearGradient>
+    <linearGradient id="topApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e0e0e0"/>
+    </linearGradient>
+    <linearGradient id="leftApple" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b00"/>
+      <stop offset="100%" style="stop-color:#cc5500"/>
+    </linearGradient>
+    <linearGradient id="rightApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0088ff"/>
+      <stop offset="100%" style="stop-color:#0066cc"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background - solid for apple touch icon -->
+  <rect width="180" height="180" fill="url(#bgApple)"/>
+  
+  <g transform="translate(90, 85)">
+    <!-- Top face -->
+    <polygon points="0,-45 38,-25 0,-5 -38,-25" fill="url(#topApple)" stroke="#666" stroke-width="0.8"/>
+    <line x1="-13" y1="-32" x2="13" y2="-18" stroke="#bbb" stroke-width="1"/>
+    <line x1="13" y1="-32" x2="-13" y2="-18" stroke="#bbb" stroke-width="1"/>
+    
+    <!-- Left face -->
+    <polygon points="-38,-25 0,-5 0,35 -38,15" fill="url(#leftApple)" stroke="#555" stroke-width="0.8"/>
+    <line x1="-25" y1="-10" x2="-13" y2="5" stroke="#aa4400" stroke-width="1"/>
+    <line x1="-25" y1="5" x2="-13" y2="20" stroke="#aa4400" stroke-width="1"/>
+    
+    <!-- Right face -->
+    <polygon points="38,-25 38,15 0,35 0,-5" fill="url(#rightApple)" stroke="#555" stroke-width="0.8"/>
+    <line x1="13" y1="-10" x2="25" y2="5" stroke="#004499" stroke-width="1"/>
+    <line x1="13" y1="5" x2="25" y2="20" stroke="#004499" stroke-width="1"/>
+    
+    <!-- Edge highlights -->
+    <line x1="0" y1="-45" x2="38" y2="-25" stroke="#00fff2" stroke-width="2" opacity="0.8"/>
+    <line x1="0" y1="-45" x2="-38" y2="-25" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
+  </g>
+  
+  <text x="90" y="155" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="800" fill="#00fff2" letter-spacing="0.08em">CUBING</text>
+</svg>
