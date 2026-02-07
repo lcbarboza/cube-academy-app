@@ -2,7 +2,7 @@ import { type CubeState, applyMove, createSolvedCube, parseScramble } from '@/li
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 /** Speed multiplier options */
-export type SpeedOption = 0.5 | 1 | 1.5 | 2
+export type SpeedOption = 0.5 | 1 | 2 | 4
 
 /** Base animation duration in ms at 1x speed */
 export const BASE_ANIMATION_DURATION = 300
@@ -53,7 +53,7 @@ export function useScramblePlayer(
   const [moves, setMoves] = useState<string[]>(() => parseScramble(initialScramble))
   const [currentIndex, setCurrentIndex] = useState(-1) // -1 = solved state
   const [isPlaying, setIsPlaying] = useState(false)
-  const [speed, setSpeedState] = useState<SpeedOption>(1)
+  const [speed, setSpeedState] = useState<SpeedOption>(4)
   const [isAnimating, setIsAnimating] = useState(false)
   const [currentMove, setCurrentMove] = useState<string | null>(null)
 

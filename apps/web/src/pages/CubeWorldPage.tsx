@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { SpeedOption } from '@/hooks/useScramblePlayer'
 
-const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 1.5, 2]
+const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 2, 4]
 
 export function CubeWorldPage() {
   const { t, i18n } = useTranslation()

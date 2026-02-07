@@ -416,12 +416,16 @@
   justify-content: center;
   width: 48px;
   height: 48px;
+  min-width: 48px;
+  min-height: 48px;
   padding: 0;
   border-radius: 50%;
   border: 2px solid var(--btn-border);
   background: var(--btn-bg);
   color: var(--text-secondary);
   transition: all 0.3s ease;
+  flex-shrink: 0;
+  aspect-ratio: 1;
 }
 
 .btn-icon:hover:not(:disabled) {
@@ -440,6 +444,8 @@
 .btn-play {
   width: 64px;
   height: 64px;
+  min-width: 64px;
+  min-height: 64px;
   border-color: var(--neon-cyan);
   color: var(--neon-cyan);
   background: var(--btn-hover-bg);
@@ -503,15 +509,17 @@
    ============================================ */
 
 .speed-btn {
-  padding: 6px 14px;
+  padding: 6px 12px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   border-radius: 6px;
   border: 1px solid var(--panel-border);
   background: transparent;
   color: var(--text-muted);
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .speed-btn:hover:not(.speed-btn-active) {
