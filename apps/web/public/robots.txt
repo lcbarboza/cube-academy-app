@@ -1,5 +1,5 @@
 # Cubing World - Robots.txt
-# https://cubingworld.com
+# https://cubing.world
 
 User-agent: *
 Allow: /
@@ -13,4 +13,4 @@ Disallow: /debug
 Disallow: /test-moves
 
 # Sitemap location
-Sitemap: https://cubingworld.com/sitemap.xml
+Sitemap: https://cubing.world/sitemap.xml

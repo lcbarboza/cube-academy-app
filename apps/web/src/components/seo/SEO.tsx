@@ -11,7 +11,7 @@ interface SEOProps {
   noIndex?: boolean
 }
 
-const BASE_URL = 'https://cubingworld.com'
+const BASE_URL = 'https://cubing.world'
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.svg`
 
 /**
