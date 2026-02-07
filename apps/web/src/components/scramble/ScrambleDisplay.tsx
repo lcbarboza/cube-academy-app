@@ -35,8 +35,11 @@ export function ScrambleDisplay({
       aria-label={t('scramble.sequence')}
     >
       {moves.map((move, index) => {
-        const isPast = index < currentIndex + 1
-        const isCurrent = index === currentIndex + 1
+        // currentIndex represents the last applied move (-1 = none, 0 = first move, etc.)
+        // A move is "past" if it was applied before the current one
+        const isPast = index < currentIndex
+        // A move is "current" (highlighted) if it's the last applied move
+        const isCurrent = index === currentIndex
         const isClickable = !isAnimating
 
         return (

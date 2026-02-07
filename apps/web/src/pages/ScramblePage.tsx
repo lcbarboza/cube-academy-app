@@ -38,8 +38,8 @@ export function ScramblePage() {
 
   const handleMoveClick = useCallback(
     (index: number) => {
-      // Convert from 0-based move index to player index
-      // index 0 = after first move, so player index is 0
+      // Click on move N should show the cube state AFTER that move is applied
+      // So goToMove(index) makes currentIndex = index, which means moves[0..index] are applied
       player.goToMove(index)
     },
     [player],
