@@ -45,8 +45,8 @@ for (const [x, y] of adjacentPairs) {
   for (let i = 0; i < 6; i++) {
     c = applyMove(c, x)
     c = applyMove(c, y)
-    c = applyMove(c, x + "'")
-    c = applyMove(c, y + "'")
+    c = applyMove(c, `${x}'`)
+    c = applyMove(c, `${y}'`)
   }
   console.log(`   [${x},${y}]^6 = I: ${cubesEqual(c, solved) ? 'PASS' : 'FAIL'}`)
 }
@@ -62,8 +62,8 @@ for (const [x, y] of oppositePairs) {
   let c = solved
   c = applyMove(c, x)
   c = applyMove(c, y)
-  c = applyMove(c, x + "'")
-  c = applyMove(c, y + "'")
+  c = applyMove(c, `${x}'`)
+  c = applyMove(c, `${y}'`)
   console.log(`   [${x},${y}] = I: ${cubesEqual(c, solved) ? 'PASS' : 'FAIL'}`)
 }
 

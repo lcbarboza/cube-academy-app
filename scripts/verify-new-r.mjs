@@ -71,9 +71,9 @@ function applyD(cube) {
 const MOVES = { R: applyR, U: applyU, F: applyF, D: applyD }
 
 function applyMove(cube, move) {
-  const face = move[0],
-    mod = move.slice(1),
-    fn = MOVES[face]
+  const face = move[0]
+  const mod = move.slice(1)
+  const fn = MOVES[face]
   if (!fn) return cube
   let r = cube
   if (mod === '') r = fn(r)

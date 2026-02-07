@@ -133,7 +133,7 @@ let testNum = 0
 
 function test(name, condition) {
   testNum++
-  console.log('Test ' + testNum + ': ' + name + ': ' + (condition ? 'PASS' : 'FAIL'))
+  console.log(`Test ${testNum}: ${name}: ${condition ? 'PASS' : 'FAIL'}`)
   if (!condition) allPassed = false
   return condition
 }
@@ -143,14 +143,14 @@ for (const name of Object.keys(MOVES)) {
   const solved = createSolvedCube()
   let state = solved
   for (let i = 0; i < 4; i++) state = MOVES[name](state)
-  test(name + '^4 = identity', cubesEqual(state, solved))
+  test(`${name}^4 = identity`, cubesEqual(state, solved))
 }
 
 for (const name of Object.keys(MOVES)) {
   const solved = createSolvedCube()
   let state = applyMove(solved, name)
-  state = applyMove(state, name + "'")
-  test(name + ' * ' + name + "' = identity", cubesEqual(state, solved))
+  state = applyMove(state, `${name}'`)
+  test(`${name} * ${name}' = identity`, cubesEqual(state, solved))
 }
 
 console.log('\n--- Commutator tests ---')
@@ -165,7 +165,7 @@ for (let i = 1; i <= 1000; i++) {
     break
   }
 }
-console.log('  [R,U] cycle length: ' + order)
+console.log(`  [R,U] cycle length: ${order}`)
 test('[R,U] (sexy move) order = 6', order === 6)
 
 solved = createSolvedCube()
@@ -178,7 +178,7 @@ for (let i = 1; i <= 1000; i++) {
     break
   }
 }
-console.log('  [F,R] cycle length: ' + order)
+console.log(`  [F,R] cycle length: ${order}`)
 test('[F,R] order = 6', order === 6)
 
 console.log('\n--- PLL algorithm tests ---')
@@ -221,7 +221,6 @@ else {
   state = applyAlgorithm(solved, "F R F' R'")
   console.log('Changed positions after [F,R]:')
   for (let i = 1; i <= 54; i++) {
-    if (state[i] !== solved[i])
-      console.log('  Position ' + i + ': ' + state[i] + ' (was ' + solved[i] + ')')
+    if (state[i] !== solved[i]) console.log(`  Position ${i}: ${state[i]} (was ${solved[i]})`)
   }
 }

@@ -48,7 +48,7 @@ const Rcol0 = [28, 31, 34] // R left column
 const Drow0 = [46, 47, 48] // D top row
 const Lcol2 = [12, 15, 18] // L right column
 
-function testF(cycles, returnDetails = false) {
+function testF(cycles, _returnDetails = false) {
   function applyF(cube) {
     const result = cloneCube(cube)
     rotateFaceCW(result, 19)
@@ -59,8 +59,8 @@ function testF(cycles, returnDetails = false) {
   }
 
   function applyMove(cube, move) {
-    const face = move[0],
-      mod = move.slice(1)
+    const face = move[0]
+    const mod = move.slice(1)
     const fn = face === 'R' ? applyR : face === 'U' ? applyU : face === 'F' ? applyF : null
     if (!fn) return cube
     let r = cube

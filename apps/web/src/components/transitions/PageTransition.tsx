@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
+// Type for the View Transitions API (experimental)
+interface DocumentWithViewTransition extends Document {
+  startViewTransition?: (callback: () => Promise<void>) => void
+}
+
 interface PageTransitionProps {
   children: React.ReactNode
 }
@@ -21,10 +26,10 @@ export function PageTransition({ children }: PageTransitionProps) {
 
     if (shouldAnimate) {
       // Use View Transitions API if available
-      if ('startViewTransition' in document) {
+      const doc = document as DocumentWithViewTransition
+      if (doc.startViewTransition) {
         setIsTransitioning(true)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ;(document as any).startViewTransition(() => {
+        doc.startViewTransition(() => {
           setDisplayChildren(children)
           previousPathRef.current = location.pathname
           return new Promise<void>((resolve) => {

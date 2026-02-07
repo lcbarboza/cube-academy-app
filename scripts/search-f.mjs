@@ -93,8 +93,8 @@ function testF(cycles) {
 
   // T-perm test
   function applyMove(cube, move) {
-    const face = move[0],
-      mod = move.slice(1)
+    const face = move[0]
+    const mod = move.slice(1)
     const fn = face === 'R' ? applyR : face === 'U' ? applyU : face === 'F' ? applyF : null
     if (!fn) return cube
     let r = cube
@@ -147,11 +147,11 @@ for (const uperm of perms) {
         ]
 
         const result = testF(cycles)
-        if (result && result.frComm && result.frOrder === 105 && result.tperm) {
+        if (result?.frComm && result.frOrder === 105 && result.tperm) {
           console.log('FOUND BEST! U->R->D->L:', JSON.stringify(cycles))
           console.log('  [F,R]=6, (FR)=105, T-perm works!')
           found = true
-        } else if (result && result.frComm && result.frOrder === 105) {
+        } else if (result?.frComm && result.frOrder === 105) {
           console.log('Good: U->R->D->L:', JSON.stringify(cycles), 'T-perm:', result.tperm)
         }
 
@@ -163,7 +163,7 @@ for (const uperm of perms) {
         ]
 
         const result2 = testF(cycles2)
-        if (result2 && result2.frComm && result2.frOrder === 105 && result2.tperm) {
+        if (result2?.frComm && result2.frOrder === 105 && result2.tperm) {
           console.log('FOUND BEST! L->D->R->U:', JSON.stringify(cycles2))
           console.log('  [F,R]=6, (FR)=105, T-perm works!')
           found = true
@@ -177,7 +177,7 @@ for (const uperm of perms) {
         ]
 
         const result3 = testF(cycles3)
-        if (result3 && result3.frComm && result3.frOrder === 105 && result3.tperm) {
+        if (result3?.frComm && result3.frOrder === 105 && result3.tperm) {
           console.log('FOUND BEST! R->U->L->D:', JSON.stringify(cycles3))
           console.log('  [F,R]=6, (FR)=105, T-perm works!')
           found = true
@@ -191,7 +191,7 @@ for (const uperm of perms) {
         ]
 
         const result4 = testF(cycles4)
-        if (result4 && result4.frComm && result4.frOrder === 105 && result4.tperm) {
+        if (result4?.frComm && result4.frOrder === 105 && result4.tperm) {
           console.log('FOUND BEST! D->L->U->R:', JSON.stringify(cycles4))
           console.log('  [F,R]=6, (FR)=105, T-perm works!')
           found = true

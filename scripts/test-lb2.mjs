@@ -95,9 +95,9 @@ function testAll(applyL, applyB) {
   const MOVES = { R: applyR, L: applyL, U: applyU, D: applyD, F: applyF, B: applyB }
 
   function applyMove(cube, move) {
-    const face = move[0],
-      mod = move.slice(1),
-      fn = MOVES[face]
+    const face = move[0]
+    const mod = move.slice(1)
+    const fn = MOVES[face]
     if (!fn) return cube
     let r = cube
     if (mod === '') r = fn(r)
@@ -119,7 +119,7 @@ function testAll(applyL, applyB) {
       cube = applyAlg(cube, alg)
       if (cubesEqual(cube, solved)) return i
     }
-    return '>' + max
+    return `>${max}`
   }
 
   const results = {

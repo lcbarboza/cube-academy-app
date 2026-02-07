@@ -1,7 +1,7 @@
 // Trace T-Perm effect on pieces
 import { applyPieceMove, createSolvedPieceState } from '../apps/web/src/lib/cube-state.ts'
 
-function tracePiece(pieces, num) {
+function _tracePiece(pieces, num) {
   for (const face of ['U', 'F', 'R', 'B', 'L', 'D']) {
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 3; c++) {

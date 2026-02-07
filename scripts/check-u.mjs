@@ -57,7 +57,7 @@ function rotateFaceCW(cube, start) {
   cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
-function applyR(cube) {
+function _applyR(cube) {
   const result = cloneCube(cube)
   rotateFaceCW(result, 28)
   cycle4(result, 3, 39, 48, 21)
@@ -66,7 +66,7 @@ function applyR(cube) {
   return result
 }
 
-function applyU(cube) {
+function _applyU(cube) {
   const result = cloneCube(cube)
   rotateFaceCW(result, 1)
   cycle4(result, 19, 28, 37, 10)
@@ -187,15 +187,9 @@ console.log('  20-24-26-22:', c[20], c[24], c[26], c[22], '(should be 22,20,24,2
 s = createSolvedCube()
 c = applyF(s)
 console.log('\nAfter full F move:')
-console.log(
-  'Ring cycle 1 (7,28,48,18): pos 7=' + c[7] + ' 28=' + c[28] + ' 48=' + c[48] + ' 18=' + c[18],
-)
+console.log(`Ring cycle 1 (7,28,48,18): pos 7=${c[7]} 28=${c[28]} 48=${c[48]} 18=${c[18]}`)
 console.log('  Expected: 7=18, 28=7, 48=28, 18=48')
-console.log(
-  'Ring cycle 2 (8,31,47,15): pos 8=' + c[8] + ' 31=' + c[31] + ' 47=' + c[47] + ' 15=' + c[15],
-)
+console.log(`Ring cycle 2 (8,31,47,15): pos 8=${c[8]} 31=${c[31]} 47=${c[47]} 15=${c[15]}`)
 console.log('  Expected: 8=15, 31=8, 47=31, 15=47')
-console.log(
-  'Ring cycle 3 (9,34,46,12): pos 9=' + c[9] + ' 34=' + c[34] + ' 46=' + c[46] + ' 12=' + c[12],
-)
+console.log(`Ring cycle 3 (9,34,46,12): pos 9=${c[9]} 34=${c[34]} 46=${c[46]} 12=${c[12]}`)
 console.log('  Expected: 9=12, 34=9, 46=34, 12=46')

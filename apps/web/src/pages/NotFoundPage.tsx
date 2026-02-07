@@ -206,7 +206,7 @@ export function NotFoundPage() {
           }}
           aria-hidden="true"
         >
-          <svg viewBox="0 0 48 48" className="w-full h-full">
+          <svg viewBox="0 0 48 48" className="w-full h-full" aria-hidden="true">
             <g transform="translate(24, 24)">
               <polygon points="0,-14 12,-8 0,-2 -12,-8" fill="var(--neon-cyan)" opacity="0.8" />
               <polygon points="-12,-8 0,-2 0,10 -12,4" fill="var(--neon-magenta)" opacity="0.6" />

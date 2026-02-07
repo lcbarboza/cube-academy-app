@@ -51,7 +51,7 @@ function cloneCube(cube) {
 }
 
 // R with standard (non-mirrored) B convention
-function R_standard(cube) {
+function _R_standard(cube) {
   const newCube = cloneCube(cube)
   newCube.R = rotateFaceCW(cube.R)
 

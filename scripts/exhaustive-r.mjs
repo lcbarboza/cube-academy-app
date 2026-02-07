@@ -122,7 +122,7 @@ for (const Bcol of Bpositions) {
           ]
 
           const result = testR(cycles)
-          if (result && result.ruComm && result.ruOrder === 105) {
+          if (result?.ruComm && result.ruOrder === 105) {
             console.log('FOUND! U->F->D->B:', JSON.stringify(cycles))
             found = true
           }
@@ -135,7 +135,7 @@ for (const Bcol of Bpositions) {
           ]
 
           const result2 = testR(cycles2)
-          if (result2 && result2.ruComm && result2.ruOrder === 105) {
+          if (result2?.ruComm && result2.ruOrder === 105) {
             console.log('FOUND! U->B->D->F:', JSON.stringify(cycles2))
             found = true
           }
@@ -148,7 +148,7 @@ for (const Bcol of Bpositions) {
           ]
 
           const result3 = testR(cycles3)
-          if (result3 && result3.ruComm && result3.ruOrder === 105) {
+          if (result3?.ruComm && result3.ruOrder === 105) {
             console.log('FOUND! F->U->B->D:', JSON.stringify(cycles3))
             found = true
           }
@@ -161,7 +161,7 @@ for (const Bcol of Bpositions) {
           ]
 
           const result4 = testR(cycles4)
-          if (result4 && result4.ruComm && result4.ruOrder === 105) {
+          if (result4?.ruComm && result4.ruOrder === 105) {
             console.log('FOUND! D->B->U->F:', JSON.stringify(cycles4))
             found = true
           }

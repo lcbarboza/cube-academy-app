@@ -22,12 +22,16 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "a11y": {
+        "useSemanticElements": "warn"
+      },
       "complexity": {
         "noUselessFragments": "warn"
       },
       "correctness": {
         "noUnusedImports": "error",
-        "noUnusedVariables": "error"
+        "noUnusedVariables": "error",
+        "noUnknownProperty": "off"
       },
       "style": {
         "noNonNullAssertion": "warn",

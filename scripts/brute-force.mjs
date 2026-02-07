@@ -87,9 +87,9 @@ function testCombination(applyR, applyU, applyF) {
   const MOVES = { R: applyR, U: applyU, F: applyF }
 
   function applyMove(cube, move) {
-    const face = move[0],
-      mod = move.slice(1),
-      fn = MOVES[face]
+    const face = move[0]
+    const mod = move.slice(1)
+    const fn = MOVES[face]
     if (!fn) return cube
     let r = cube
     if (mod === '') r = fn(r)
@@ -134,7 +134,7 @@ for (let rBCol = 0; rBCol <= 1; rBCol++) {
 
         // Only print if all commutators are correct OR if T-Perm is close to 2
         if ((result.RU === 6 && result.FR === 6 && result.FU === 6) || result.TPerm <= 10) {
-          console.log(label + ':', result)
+          console.log(`${label}:`, result)
         }
       }
     }

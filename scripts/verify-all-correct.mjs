@@ -105,9 +105,9 @@ function applyB(cube) {
 const MOVES = { R: applyR, L: applyL, U: applyU, D: applyD, F: applyF, B: applyB }
 
 function applyMove(cube, move) {
-  const face = move[0],
-    mod = move.slice(1),
-    fn = MOVES[face]
+  const face = move[0]
+  const mod = move.slice(1)
+  const fn = MOVES[face]
   if (!fn) return cube
   let r = cube
   if (mod === '') r = fn(r)
@@ -125,10 +125,10 @@ function applyAlg(cube, alg) {
 console.log('=== Testing all moves ===')
 
 for (const n of Object.keys(MOVES)) {
-  let s = createSolvedCube(),
-    c = s
+  const s = createSolvedCube()
+  let c = s
   for (let i = 0; i < 4; i++) c = MOVES[n](c)
-  console.log(n + '^4 = identity: ' + (cubesEqual(c, s) ? 'PASS' : 'FAIL'))
+  console.log(`${n}^4 = identity: ${cubesEqual(c, s) ? 'PASS' : 'FAIL'}`)
 }
 
 console.log('')
@@ -136,16 +136,16 @@ console.log('')
 for (const n of Object.keys(MOVES)) {
   const s = createSolvedCube()
   let c = applyMove(s, n)
-  c = applyMove(c, n + "'")
-  console.log(n + ' * ' + n + "' = identity: " + (cubesEqual(c, s) ? 'PASS' : 'FAIL'))
+  c = applyMove(c, `${n}'`)
+  console.log(`${n} * ${n}' = identity: ${cubesEqual(c, s) ? 'PASS' : 'FAIL'}`)
 }
 
 console.log('')
 
 // Test commutators
-let s = createSolvedCube(),
-  c = s,
-  ord = 0
+let s = createSolvedCube()
+let c = s
+let ord = 0
 for (let i = 1; i <= 500; i++) {
   c = applyAlg(c, "R U R' U'")
   if (cubesEqual(c, s)) {
@@ -153,7 +153,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[R,U] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[R,U] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -165,7 +165,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[F,R] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[F,R] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 console.log('')
 
@@ -173,17 +173,17 @@ console.log('')
 s = createSolvedCube()
 c = s
 for (let i = 0; i < 6; i++) c = applyAlg(c, "R U R' U R U2 R'")
-console.log('Sune^6 = identity: ' + (cubesEqual(c, s) ? 'PASS' : 'FAIL'))
+console.log(`Sune^6 = identity: ${cubesEqual(c, s) ? 'PASS' : 'FAIL'}`)
 
 s = createSolvedCube()
 c = s
 for (let i = 0; i < 2; i++) c = applyAlg(c, "R U R' U' R' F R2 U' R' U' R U R' F'")
-console.log('T-Perm^2 = identity: ' + (cubesEqual(c, s) ? 'PASS' : 'FAIL'))
+console.log(`T-Perm^2 = identity: ${cubesEqual(c, s) ? 'PASS' : 'FAIL'}`)
 
 s = createSolvedCube()
 c = s
 for (let i = 0; i < 2; i++) c = applyAlg(c, "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2")
-console.log('Superflip^2 = identity: ' + (cubesEqual(c, s) ? 'PASS' : 'FAIL'))
+console.log(`Superflip^2 = identity: ${cubesEqual(c, s) ? 'PASS' : 'FAIL'}`)
 
 // Additional commutator tests for L and B
 console.log('')
@@ -199,7 +199,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[L,U] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[L,U] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -211,7 +211,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[L,F] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[L,F] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -223,7 +223,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[B,U] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[B,U] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -235,7 +235,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[B,R] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[B,R] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -247,7 +247,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[B,L] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[B,L] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -259,7 +259,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[L,B] order: ' + ord + (ord === 6 ? ' PASS' : ' FAIL'))
+console.log(`[L,B] order: ${ord}${ord === 6 ? ' PASS' : ' FAIL'}`)
 
 // Test opposite face commutators (should be infinite/very high order since they commute)
 console.log('')
@@ -275,7 +275,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[R,L] order: ' + ord + (ord === 1 ? ' PASS (commute)' : ' FAIL'))
+console.log(`[R,L] order: ${ord}${ord === 1 ? ' PASS (commute)' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -287,7 +287,7 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[U,D] order: ' + ord + (ord === 1 ? ' PASS (commute)' : ' FAIL'))
+console.log(`[U,D] order: ${ord}${ord === 1 ? ' PASS (commute)' : ' FAIL'}`)
 
 s = createSolvedCube()
 c = s
@@ -299,4 +299,4 @@ for (let i = 1; i <= 500; i++) {
     break
   }
 }
-console.log('[F,B] order: ' + ord + (ord === 1 ? ' PASS (commute)' : ' FAIL'))
+console.log(`[F,B] order: ${ord}${ord === 1 ? ' PASS (commute)' : ' FAIL'}`)

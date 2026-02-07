@@ -1052,8 +1052,8 @@ console.log('\nTest 23: Alternative PLL cycle test - just R2 and F')
 console.log("\nTest 24: R2 = R2'")
 {
   const solved = createSolvedCube()
-  const viaR2 = applyMove(solved, 'R2')
-  const viaR2Prime = applyMove(applyMove(applyMove(solved, 'R2'), 'R2'), 'R2') // R2' = R2 R2 R2 = R6 = R2
+  const _viaR2 = applyMove(solved, 'R2')
+  const _viaR2Prime = applyMove(applyMove(applyMove(solved, 'R2'), 'R2'), 'R2') // R2' = R2 R2 R2 = R6 = R2
   // Wait that's wrong. R2' should equal R2 (180 deg both ways is same)
 
   // R2 applied once, then R2 again should give R4 = identity
@@ -1410,7 +1410,7 @@ console.log('\nTest 32: Scramble and reverse')
   const reverse = scramble
     .slice()
     .reverse()
-    .map((m) => m + "'")
+    .map((m) => `${m}'`)
   for (const m of reverse) {
     state = applyMove(state, m)
   }
@@ -1565,7 +1565,7 @@ console.log('\nTest 38: F R detailed trace')
   const afterF = applyF(numbered)
   console.log('  After F:')
   console.log(`    R col0: ${afterF.R[0][0]}, ${afterF.R[1][0]}, ${afterF.R[2][0]}`)
-  console.log(`    (Expected: U6, U7, U8)`)
+  console.log('    (Expected: U6, U7, U8)')
 
   // Now R is applied
   // R face rotates CW
@@ -1580,7 +1580,7 @@ console.log('\nTest 38: F R detailed trace')
   console.log('  After F R:')
   console.log(`    U col2: ${afterFR.U[0][2]}, ${afterFR.U[1][2]}, ${afterFR.U[2][2]}`)
   console.log(
-    `    (Expected: F0, F1, F2 after F rotated F face, so should be F6, F7, F8 positions... wait let me recalc)`,
+    '    (Expected: F0, F1, F2 after F rotated F face, so should be F6, F7, F8 positions... wait let me recalc)',
   )
 
   // After F, F face becomes:
@@ -1597,7 +1597,7 @@ console.log('\nTest 38: F R detailed trace')
     `    F col2 after F was: ${afterF.F[0][2]}, ${afterF.F[1][2]}, ${afterF.F[2][2]} = F0, F1, F2`,
   )
   console.log(`    After R, U col2: ${afterFR.U[0][2]}, ${afterFR.U[1][2]}, ${afterFR.U[2][2]}`)
-  console.log(`    (These should be F0, F1, F2)`)
+  console.log('    (These should be F0, F1, F2)')
 }
 
 // Test 39: Compare with U R which works
@@ -1689,10 +1689,8 @@ console.log("\nTest 41: Edge 3-cycle R L' U2 L R' U2")
 
 // Test 42: Allan algorithm - moves 3 edges
 console.log("\nTest 42: Allan (M2 U M2 U2 M2 U M2) - but we don't have M")
-{
-  // Use slice move equivalent: M = R L' or similar... skip for now
-  console.log('  Skipped (no M moves)')
-}
+// Use slice move equivalent: M = R L' or similar... skip for now
+console.log('  Skipped (no M moves)')
 
 // Test 43: Simple Sune check
 console.log('\nTest 43: Sune effect check')
@@ -1771,7 +1769,7 @@ console.log('\nTest 44: Algorithm then inverse')
       .map((m) => {
         if (m.endsWith("'")) return m.slice(0, -1)
         if (m.endsWith('2')) return m
-        return m + "'"
+        return `${m}'`
       })
 
     for (const m of inverse) {

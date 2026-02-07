@@ -12,7 +12,7 @@ function cubesEqual(a, b) {
   return true
 }
 
-function printCube(cube) {
+function _printCube(cube) {
   for (const face of ['U', 'F', 'R', 'B', 'L', 'D']) {
     console.log(`  ${face}: ${JSON.stringify(cube[face])}`)
   }
@@ -37,12 +37,12 @@ for (let i = 1; i <= 110; i++) {
 console.log(`\nAll orders found: ${orders}`)
 
 // Check if 105 and 77 share a common factor
-console.log(`\n105 = 3 * 5 * 7`)
-console.log(`77 = 7 * 11`)
-console.log(`GCD(105, 77) = 7`)
+console.log('\n105 = 3 * 5 * 7')
+console.log('77 = 7 * 11')
+console.log('GCD(105, 77) = 7')
 console.log(`LCM(105, 77) = ${(105 * 77) / 7}`)
 
 // On a color cube, the order is determined by when colors match
 // This could be different from the permutation order
-console.log(`\nOn a color cube, the order might be different from permutation order`)
-console.log(`because colors only care about face, not specific position.`)
+console.log('\nOn a color cube, the order might be different from permutation order')
+console.log('because colors only care about face, not specific position.')

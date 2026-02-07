@@ -77,9 +77,9 @@ function applyB(cube) {
 const MOVES = { R: applyR, L: applyL, U: applyU, D: applyD, F: applyF, B: applyB }
 
 function applyMove(cube, move) {
-  const face = move[0],
-    mod = move.slice(1),
-    fn = MOVES[face]
+  const face = move[0]
+  const mod = move.slice(1)
+  const fn = MOVES[face]
   if (!fn) return cube
   let r = cube
   if (mod === '') r = fn(r)
@@ -161,7 +161,7 @@ const c = applyAlg(s, "R U R' U' R' F R2 U' R' U' R U R' F'")
 // Find which positions changed
 const changed = []
 for (let i = 1; i <= 54; i++) {
-  if (c[i] !== i) changed.push(i + ':' + c[i])
+  if (c[i] !== i) changed.push(`${i}:${c[i]}`)
 }
 console.log('Changed positions (pos:value):', changed.join(', '))
 

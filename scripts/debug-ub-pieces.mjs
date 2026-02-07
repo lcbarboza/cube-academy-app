@@ -29,7 +29,7 @@ for (let i = 1; i <= 110; i++) {
 }
 
 if (orders.length === 0) {
-  console.log(`No identity found up to 110, checking further...`)
+  console.log('No identity found up to 110, checking further...')
   for (let i = 111; i <= 120; i++) {
     p = applyPieceMove(p, 'U')
     p = applyPieceMove(p, 'B')

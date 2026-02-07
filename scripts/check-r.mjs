@@ -42,8 +42,8 @@ function applyR_alt(cube) {
 
 // Test R^4
 function testR4(applyR) {
-  let s = createSolvedCube(),
-    c = s
+  const s = createSolvedCube()
+  let c = s
   for (let i = 0; i < 4; i++) c = applyR(c)
   for (let i = 1; i <= 54; i++) if (c[i] !== i) return 'FAIL'
   return 'PASS'
@@ -56,14 +56,14 @@ console.log('R_alt^4:', testR4(applyR_alt))
 console.log('\nAfter R_ref:')
 let s = createSolvedCube()
 let c = applyR_ref(s)
-console.log('B col 0 (37,40,43): ' + c[37] + ' ' + c[40] + ' ' + c[43] + ' (unchanged if correct)')
-console.log('B col 2 (39,42,45): ' + c[39] + ' ' + c[42] + ' ' + c[45] + ' (should be 3,6,9)')
+console.log(`B col 0 (37,40,43): ${c[37]} ${c[40]} ${c[43]} (unchanged if correct)`)
+console.log(`B col 2 (39,42,45): ${c[39]} ${c[42]} ${c[45]} (should be 3,6,9)`)
 
 console.log('\nAfter R_alt:')
 s = createSolvedCube()
 c = applyR_alt(s)
-console.log('B col 0 (37,40,43): ' + c[37] + ' ' + c[40] + ' ' + c[43] + ' (should be 3,6,9)')
-console.log('B col 2 (39,42,45): ' + c[39] + ' ' + c[42] + ' ' + c[45] + ' (unchanged if correct)')
+console.log(`B col 0 (37,40,43): ${c[37]} ${c[40]} ${c[43]} (should be 3,6,9)`)
+console.log(`B col 2 (39,42,45): ${c[39]} ${c[42]} ${c[45]} (unchanged if correct)`)
 
 // Physical analysis:
 // In Kociemba layout, B is to the RIGHT of R in the net.

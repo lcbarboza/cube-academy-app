@@ -1,7 +1,7 @@
 // Deep debug of R and U moves
 import { applyPieceMove, createSolvedPieceState } from '../apps/web/src/lib/cube-state.ts'
 
-function piecesEqual(a, b) {
+function _piecesEqual(a, b) {
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 3; c++) {

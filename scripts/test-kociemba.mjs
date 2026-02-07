@@ -33,7 +33,7 @@
 // Format: newPosition[i] = oldPosition[perm[i]]
 
 // R move permutation (from Kociemba):
-const R_kociemba = [
+const _R_kociemba = [
   0,
   1,
   20,
@@ -91,7 +91,7 @@ const R_kociemba = [
 ]
 
 // U move permutation (from Kociemba):
-const U_kociemba = [
+const _U_kociemba = [
   2,
   5,
   8,

@@ -66,9 +66,9 @@ function testWithR(applyR) {
   const MOVES = { R: applyR, U: applyU, F: applyF }
 
   function applyMove(cube, move) {
-    const face = move[0],
-      mod = move.slice(1),
-      fn = MOVES[face]
+    const face = move[0]
+    const mod = move.slice(1)
+    const fn = MOVES[face]
     if (!fn) return cube
     let r = cube
     if (mod === '') r = fn(r)
@@ -90,7 +90,7 @@ function testWithR(applyR) {
       cube = applyAlg(cube, alg)
       if (cubesEqual(cube, solved)) return i
     }
-    return '>' + max
+    return `>${max}`
   }
 
   return {
@@ -119,9 +119,9 @@ function testWithU(applyR, applyU) {
   const MOVES = { R: applyR, U: applyU, F: applyF }
 
   function applyMove(cube, move) {
-    const face = move[0],
-      mod = move.slice(1),
-      fn = MOVES[face]
+    const face = move[0]
+    const mod = move.slice(1)
+    const fn = MOVES[face]
     if (!fn) return cube
     let r = cube
     if (mod === '') r = fn(r)
@@ -143,7 +143,7 @@ function testWithU(applyR, applyU) {
       cube = applyAlg(cube, alg)
       if (cubesEqual(cube, solved)) return i
     }
-    return '>' + max
+    return `>${max}`
   }
 
   return {

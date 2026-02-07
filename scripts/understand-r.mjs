@@ -236,7 +236,7 @@ function applyU(cube) {
 }
 
 console.log('\nTesting with U:')
-for (const [name, applyR, bpos] of [
+for (const [name, applyR, _bpos] of [
   ['col0', applyR_col0, Bcol0],
   ['col2', applyR_col2, Bcol2],
 ]) {

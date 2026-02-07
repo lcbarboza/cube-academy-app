@@ -1,26 +1,26 @@
 /**
  * FIXED Kociemba Convention Cube Implementation (1-54 indexing)
- * 
+ *
  * IMPORTANT: B face indices are read as if looking FROM THE FRONT through the cube
- * This means B's left-to-right in the unfolded layout corresponds to 
+ * This means B's left-to-right in the unfolded layout corresponds to
  * RIGHT-to-LEFT physically on the back of the cube.
- * 
+ *
  * Layout:
  *              [ U (Up)   ]
  *              01  02  03
  *              04  05  06
  *              07  08  09
- * 
+ *
  * [ L (Left) ] [ F (Front)] [ R (Right)] [ B (Back) ]
  * 10  11  12   19  20  21   28  29  30   37  38  39
  * 13  14  15   22  23  24   31  32  33   40  41  42
  * 16  17  18   25  26  27   34  35  36   43  44  45
- * 
+ *
  *              [ D (Down) ]
  *              46  47  48
  *              49  50  51
  *              52  53  54
- * 
+ *
  * Physical cube corners:
  * - B[37] = back-top-RIGHT (not left!)
  * - B[39] = back-top-LEFT (not right!)
@@ -39,7 +39,9 @@ function createSolvedCube() {
   return cube
 }
 
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
@@ -55,8 +57,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+6, start+8, start+2)
-  cycle4(cube, start+1, start+3, start+7, start+5)
+  cycle4(cube, start, start + 6, start + 8, start + 2)
+  cycle4(cube, start + 1, start + 3, start + 7, start + 5)
 }
 
 /**
@@ -80,25 +82,25 @@ function applyR(cube) {
  * But wait, if B is mirrored, L touches B's RIGHT column in layout (39,42,45)
  * Let me use the physical reasoning:
  * - U[1] (back-left of U) goes to F[19] (top-left of F)
- * - F[19] goes to D[46] (front-left of D)  
+ * - F[19] goes to D[46] (front-left of D)
  * - D[46] goes to B[?]... D's front-left corner goes to B's bottom-left (physically)
  *   In mirrored B, bottom-left physically = bottom-RIGHT in layout = 45
  * - B[45] goes to U[7]... no wait
- * 
+ *
  * Let me trace more carefully:
  * L CW (from left): U→F→D→B→U
  * U[1,4,7] (left column) → F[19,22,25] (left column) → D[46,49,52] (left column)
  * D col0 → B col2 (in layout, which is physically left side): 39,42,45
  * B col2 → U col0
- * 
+ *
  * U1→F19→D46→B45→U1 (corners)
  * Wait no - D[46] is FRONT-left, going to B which is BACK...
  * D[52] is BACK-left, this should connect to B's bottom.
- * 
+ *
  * Let me use reference pattern. If R uses [3,39,48,21] for right column,
  * then L should use left column with B's opposite column.
  * R touches B col: 39,42,45 (layout right = physical left... wait that contradicts)
- * 
+ *
  * Actually I think I had it backwards. Let me just use the reference directly for R,
  * and derive L symmetrically.
  */
@@ -165,26 +167,26 @@ function applyF(cube) {
 /**
  * B move - affects U row0, L col0, D row2, R col2
  * B CW (from back): U row0 → L col0 → D row2 → R col2 → U row0
- * 
+ *
  * With mirrored B convention:
  * U3 (back-right of U) → L10 (top-left of L)
  * L16 (bottom-left of L) → D52 (back-left of D)
  * D54 (back-right of D) → R30 (top-right of R)
  * R36 (bottom-right of R) → U1 (back-left of U)
- * 
+ *
  * Wait, let me trace the cycle direction:
  * B CW from back view means pieces rotate: U→L→D→R→U
- * 
+ *
  * U row0 goes LEFT to L col0
  * L col0 goes DOWN to D row2
  * D row2 goes RIGHT to R col2
  * R col2 goes UP to U row0
- * 
+ *
  * U3 → L10, U2 → L13, U1 → L16
  * L10 → D52, L13 → D53, L16 → D54
  * D52 → R36, D53 → R33, D54 → R30
  * R30 → U3, R33 → U2, R36 → U1
- * 
+ *
  * Cycles: 3→10→52→36→3, 2→13→53→33→2, 1→16→54→30→1
  */
 function applyB(cube) {
@@ -211,7 +213,7 @@ function applyMove(cube, move) {
 }
 
 function applyAlgorithm(cube, alg) {
-  const moves = alg.split(' ').filter(m => m.length > 0)
+  const moves = alg.split(' ').filter((m) => m.length > 0)
   let result = cube
   for (const m of moves) result = applyMove(result, m)
   return result
@@ -219,13 +221,13 @@ function applyAlgorithm(cube, alg) {
 
 console.log('=== FIXED Kociemba Cube Verification ===\n')
 
-let allPassed = true
+let _allPassed = true
 let testNum = 0
 
 function test(name, condition) {
   testNum++
-  console.log('Test ' + testNum + ': ' + name + ': ' + (condition ? 'PASS' : 'FAIL'))
-  if (!condition) allPassed = false
+  console.log(`Test ${testNum}: ${name}: ${condition ? 'PASS' : 'FAIL'}`)
+  if (!condition) _allPassed = false
   return condition
 }
 
@@ -234,14 +236,14 @@ for (const name of Object.keys(MOVES)) {
   const solved = createSolvedCube()
   let state = solved
   for (let i = 0; i < 4; i++) state = MOVES[name](state)
-  test(name + '^4 = identity', cubesEqual(state, solved))
+  test(`${name}^4 = identity`, cubesEqual(state, solved))
 }
 
 for (const name of Object.keys(MOVES)) {
   const solved = createSolvedCube()
   let state = applyMove(solved, name)
-  state = applyMove(state, name + "'")
-  test(name + " * " + name + "' = identity", cubesEqual(state, solved))
+  state = applyMove(state, `${name}'`)
+  test(`${name} * ${name}' = identity`, cubesEqual(state, solved))
 }
 
 console.log('\n--- Commutator tests ---')
@@ -251,9 +253,12 @@ let state = solved
 let order = 0
 for (let i = 1; i <= 1000; i++) {
   state = applyAlgorithm(state, "R U R' U'")
-  if (cubesEqual(state, solved)) { order = i; break }
+  if (cubesEqual(state, solved)) {
+    order = i
+    break
+  }
 }
-console.log('  [R,U] cycle length: ' + order)
+console.log(`  [R,U] cycle length: ${order}`)
 test('[R,U] (sexy move) order = 6', order === 6)
 
 solved = createSolvedCube()
@@ -261,7 +266,10 @@ state = solved
 order = 0
 for (let i = 1; i <= 1000; i++) {
   state = applyAlgorithm(state, "F R F' R'")
-  if (cubesEqual(state, solved)) { order = i; break }
+  if (cubesEqual(state, solved)) {
+    order = i
+    break
+  }
 }
-console.log('  [F,R] cycle length: ' + order)
-test('[F,R] order
+console.log(`  [F,R] cycle length: ${order}`)
+test('[F,R] order = 6', order === 6)

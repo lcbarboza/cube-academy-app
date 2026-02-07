@@ -62,9 +62,9 @@ function applyF_current(cube) {
 const MOVES = { R: applyR, U: applyU, F: applyF_current }
 
 function applyMove(cube, move) {
-  const face = move[0],
-    mod = move.slice(1),
-    fn = MOVES[face]
+  const face = move[0]
+  const mod = move.slice(1)
+  const fn = MOVES[face]
   if (!fn) return cube
   let r = cube
   if (mod === '') r = fn(r)

@@ -115,11 +115,11 @@ function testFR(applyF) {
 }
 
 console.log('Testing [F,R] order with different F definitions:')
-console.log('  F_v1: ' + testFR(applyF_v1))
-console.log('  F_v2: ' + testFR(applyF_v2))
-console.log('  F_v3: ' + testFR(applyF_v3))
-console.log('  F_v4: ' + testFR(applyF_v4))
-console.log('  F_v5: ' + testFR(applyF_v5))
+console.log(`  F_v1: ${testFR(applyF_v1)}`)
+console.log(`  F_v2: ${testFR(applyF_v2)}`)
+console.log(`  F_v3: ${testFR(applyF_v3)}`)
+console.log(`  F_v4: ${testFR(applyF_v4)}`)
+console.log(`  F_v5: ${testFR(applyF_v5)}`)
 
 // Let me also try to derive from first principles
 // When F rotates CW (looking at F), stickers around F move:
@@ -172,17 +172,17 @@ function applyF_derived(cube) {
   return result
 }
 
-console.log('  F_derived: ' + testFR(applyF_derived))
+console.log(`  F_derived: ${testFR(applyF_derived)}`)
 
 // Hmm, F_derived is same as F_v1. Let me trace more carefully what physically happens.
 console.log('\n--- Detailed trace ---')
 const s = createSolvedCube()
 const c = applyF_v1(s)
 console.log('After F_v1:')
-console.log('  U row3: 7=' + c[7] + ' 8=' + c[8] + ' 9=' + c[9])
-console.log('  R col1: 28=' + c[28] + ' 31=' + c[31] + ' 34=' + c[34])
-console.log('  D row1: 46=' + c[46] + ' 47=' + c[47] + ' 48=' + c[48])
-console.log('  L col3: 12=' + c[12] + ' 15=' + c[15] + ' 18=' + c[18])
+console.log(`  U row3: 7=${c[7]} 8=${c[8]} 9=${c[9]}`)
+console.log(`  R col1: 28=${c[28]} 31=${c[31]} 34=${c[34]}`)
+console.log(`  D row1: 46=${c[46]} 47=${c[47]} 48=${c[48]}`)
+console.log(`  L col3: 12=${c[12]} 15=${c[15]} 18=${c[18]}`)
 
 // Expected after F CW:
 // U row3 (7,8,9) should come from L col3 (12,15,18) or reversed?

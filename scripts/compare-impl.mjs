@@ -100,7 +100,7 @@ function referenceR(cube) {
 // When U turns CW (looking from above):
 // F row0 -> R row0 -> B row0 -> L row0 -> F row0
 // But B is mirrored... how does this work?
-function referenceU(cube) {
+function _referenceU(cube) {
   const newCube = cloneCube(cube)
   newCube.U = rotateFaceCW(cube.U)
 

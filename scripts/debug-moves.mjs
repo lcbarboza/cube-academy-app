@@ -57,28 +57,28 @@ let c = s
 c = applyR(c)
 console.log('After R:')
 const afterR = []
-for (let i = 1; i <= 54; i++) if (c[i] !== i) afterR.push(i + ':' + c[i])
+for (let i = 1; i <= 54; i++) if (c[i] !== i) afterR.push(`${i}:${c[i]}`)
 console.log('  Changed:', afterR.join(', '))
 
 // Apply U
 c = applyU(c)
 console.log('After R U:')
 const afterRU = []
-for (let i = 1; i <= 54; i++) if (c[i] !== i) afterRU.push(i + ':' + c[i])
+for (let i = 1; i <= 54; i++) if (c[i] !== i) afterRU.push(`${i}:${c[i]}`)
 console.log('  Changed:', afterRU.join(', '))
 
 // Apply R'
 c = applyR(applyR(applyR(c)))
 console.log("After R U R':")
 const afterRUR = []
-for (let i = 1; i <= 54; i++) if (c[i] !== i) afterRUR.push(i + ':' + c[i])
+for (let i = 1; i <= 54; i++) if (c[i] !== i) afterRUR.push(`${i}:${c[i]}`)
 console.log('  Changed:', afterRUR.join(', '))
 
 // Apply U'
 c = applyU(applyU(applyU(c)))
 console.log("After R U R' U':")
 const afterRURU = []
-for (let i = 1; i <= 54; i++) if (c[i] !== i) afterRURU.push(i + ':' + c[i])
+for (let i = 1; i <= 54; i++) if (c[i] !== i) afterRURU.push(`${i}:${c[i]}`)
 console.log('  Changed:', afterRURU.join(', '))
 
 // The result of R U R' U' should affect specific pieces
@@ -89,7 +89,7 @@ s = createSolvedCube()
 c = applyF(s)
 console.log('After F:')
 const afterF = []
-for (let i = 1; i <= 54; i++) if (c[i] !== i) afterF.push(i + '->' + c[i])
+for (let i = 1; i <= 54; i++) if (c[i] !== i) afterF.push(`${i}->${c[i]}`)
 console.log('  Changed:', afterF.join(', '))
 
 // For F, the cycles should be:

@@ -52,7 +52,7 @@ function showDiff(cube, label) {
   for (let i = 1; i <= 54; i++) {
     if (cube[i] !== i) diff.push(`${i}<-${cube[i]}`)
   }
-  console.log(label + ': ' + diff.length + ' changes')
+  console.log(`${label}: ${diff.length} changes`)
 }
 
 for (const m of moves) {
@@ -63,7 +63,7 @@ for (const m of moves) {
   else if (m === "U'") c = applyU(applyU(applyU(c)))
   else if (m === 'F') c = applyF(c)
   else if (m === "F'") c = applyF(applyF(applyF(c)))
-  showDiff(c, 'After ' + m)
+  showDiff(c, `After ${m}`)
 }
 
 console.log('\nFinal state changes:')

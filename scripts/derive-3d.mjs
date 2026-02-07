@@ -221,7 +221,7 @@ for (const move of ['R', 'U', 'F', 'L', 'D', 'B']) {
   }
 
   // Generate cycle4 calls
-  console.log(`  // cycle4 calls:`)
+  console.log('  // cycle4 calls:')
   for (const cycle of cycles) {
     if (cycle.length === 4) {
       console.log(`  cycle4(result, ${cycle.join(', ')})`)

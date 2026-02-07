@@ -42,6 +42,16 @@ export function SolveDetailModal({
     }
   }, [])
 
+  const handleBackdropKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        onClose()
+      }
+    },
+    [onClose],
+  )
+
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent) => {
       if (e.target === e.currentTarget) {
@@ -72,6 +82,10 @@ export function SolveDetailModal({
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4 modal-backdrop"
       onClick={handleBackdropClick}
+      onKeyDown={handleBackdropKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={t('common.close', 'Close')}
     >
       <div className="modal-content glass-panel glass-panel-glow w-full max-w-md p-6 animate-fade-in-up">
         {/* Header */}

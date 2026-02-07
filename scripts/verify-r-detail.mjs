@@ -182,7 +182,7 @@ function applyR_alt(cube) {
   return result
 }
 
-const r_alt = applyR_alt(s)
+const _r_alt = applyR_alt(s)
 // Check R^4 = identity
 let c = s
 for (let i = 0; i < 4; i++) c = applyR_alt(c)
