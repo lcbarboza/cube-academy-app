@@ -25,7 +25,7 @@ interface PlayerControlsProps {
   onSpeedChange: (speed: SpeedOption) => void
 }
 
-const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 1.5, 2]
+const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 2, 4]
 
 /**
  * Player controls for scramble animation playback

@@ -1,9 +1,8 @@
 import { CubeViewer } from '@/components/cube'
-import { useScramblePlayer } from '@/hooks/useScramblePlayer'
+import { useScramble } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
-import { generateScrambleString } from '@/lib/scramble'
 import { Moon, Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward, Sun, Timer } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -13,37 +12,42 @@ const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 2, 4]
 
 export function CubingWorldPage() {
   const { t, i18n } = useTranslation()
-  const { theme, toggleTheme, isDark } = useTheme()
-  const [scramble, setScramble] = useState(() => generateScrambleString())
-
-  const player = useScramblePlayer(scramble)
-
-  // Use ref to avoid dependency on player.setScramble
-  const setScrambleRef = useRef(player.setScramble)
-  setScrambleRef.current = player.setScramble
-
-  // Update player when scramble changes
-  useEffect(() => {
-    setScrambleRef.current(scramble)
-  }, [scramble])
-
-  const handleNewScramble = useCallback(() => {
-    setScramble(generateScrambleString())
-  }, [])
+  const { isDark, toggleTheme } = useTheme()
+  
+  // Use shared scramble context
+  const {
+    scramble,
+    moves,
+    currentIndex,
+    isPlaying,
+    speed,
+    isAnimating,
+    displayState,
+    currentMove,
+    generateNewScramble,
+    play,
+    pause,
+    stepForward,
+    stepBack,
+    goToMove,
+    setSpeed,
+    reset,
+    onAnimationComplete,
+  } = useScramble()
 
   const handlePlayPause = useCallback(() => {
-    if (player.isPlaying) {
-      player.pause()
+    if (isPlaying) {
+      pause()
     } else {
-      player.play()
+      play()
     }
-  }, [player])
+  }, [isPlaying, play, pause])
 
   const handleMoveClick = useCallback(
     (index: number) => {
-      player.goToMove(index)
+      goToMove(index)
     },
-    [player],
+    [goToMove],
   )
 
   const toggleLanguage = useCallback(() => {
@@ -51,13 +55,13 @@ export function CubingWorldPage() {
     i18n.changeLanguage(newLang)
   }, [i18n])
 
-  const canStepBack = player.currentIndex >= 0 && !player.isAnimating
-  const canStepForward = player.currentIndex < player.moves.length - 1 && !player.isAnimating
-  const canReset = (player.currentIndex >= 0 || player.isPlaying) && !player.isAnimating
+  const canStepBack = currentIndex >= 0 && !isAnimating
+  const canStepForward = currentIndex < moves.length - 1 && !isAnimating
+  const canReset = (currentIndex >= 0 || isPlaying) && !isAnimating
 
   // Progress calculation
-  const progress = player.moves.length > 0 
-    ? ((player.currentIndex + 1) / player.moves.length) * 100 
+  const progress = moves.length > 0 
+    ? ((currentIndex + 1) / moves.length) * 100 
     : 0
 
   return (
@@ -114,7 +118,7 @@ export function CubingWorldPage() {
             {/* New Scramble Button */}
             <button
               type="button"
-              onClick={handleNewScramble}
+              onClick={generateNewScramble}
               className="btn-neon flex items-center gap-2"
             >
               <Shuffle className="w-4 h-4" />
@@ -123,19 +127,24 @@ export function CubingWorldPage() {
           </div>
         </header>
 
+        {/* Scramble display - connected between pages */}
+        <div className="glass-panel glass-panel-glow mb-8 opacity-0 animate-fade-in-up stagger-1">
+          <div className="scramble-display-connected">{scramble}</div>
+        </div>
+
         {/* Main grid */}
         <div className="grid lg:grid-cols-[1fr,320px] gap-8">
           {/* Cube Arena */}
-          <div className="opacity-0 animate-fade-in-up stagger-1">
+          <div className="opacity-0 animate-fade-in-up stagger-2">
             <div className="cube-arena glass-panel glass-panel-glow p-2">
               <div className="relative">
                 <div className="cube-halo" />
                 <CubeViewer
-                  cubeState={player.displayState}
-                  currentMove={player.currentMove}
-                  isAnimating={player.isAnimating}
-                  speed={player.speed}
-                  onAnimationComplete={player.onAnimationComplete}
+                  cubeState={displayState}
+                  currentMove={currentMove}
+                  isAnimating={isAnimating}
+                  speed={speed}
+                  onAnimationComplete={onAnimationComplete}
                   height={400}
                 />
               </div>
@@ -150,11 +159,11 @@ export function CubingWorldPage() {
                 />
               </div>
               <div className="flex justify-between mt-2 text-xs font-mono text-[var(--text-muted)]">
-                <span>{Math.max(0, player.currentIndex + 1)} / {player.moves.length}</span>
+                <span>{Math.max(0, currentIndex + 1)} / {moves.length}</span>
                 <span>
-                  {player.currentIndex >= player.moves.length - 1 && player.moves.length > 0
+                  {currentIndex >= moves.length - 1 && moves.length > 0
                     ? t('player.complete', 'Complete')
-                    : player.currentIndex < 0 
+                    : currentIndex < 0 
                       ? t('player.ready', 'Ready')
                       : t('player.inProgress', 'In Progress')}
                 </span>
@@ -163,7 +172,7 @@ export function CubingWorldPage() {
           </div>
 
           {/* Controls Panel */}
-          <div className="space-y-6 opacity-0 animate-fade-in-up stagger-2">
+          <div className="space-y-6 opacity-0 animate-fade-in-up stagger-3">
             {/* Player Controls */}
             <div className="glass-panel p-6">
               <h2 className="font-display text-sm font-semibold tracking-widest text-[var(--text-muted)] mb-6 uppercase">
@@ -174,7 +183,7 @@ export function CubingWorldPage() {
               <div className="flex items-center justify-center gap-3 mb-6">
                 <button
                   type="button"
-                  onClick={player.reset}
+                  onClick={reset}
                   disabled={!canReset}
                   className="btn-icon"
                   aria-label={t('player.reset', 'Reset')}
@@ -185,7 +194,7 @@ export function CubingWorldPage() {
 
                 <button
                   type="button"
-                  onClick={player.stepBack}
+                  onClick={stepBack}
                   disabled={!canStepBack}
                   className="btn-icon"
                   aria-label={t('player.stepBack', 'Step back')}
@@ -197,17 +206,17 @@ export function CubingWorldPage() {
                 <button
                   type="button"
                   onClick={handlePlayPause}
-                  disabled={player.isAnimating && !player.isPlaying}
+                  disabled={isAnimating && !isPlaying}
                   className="btn-icon btn-play"
-                  aria-label={player.isPlaying ? t('player.pause', 'Pause') : t('player.play', 'Play')}
-                  title={player.isPlaying ? t('player.pause', 'Pause') : t('player.play', 'Play')}
+                  aria-label={isPlaying ? t('player.pause', 'Pause') : t('player.play', 'Play')}
+                  title={isPlaying ? t('player.pause', 'Pause') : t('player.play', 'Play')}
                 >
-                  {player.isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
+                  {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
                 </button>
 
                 <button
                   type="button"
-                  onClick={player.stepForward}
+                  onClick={stepForward}
                   disabled={!canStepForward}
                   className="btn-icon"
                   aria-label={t('player.stepForward', 'Step forward')}
@@ -229,9 +238,9 @@ export function CubingWorldPage() {
                   <button
                     key={option}
                     type="button"
-                    onClick={() => player.setSpeed(option)}
-                    className={`speed-btn ${player.speed === option ? 'speed-btn-active' : ''}`}
-                    aria-pressed={player.speed === option}
+                    onClick={() => setSpeed(option)}
+                    className={`speed-btn ${speed === option ? 'speed-btn-active' : ''}`}
+                    aria-pressed={speed === option}
                   >
                     {option}x
                   </button>
@@ -245,22 +254,22 @@ export function CubingWorldPage() {
                 {t('scramble.sequence', 'Sequence')}
               </h2>
 
-              {player.moves.length === 0 ? (
+              {moves.length === 0 ? (
                 <div className="text-center py-8 text-[var(--text-muted)]">
                   {t('scramble.noMoves', 'No moves')}
                 </div>
               ) : (
                 <div className="grid grid-cols-5 gap-2 justify-items-center">
-                  {player.moves.map((move, index) => {
-                    const isPast = index < player.currentIndex
-                    const isCurrent = index === player.currentIndex
+                  {moves.map((move, index) => {
+                    const isPast = index < currentIndex
+                    const isCurrent = index === currentIndex
 
                     return (
                       <button
                         key={`${index}-${move}`}
                         type="button"
-                        onClick={() => !player.isAnimating && handleMoveClick(index)}
-                        disabled={player.isAnimating}
+                        onClick={() => !isAnimating && handleMoveClick(index)}
+                        disabled={isAnimating}
                         className={`
                           move-chip
                           ${isCurrent ? 'move-chip-active' : ''}

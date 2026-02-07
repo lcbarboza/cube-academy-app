@@ -1,4 +1,5 @@
 import type { TimerState } from '@/hooks/useTimer'
+import { useTranslation } from 'react-i18next'
 
 interface TimerDisplayProps {
   /** Formatted time string with progressive digits (S.c, SS.c, or M:SS.c) */
@@ -17,6 +18,8 @@ interface TimerDisplayProps {
  * - running: Bright white, pulsing animation
  */
 export function TimerDisplay({ formattedTime, state }: TimerDisplayProps) {
+  const { t } = useTranslation()
+
   const stateStyles: Record<TimerState, string> = {
     idle: 'timer-idle',
     holding: 'timer-holding',
@@ -31,11 +34,11 @@ export function TimerDisplay({ formattedTime, state }: TimerDisplayProps) {
         {formattedTime}
       </div>
       <div className="timer-hint">
-        {state === 'idle' && <span>Press and hold SPACE to start</span>}
-        {state === 'holding' && <span>Keep holding...</span>}
-        {state === 'ready' && <span>Release to start!</span>}
-        {state === 'running' && <span>Press any key to stop</span>}
-        {state === 'stopped' && <span>Press SPACE for new solve</span>}
+        {state === 'idle' && <span>{t('timer.holdSpace', 'Press and hold SPACE to start')}</span>}
+        {state === 'holding' && <span>{t('timer.keepHolding', 'Keep holding...')}</span>}
+        {state === 'ready' && <span>{t('timer.releaseToStart', 'Release to start!')}</span>}
+        {state === 'running' && <span>{t('timer.pressToStop', 'Press any key to stop')}</span>}
+        {state === 'stopped' && <span>{t('timer.pressForNew', 'Press SPACE for new solve')}</span>}
       </div>
     </div>
   )

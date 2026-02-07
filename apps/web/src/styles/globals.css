@@ -385,6 +385,11 @@
   z-index: 1;
 }
 
+.btn-neon svg {
+  position: relative;
+  z-index: 1;
+}
+
 .btn-neon:disabled {
   opacity: 0.3;
   cursor: not-allowed;
@@ -777,4 +782,231 @@
   padding: 1.5rem;
   word-spacing: 0.5em;
   line-height: 1.8;
+}
+
+/* ============================================
+   CONNECTED SCRAMBLE DISPLAY
+   Shared between pages for visual continuity
+   ============================================ */
+
+.scramble-display-connected {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  text-align: center;
+  padding: 1.25rem 1.5rem;
+  word-spacing: 0.6em;
+  line-height: 1.8;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 242, 0.03) 0%,
+    transparent 50%,
+    rgba(255, 0, 255, 0.03) 100%
+  );
+  border-radius: 12px;
+  position: relative;
+}
+
+.scramble-display-connected::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.01) 2px,
+    rgba(255, 255, 255, 0.01) 4px
+  );
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.light-theme .scramble-display-connected {
+  background: linear-gradient(
+    135deg,
+    rgba(8, 145, 178, 0.05) 0%,
+    transparent 50%,
+    rgba(192, 38, 211, 0.05) 100%
+  );
+}
+
+/* ============================================
+   MINI CUBE PREVIEW (Timer page)
+   ============================================ */
+
+.cube-preview-mini {
+  border-radius: 16px;
+}
+
+.cube-halo-mini {
+  width: 120px;
+  height: 120px;
+}
+
+/* ============================================
+   VIEW TRANSITIONS API SUPPORT
+   Smooth morphing between connected pages
+   ============================================ */
+
+@view-transition {
+  navigation: auto;
+}
+
+/* Named view transitions for connected elements */
+::view-transition-old(logo-cube),
+::view-transition-new(logo-cube) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(page-title),
+::view-transition-new(page-title) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(scramble-panel),
+::view-transition-new(scramble-panel) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+::view-transition-old(cube-arena),
+::view-transition-new(cube-arena) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+::view-transition-old(timer-nav),
+::view-transition-new(timer-nav) {
+  animation-duration: 0.25s;
+  animation-timing-function: ease-out;
+}
+
+/* Crossfade animation for morphing elements */
+::view-transition-old(scramble-panel) {
+  animation: fade-out-scale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-new(scramble-panel) {
+  animation: fade-in-scale 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+::view-transition-old(cube-arena) {
+  animation: morph-out 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-new(cube-arena) {
+  animation: morph-in 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes fade-out-scale {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes morph-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+}
+
+@keyframes morph-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================
+   PAGE WRAPPER TRANSITIONS (CSS Fallback)
+   ============================================ */
+
+.page-wrapper {
+  will-change: opacity, transform;
+}
+
+.page-entering {
+  animation: page-enter 0.4s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.page-exiting {
+  animation: page-exit 0.2s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes page-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* ============================================
+   CONNECTED LINK HOVER EFFECTS
+   ============================================ */
+
+.transition-timer-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.transition-timer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  transform-origin: center;
+}
+
+.transition-timer-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
 }
