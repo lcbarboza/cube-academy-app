@@ -154,6 +154,10 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+.font-timer {
+  font-family: 'Share Tech Mono', monospace;
+}
+
 .text-glow-cyan {
   text-shadow: var(--glow-cyan);
 }
@@ -676,4 +680,101 @@
 
 .light-theme .settings-btn-active {
   background: rgba(192, 38, 211, 0.1);
+}
+
+/* ============================================
+   TIMER DISPLAY
+   ============================================ */
+
+.timer-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  min-height: 280px;
+}
+
+.timer-display {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(5rem, 18vw, 10rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: center;
+  transition: color 0.15s ease, text-shadow 0.15s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+/* Timer States */
+.timer-idle {
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.timer-holding {
+  color: #ff4444;
+  text-shadow: 0 0 20px rgba(255, 68, 68, 0.6), 0 0 40px rgba(255, 68, 68, 0.4);
+  transform: scale(0.98);
+}
+
+.timer-ready {
+  color: #44ff88;
+  text-shadow: 0 0 20px rgba(68, 255, 136, 0.6), 0 0 40px rgba(68, 255, 136, 0.4);
+  transform: scale(1.02);
+}
+
+.timer-running {
+  color: var(--text-primary);
+  text-shadow: var(--glow-soft);
+  animation: timer-pulse 0.5s ease-in-out infinite alternate;
+}
+
+.timer-stopped {
+  color: var(--neon-magenta);
+  text-shadow: var(--glow-magenta);
+}
+
+@keyframes timer-pulse {
+  0% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+.timer-hint {
+  margin-top: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: color 0.15s ease;
+}
+
+/* Light theme adjustments */
+.light-theme .timer-holding {
+  color: #dc2626;
+  text-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+}
+
+.light-theme .timer-ready {
+  color: #16a34a;
+  text-shadow: 0 4px 20px rgba(22, 163, 74, 0.3);
+}
+
+.light-theme .timer-running {
+  color: var(--text-primary);
+  text-shadow: none;
+}
+
+/* Scramble display for timer page */
+.timer-scramble {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 1.5rem;
+  word-spacing: 0.5em;
+  line-height: 1.8;
 }

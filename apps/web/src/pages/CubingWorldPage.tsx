@@ -2,9 +2,10 @@ import { CubeViewer } from '@/components/cube'
 import { useScramblePlayer } from '@/hooks/useScramblePlayer'
 import { useTheme } from '@/hooks/useTheme'
 import { generateScrambleString } from '@/lib/scramble'
-import { Moon, Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward, Sun } from 'lucide-react'
+import { Moon, Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward, Sun, Timer } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import type { SpeedOption } from '@/hooks/useScramblePlayer'
 
@@ -78,6 +79,16 @@ export function CubingWorldPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Timer Link */}
+            <Link
+              to="/timer"
+              className="btn-neon btn-neon-magenta flex items-center gap-2"
+              title={t('nav.timer', 'Timer')}
+            >
+              <Timer className="w-4 h-4" />
+              <span>{t('nav.timer', 'Timer')}</span>
+            </Link>
+
             {/* Theme Toggle */}
             <button
               type="button"

@@ -11,6 +11,7 @@
   "nav": {
     "scramble": "Scramble",
     "cubingWorld": "Cubing World",
+    "timer": "Timer",
     "tutorials": "Tutoriais",
     "algorithms": "Algoritmos",
     "practice": "Prática",
@@ -35,6 +36,17 @@
     "ready": "Pronto",
     "inProgress": "Em Progresso",
     "controls": "Controles"
+  },
+  "timer": {
+    "title": "Timer",
+    "newScramble": "Novo Scramble",
+    "lastSolve": "Última resolução",
+    "instructions": "Segure ESPAÇO por 300ms até ficar verde, depois solte para iniciar. Pressione qualquer tecla para parar.",
+    "holdSpace": "Pressione e segure ESPAÇO para iniciar",
+    "keepHolding": "Continue segurando...",
+    "releaseToStart": "Solte para iniciar!",
+    "pressToStop": "Pressione qualquer tecla para parar",
+    "pressForNew": "Pressione ESPAÇO para nova resolução"
   },
   "settings": {
     "lightMode": "Modo claro",
