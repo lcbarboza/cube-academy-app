@@ -5,6 +5,8 @@ interface LogoProps {
   showText?: boolean
   to?: string
   className?: string
+  /** Render the logo text as an H1 element for SEO */
+  asHeading?: boolean
 }
 
 const sizeMap = {
@@ -17,8 +19,13 @@ const sizeMap = {
  * Cubing World Logo
  * Isometric Rubik's cube with cosmic arcade styling
  */
-export function Logo({ size = 'md', showText = true, to = '/', className = '' }: LogoProps) {
+export function Logo({ size = 'md', showText = true, to = '/', className = '', asHeading = false }: LogoProps) {
   const { cube: cubeSize, text: textClass } = sizeMap[size]
+
+  // The text element - can be h1 or span
+  const TextElement = asHeading ? 'h1' : 'span'
+  // When rendered as h1, reset font-size to inherit from the span wrapper
+  const headingStyles = asHeading ? 'text-[length:inherit] leading-[inherit] m-0' : ''
 
   const logoContent = (
     <div className={`flex items-center gap-3 ${className}`}>
@@ -32,6 +39,7 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '' }:
           width={cubeSize}
           height={cubeSize}
           className="logo-cube-svg"
+          aria-hidden="true"
         >
           <defs>
             {/* Gradient for top face */}
@@ -108,9 +116,9 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '' }:
 
       {/* Text */}
       {showText && (
-        <span className={`font-display font-bold tracking-wider text-glow-cyan ${textClass}`}>
+        <TextElement className={`font-display font-bold tracking-wider text-glow-cyan ${textClass} ${headingStyles}`}>
           CUBING WORLD
-        </span>
+        </TextElement>
       )}
     </div>
   )

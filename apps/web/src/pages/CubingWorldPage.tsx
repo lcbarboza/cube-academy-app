@@ -86,7 +86,7 @@ export function CubingWorldPage() {
       <div className="container-app py-8 relative z-10">
         {/* Header */}
         <header className="flex items-center justify-between mb-12 opacity-0 animate-fade-in-up">
-          <Logo size="md" to="/" />
+          <Logo size="md" to="/" asHeading />
 
           <div className="flex items-center gap-3">
             {/* Timer Link */}

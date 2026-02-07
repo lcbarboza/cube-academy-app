@@ -92,9 +92,9 @@ export function TimerPage() {
       <header className="relative z-20 flex items-center justify-between px-6 py-4 opacity-0 animate-fade-in-up">
         <div className="flex items-center gap-4">
           <Logo size="sm" to="/" />
-          <span className="font-display font-semibold text-lg tracking-widest text-[var(--neon-magenta)] uppercase">
+          <h1 className="font-display font-semibold text-lg tracking-widest text-[var(--neon-magenta)] uppercase m-0">
             {t('timer.title', 'Timer')}
-          </span>
+          </h1>
         </div>
 
         <div className="flex items-center gap-2">
