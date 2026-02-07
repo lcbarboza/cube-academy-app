@@ -1,4 +1,5 @@
 import { CubeViewer } from '@/components/cube'
+import { Logo } from '@/components/ui'
 import { useScramble } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { Moon, Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward, Sun, Timer } from 'lucide-react'
@@ -73,14 +74,7 @@ export function CubingWorldPage() {
       <div className="container-app py-8 relative z-10">
         {/* Header */}
         <header className="flex items-center justify-between mb-12 opacity-0 animate-fade-in-up">
-          <div className="flex items-center gap-4">
-            <div className="logo-cube">
-              <span className="font-display font-bold text-sm text-[var(--void-deep)]">CW</span>
-            </div>
-            <h1 className="font-display font-bold text-2xl tracking-wider text-glow-cyan">
-              CUBING WORLD
-            </h1>
-          </div>
+          <Logo size="md" to="/" />
 
           <div className="flex items-center gap-3">
             {/* Timer Link */}

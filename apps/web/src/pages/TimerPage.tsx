@@ -1,6 +1,7 @@
 import { CubeViewer } from '@/components/cube'
 import { SolveHistoryPanel } from '@/components/history'
 import { TimerDisplay } from '@/components/timer'
+import { Logo } from '@/components/ui'
 import { useScramble, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { useTimer } from '@/hooks/useTimer'
@@ -78,14 +79,10 @@ export function TimerPage() {
       {/* Top Bar - Compact header */}
       <header className="relative z-20 flex items-center justify-between px-6 py-4 opacity-0 animate-fade-in-up">
         <div className="flex items-center gap-4">
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="logo-cube">
-              <span className="font-display font-bold text-sm text-[var(--void-deep)]">CW</span>
-            </div>
-            <h1 className="font-display font-bold text-xl tracking-wider text-glow-cyan">
-              {t('timer.title', 'TIMER')}
-            </h1>
-          </Link>
+          <Logo size="sm" to="/" />
+          <span className="font-display font-semibold text-lg tracking-widest text-[var(--neon-magenta)] uppercase">
+            {t('timer.title', 'Timer')}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">

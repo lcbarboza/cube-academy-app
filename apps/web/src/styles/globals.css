@@ -629,6 +629,30 @@
   box-shadow: 0 0 20px rgba(0, 255, 242, 0.3);
 }
 
+/* Logo Container with glow effect */
+.logo-cube-container {
+  position: relative;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 242, 0.4));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.logo-cube-container:hover {
+  filter: drop-shadow(0 0 12px rgba(0, 255, 242, 0.6));
+  transform: scale(1.05);
+}
+
+.logo-cube-svg {
+  display: block;
+}
+
+.light-theme .logo-cube-container {
+  filter: drop-shadow(0 2px 8px rgba(8, 145, 178, 0.25));
+}
+
+.light-theme .logo-cube-container:hover {
+  filter: drop-shadow(0 4px 12px rgba(8, 145, 178, 0.35));
+}
+
 .nav-link {
   font-family: 'Orbitron', sans-serif;
   font-size: 13px;
