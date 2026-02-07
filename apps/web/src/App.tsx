@@ -1,4 +1,4 @@
-import { CubeWorldPage, HomePage } from '@/pages'
+import { CubingWorldPage, HomePage } from '@/pages'
 import { DebugScramblePage } from '@/pages/DebugScramblePage'
 import { ScramblePage } from '@/pages/ScramblePage'
 import { TestMovesPage } from '@/pages/TestMovesPage'
@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CubeWorldPage />} />
+        <Route path="/" element={<CubingWorldPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/scramble" element={<ScramblePage />} />
         <Route path="/test-moves" element={<TestMovesPage />} />

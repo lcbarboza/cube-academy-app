@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Cube World"
+    "name": "Cubing World"
   },
   "welcome": {
     "title": "Learn to Solve the Rubik's Cube",
@@ -10,7 +10,7 @@
   },
   "nav": {
     "scramble": "Scramble",
-    "cubeWorld": "Cube World",
+    "cubingWorld": "Cubing World",
     "tutorials": "Tutorials",
     "algorithms": "Algorithms",
     "practice": "Practice",

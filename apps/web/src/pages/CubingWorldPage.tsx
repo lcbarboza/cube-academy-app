@@ -10,7 +10,7 @@ import type { SpeedOption } from '@/hooks/useScramblePlayer'
 
 const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 2, 4]
 
-export function CubeWorldPage() {
+export function CubingWorldPage() {
   const { t, i18n } = useTranslation()
   const { theme, toggleTheme, isDark } = useTheme()
   const [scramble, setScramble] = useState(() => generateScrambleString())
@@ -73,7 +73,7 @@ export function CubeWorldPage() {
               <span className="font-display font-bold text-sm text-[var(--void-deep)]">CW</span>
             </div>
             <h1 className="font-display font-bold text-2xl tracking-wider text-glow-cyan">
-              CUBE WORLD
+              CUBING WORLD
             </h1>
           </div>
 

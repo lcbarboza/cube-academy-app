@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Cube World"
+    "name": "Cubing World"
   },
   "welcome": {
     "title": "Aprenda a Resolver o Cubo Mágico",
@@ -10,7 +10,7 @@
   },
   "nav": {
     "scramble": "Scramble",
-    "cubeWorld": "Cube World",
+    "cubingWorld": "Cubing World",
     "tutorials": "Tutoriais",
     "algorithms": "Algoritmos",
     "practice": "Prática",
