@@ -87,7 +87,13 @@ export function SEO({
 
   const metaKeywords = keywords || defaultKeywords
 
-  const canonicalUrl = canonical ? `${BASE_URL}${canonical}` : window.location.href.split('?')[0]
+  const getCanonicalUrl = (): string => {
+    if (canonical) {
+      return `${BASE_URL}${canonical}`
+    }
+    return window.location.href.split('?')[0] || window.location.href
+  }
+  const canonicalUrl = getCanonicalUrl()
 
   useEffect(() => {
     // Update document title

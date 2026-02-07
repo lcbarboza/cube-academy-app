@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 // Type for the View Transitions API (experimental)
-interface DocumentWithViewTransition extends Document {
+// Using intersection type to avoid conflict with native Document type
+type DocumentWithViewTransition = Document & {
   startViewTransition?: (callback: () => Promise<void>) => void
 }
 
