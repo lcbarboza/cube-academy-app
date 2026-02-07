@@ -239,7 +239,7 @@ export function CubeWorldPage() {
                   {t('scramble.noMoves', 'No moves')}
                 </div>
               ) : (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-5 gap-2 justify-items-center">
                   {player.moves.map((move, index) => {
                     const isPast = index < player.currentIndex
                     const isCurrent = index === player.currentIndex
