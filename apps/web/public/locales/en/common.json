@@ -46,7 +46,30 @@
     "keepHolding": "Keep holding...",
     "releaseToStart": "Release to start!",
     "pressToStop": "Press any key to stop",
-    "pressForNew": "Press SPACE for new solve"
+    "pressForNew": "Press SPACE for new solve",
+    "cubePreview": "Scrambled State"
+  },
+  "history": {
+    "title": "History",
+    "solves": "solves",
+    "solve": "Solve",
+    "empty": "Complete a solve to see your history here.",
+    "clear": "Clear session",
+    "confirmClear": "Clear all solves? This cannot be undone.",
+    "confirmDelete": "Delete this solve?",
+    "scramble": "Scramble",
+    "date": "Date",
+    "penalty": "Penalty",
+    "delete": "Delete Solve",
+    "mo3": "mo3",
+    "ao5": "ao5",
+    "ao12": "ao12",
+    "bestSingle": "best",
+    "bestAo5": "best ao5",
+    "bestAo12": "best ao12"
+  },
+  "common": {
+    "close": "Close"
   },
   "settings": {
     "lightMode": "Light mode",

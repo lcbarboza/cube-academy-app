@@ -1,4 +1,4 @@
-import { ScrambleProvider } from '@/contexts'
+import { ScrambleProvider, SolveHistoryProvider } from '@/contexts'
 import { CubingWorldPage, HomePage, TimerPage } from '@/pages'
 import { DebugScramblePage } from '@/pages/DebugScramblePage'
 import { ScramblePage } from '@/pages/ScramblePage'
@@ -9,14 +9,16 @@ function App() {
   return (
     <BrowserRouter>
       <ScrambleProvider>
-        <Routes>
-          <Route path="/" element={<CubingWorldPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/timer" element={<TimerPage />} />
-          <Route path="/scramble" element={<ScramblePage />} />
-          <Route path="/test-moves" element={<TestMovesPage />} />
-          <Route path="/debug" element={<DebugScramblePage />} />
-        </Routes>
+        <SolveHistoryProvider>
+          <Routes>
+            <Route path="/" element={<CubingWorldPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/timer" element={<TimerPage />} />
+            <Route path="/scramble" element={<ScramblePage />} />
+            <Route path="/test-moves" element={<TestMovesPage />} />
+            <Route path="/debug" element={<DebugScramblePage />} />
+          </Routes>
+        </SolveHistoryProvider>
       </ScrambleProvider>
     </BrowserRouter>
   )

@@ -33,8 +33,8 @@
 
 ## 5. Testing & Validation
 
-- [ ] 5.1 Manual test: spacebar hold detection works correctly
-- [ ] 5.2 Manual test: timer starts only on spacebar release after 300ms hold
-- [ ] 5.3 Manual test: timer stops on any key press
-- [ ] 5.4 Manual test: new scramble generates after solve
-- [ ] 5.5 Verify i18n strings display correctly in both languages
+- [x] 5.1 Manual test: spacebar hold detection works correctly
+- [x] 5.2 Manual test: timer starts only on spacebar release after 300ms hold
+- [x] 5.3 Manual test: timer stops on any key press
+- [x] 5.4 Manual test: new scramble generates after solve
+- [x] 5.5 Verify i18n strings display correctly in both languages

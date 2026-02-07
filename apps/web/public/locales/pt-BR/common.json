@@ -46,7 +46,30 @@
     "keepHolding": "Continue segurando...",
     "releaseToStart": "Solte para iniciar!",
     "pressToStop": "Pressione qualquer tecla para parar",
-    "pressForNew": "Pressione ESPAÇO para nova resolução"
+    "pressForNew": "Pressione ESPAÇO para nova resolução",
+    "cubePreview": "Estado Embaralhado"
+  },
+  "history": {
+    "title": "Histórico",
+    "solves": "resoluções",
+    "solve": "Resolução",
+    "empty": "Complete uma resolução para ver seu histórico aqui.",
+    "clear": "Limpar sessão",
+    "confirmClear": "Limpar todas as resoluções? Esta ação não pode ser desfeita.",
+    "confirmDelete": "Excluir esta resolução?",
+    "scramble": "Scramble",
+    "date": "Data",
+    "penalty": "Penalidade",
+    "delete": "Excluir Resolução",
+    "mo3": "mo3",
+    "ao5": "ao5",
+    "ao12": "ao12",
+    "bestSingle": "melhor",
+    "bestAo5": "melhor ao5",
+    "bestAo12": "melhor ao12"
+  },
+  "common": {
+    "close": "Fechar"
   },
   "settings": {
     "lightMode": "Modo claro",

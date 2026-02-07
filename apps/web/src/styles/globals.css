@@ -1010,3 +1010,256 @@
 .transition-timer-link:hover::after {
   transform: translateX(-50%) scaleX(1);
 }
+
+/* ============================================
+   MODAL STYLES
+   ============================================ */
+
+.modal-backdrop {
+  background: rgba(5, 5, 16, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.light-theme .modal-backdrop {
+  background: rgba(248, 250, 252, 0.9);
+  backdrop-filter: blur(12px);
+}
+
+.modal-content {
+  box-shadow: 
+    0 0 0 1px rgba(0, 255, 242, 0.1),
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(0, 255, 242, 0.1);
+}
+
+.light-theme .modal-content {
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   HUD (HEADS-UP DISPLAY) STYLES
+   Gaming-inspired bottom panel for stats
+   ============================================ */
+
+.hud-stats-bar {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(5, 5, 16, 0.6) 20%,
+    rgba(5, 5, 16, 0.9) 100%
+  );
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 255, 242, 0.1);
+  position: relative;
+}
+
+.hud-stats-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--neon-cyan) 50%,
+    transparent 100%
+  );
+}
+
+.light-theme .hud-stats-bar {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(248, 250, 252, 0.8) 20%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+  border-top: 1px solid rgba(8, 145, 178, 0.15);
+}
+
+.light-theme .hud-stats-bar::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--neon-cyan) 50%,
+    transparent 100%
+  );
+}
+
+.hud-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hud-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.hud-stat-label-best {
+  color: var(--neon-green);
+}
+
+.hud-stat-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.hud-stat-value-best {
+  color: var(--neon-green);
+  text-shadow: 0 0 10px rgba(68, 255, 136, 0.3);
+}
+
+.light-theme .hud-stat-value-best {
+  color: #16a34a;
+  text-shadow: none;
+}
+
+.hud-stat-divider {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--text-muted) 50%,
+    transparent 100%
+  );
+  opacity: 0.3;
+}
+
+.hud-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: var(--btn-bg);
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.hud-toggle-btn:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  background: var(--btn-hover-bg);
+}
+
+.hud-history-panel {
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(5, 5, 16, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.hud-history-panel.hud-history-expanded {
+  max-height: 120px;
+  overflow: visible;
+  border-top-color: var(--panel-border);
+}
+
+.light-theme .hud-history-panel {
+  background: rgba(248, 250, 252, 0.98);
+}
+
+/* Scrollbar for history in HUD */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 2px;
+}
+
+/* ============================================
+   TIMER HERO PANEL
+   Larger, more prominent timer display
+   ============================================ */
+
+.timer-hero-panel {
+  padding: 2rem 3rem;
+  min-width: 400px;
+}
+
+.timer-hero-panel .timer-display-container {
+  min-height: auto;
+  padding: 1rem 0;
+}
+
+/* ============================================
+   CUBE PREVIEW SIDE (Timer page companion)
+   ============================================ */
+
+.cube-preview-side {
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.cube-preview-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.cube-halo-side {
+  width: 100px;
+  height: 100px;
+}
+
+/* ============================================
+   SOLVE CHIPS (Compact history items)
+   ============================================ */
+
+.solve-chip {
+  position: relative;
+  overflow: hidden;
+  transform-origin: center;
+  z-index: 1;
+}
+
+.solve-chip:hover {
+  z-index: 10;
+}
+
+.solve-chip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+/* Neon Green for accent */
+:root,
+.dark-theme {
+  --neon-green: #44ff88;
+}
+
+.light-theme {
+  --neon-green: #16a34a;
+}

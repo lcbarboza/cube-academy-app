@@ -1,6 +1,7 @@
 import { CubeViewer } from '@/components/cube'
+import { SolveHistoryPanel } from '@/components/history'
 import { TimerDisplay } from '@/components/timer'
-import { useScramble } from '@/contexts'
+import { useScramble, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { useTimer } from '@/hooks/useTimer'
 import { Box, Moon, RotateCcw, Sun } from 'lucide-react'
@@ -11,7 +12,8 @@ import { Link } from 'react-router-dom'
 export function TimerPage() {
   const { t, i18n } = useTranslation()
   const { isDark, toggleTheme } = useTheme()
-  const [lastSolveTime, setLastSolveTime] = useState<number | null>(null)
+  const { addSolve, stats } = useSolveHistory()
+  const [isHistoryExpanded, setIsHistoryExpanded] = useState(false)
 
   // Use shared scramble context
   const {
@@ -26,9 +28,13 @@ export function TimerPage() {
     generateNewScrambleAnimated,
   } = useScramble()
 
-  const handleSolveComplete = useCallback((timeMs: number) => {
-    setLastSolveTime(timeMs)
-  }, [])
+  const handleSolveComplete = useCallback(
+    (timeMs: number) => {
+      // Save the solve to history with the current scramble
+      addSolve(timeMs, scramble)
+    },
+    [addSolve, scramble],
+  )
 
   const timer = useTimer(handleSolveComplete)
 
@@ -60,130 +66,189 @@ export function TimerPage() {
   const cubeCurrentMove = showAnimation ? currentMove : null
   const cubeIsAnimating = showAnimation ? isAnimating : false
 
+  const toggleHistoryPanel = useCallback(() => {
+    setIsHistoryExpanded((prev) => !prev)
+  }, [])
+
   return (
-    <div className="min-h-screen relative" onKeyDown={handleKeyDown}>
+    <div className="h-screen flex flex-col relative" onKeyDown={handleKeyDown}>
       {/* Cosmic background */}
       <div className="cosmic-bg" />
 
-      {/* Main content */}
-      <div className="container-app py-8 relative z-10">
-        {/* Header */}
-        <header className="flex items-center justify-between mb-8 opacity-0 animate-fade-in-up">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
-              <div className="logo-cube">
-                <span className="font-display font-bold text-sm text-[var(--void-deep)]">CW</span>
-              </div>
-              <h1 className="font-display font-bold text-2xl tracking-wider text-glow-cyan">
-                {t('timer.title', 'TIMER')}
-              </h1>
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Back to Scramble View */}
-            <Link
-              to="/"
-              className="btn-neon btn-neon-magenta flex items-center gap-2"
-              title={t('nav.scramble', 'Scramble View')}
-            >
-              <Box className="w-4 h-4" />
-              <span>{t('nav.scramble', 'Scramble')}</span>
-            </Link>
-
-            {/* Theme Toggle */}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="settings-btn"
-              aria-label={isDark ? t('settings.lightMode') : t('settings.darkMode')}
-            >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-
-            {/* Language Toggle */}
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              className="settings-btn"
-              aria-label={t('settings.changeLanguage')}
-            >
-              {i18n.language === 'pt-BR' ? 'EN' : 'PT'}
-            </button>
-
-            {/* New Scramble Button */}
-            <button
-              type="button"
-              onClick={handleNewScramble}
-              className="btn-neon flex items-center gap-2"
-              disabled={timer.state === 'running'}
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>{t('timer.newScramble', 'New Scramble')}</span>
-            </button>
-          </div>
-        </header>
-
-        {/* Main Timer Area - Two column layout */}
-        <div className="grid lg:grid-cols-[1fr,280px] gap-8 max-w-5xl mx-auto">
-          {/* Left Column - Timer + Scramble */}
-          <div className="space-y-6">
-            {/* Scramble Display - Connected element */}
-            <div className="glass-panel glass-panel-glow opacity-0 animate-fade-in-up stagger-1">
-              <div className="scramble-display-connected">{scramble}</div>
+      {/* Top Bar - Compact header */}
+      <header className="relative z-20 flex items-center justify-between px-6 py-4 opacity-0 animate-fade-in-up">
+        <div className="flex items-center gap-4">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div className="logo-cube">
+              <span className="font-display font-bold text-sm text-[var(--void-deep)]">CW</span>
             </div>
+            <h1 className="font-display font-bold text-xl tracking-wider text-glow-cyan">
+              {t('timer.title', 'TIMER')}
+            </h1>
+          </Link>
+        </div>
 
-            {/* Timer Display */}
-            <div className="glass-panel glass-panel-glow opacity-0 animate-fade-in-up stagger-2">
-              <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
-            </div>
+        <div className="flex items-center gap-2">
+          {/* Back to Scramble View */}
+          <Link
+            to="/"
+            className="btn-neon btn-neon-magenta flex items-center gap-2 py-2 px-4 text-xs"
+            title={t('nav.scramble', 'Scramble View')}
+          >
+            <Box className="w-3.5 h-3.5" />
+            <span>{t('nav.scramble', 'Scramble')}</span>
+          </Link>
 
-            {/* Last Solve Info */}
-            {lastSolveTime !== null && timer.state !== 'running' && (
-              <div className="text-center opacity-0 animate-fade-in-up stagger-3">
-                <p className="text-sm text-[var(--text-muted)] font-mono uppercase tracking-wider">
-                  {t('timer.lastSolve', 'Last solve')}
-                </p>
-                <p className="text-2xl font-display font-bold text-[var(--neon-magenta)] mt-2">
-                  {timer.formattedTime}
-                </p>
-              </div>
-            )}
+          {/* Theme Toggle */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="settings-btn w-9 h-9"
+            aria-label={isDark ? t('settings.lightMode') : t('settings.darkMode')}
+          >
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
+          {/* Language Toggle */}
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="settings-btn w-9 h-9 text-xs"
+            aria-label={t('settings.changeLanguage')}
+          >
+            {i18n.language === 'pt-BR' ? 'EN' : 'PT'}
+          </button>
+
+          {/* New Scramble Button */}
+          <button
+            type="button"
+            onClick={handleNewScramble}
+            className="btn-neon flex items-center gap-2 py-2 px-4 text-xs"
+            disabled={timer.state === 'running'}
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>{t('timer.newScramble', 'New Scramble')}</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content - Timer centered */}
+      <main className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 -mt-8">
+        {/* Scramble Display - Compact above timer */}
+        <div className="w-full max-w-3xl mb-6 opacity-0 animate-fade-in-up stagger-1">
+          <div className="glass-panel glass-panel-glow">
+            <div className="scramble-display-connected text-base py-3 px-4">{scramble}</div>
+          </div>
+        </div>
+
+        {/* Timer + Cube side by side */}
+        <div className="flex items-center justify-center gap-8 opacity-0 animate-fade-in-up stagger-2">
+          {/* Timer Display - The hero */}
+          <div className="glass-panel glass-panel-glow timer-hero-panel">
+            <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
           </div>
 
-          {/* Right Column - Mini Cube Preview */}
-          <div className="opacity-0 animate-fade-in-up stagger-2">
-            <div className="cube-arena glass-panel glass-panel-glow p-2 cube-preview-mini">
-              <div className="relative">
-                <div className="cube-halo cube-halo-mini" />
+          {/* Mini Cube Preview - Side companion */}
+          <div className="hidden md:block shrink-0">
+            <div className="cube-arena glass-panel glass-panel-glow cube-preview-side">
+              <div className="cube-preview-container">
+                <div className="cube-halo cube-halo-side" />
                 <CubeViewer
                   cubeState={cubeState}
                   currentMove={cubeCurrentMove}
                   isAnimating={cubeIsAnimating}
                   speed={speed}
                   onAnimationComplete={onAnimationComplete}
-                  height={220}
+                  height={160}
                 />
               </div>
-              
-              {/* Cube label */}
-              <div className="text-center py-2 mt-1">
-                <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                  {t('timer.cubePreview', 'Scrambled State')}
-                </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Instructions */}
+        <p className="text-center text-xs text-[var(--text-muted)] font-mono leading-relaxed mt-6 opacity-0 animate-fade-in-up stagger-3">
+          {t(
+            'timer.instructions',
+            'Hold SPACE for 300ms until green, then release to start. Press any key to stop.',
+          )}
+        </p>
+      </main>
+
+      {/* Bottom HUD - Stats & History */}
+      <div className="relative z-20 opacity-0 animate-fade-in-up stagger-4">
+        {/* Stats Bar - Always visible */}
+        <div className="hud-stats-bar">
+          <div className="flex items-center justify-between max-w-5xl mx-auto px-6 py-3">
+            {/* Quick Stats */}
+            <div className="flex items-center gap-6">
+              <div className="hud-stat-item">
+                <span className="hud-stat-label">{t('history.mo3', 'mo3')}</span>
+                <span className="hud-stat-value">{formatStatValue(stats.mo3)}</span>
+              </div>
+              <div className="hud-stat-item">
+                <span className="hud-stat-label">{t('history.ao5', 'ao5')}</span>
+                <span className="hud-stat-value">{formatStatValue(stats.ao5)}</span>
+              </div>
+              <div className="hud-stat-item">
+                <span className="hud-stat-label">{t('history.ao12', 'ao12')}</span>
+                <span className="hud-stat-value">{formatStatValue(stats.ao12)}</span>
+              </div>
+              <div className="hud-stat-divider" />
+              <div className="hud-stat-item">
+                <span className="hud-stat-label hud-stat-label-best">{t('history.bestSingle', 'best')}</span>
+                <span className="hud-stat-value hud-stat-value-best">{formatStatValue(stats.bestSingle)}</span>
               </div>
             </div>
 
-            {/* Instructions */}
-            <p className="text-center text-xs text-[var(--text-muted)] font-mono leading-relaxed mt-4 opacity-0 animate-fade-in-up stagger-4">
-              {t(
-                'timer.instructions',
-                'Hold SPACE for 300ms until green, then release to start. Press any key to stop.',
-              )}
-            </p>
+            {/* Toggle History Button */}
+            <button
+              type="button"
+              onClick={toggleHistoryPanel}
+              className="hud-toggle-btn"
+            >
+              <span className="font-mono text-xs">
+                {stats.totalSolves} {t('history.solves', 'solves')}
+              </span>
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${isHistoryExpanded ? 'rotate-180' : ''}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Expandable History Panel */}
+        <div
+          className={`hud-history-panel ${isHistoryExpanded ? 'hud-history-expanded' : ''}`}
+        >
+          <div className="max-w-5xl mx-auto px-6">
+            <SolveHistoryPanel compact />
           </div>
         </div>
       </div>
     </div>
   )
+}
+
+/**
+ * Format stat value for HUD display
+ */
+function formatStatValue(value: number | 'dnf' | null): string {
+  if (value === null) return '--.--'
+  if (value === 'dnf') return 'DNF'
+  
+  const totalMs = Math.round(value)
+  const minutes = Math.floor(totalMs / 60000)
+  const seconds = Math.floor((totalMs % 60000) / 1000)
+  const centiseconds = Math.floor((totalMs % 1000) / 10)
+  
+  if (minutes > 0) {
+    return `${minutes}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`
+  }
+  return `${seconds}.${centiseconds.toString().padStart(2, '0')}`
 }
