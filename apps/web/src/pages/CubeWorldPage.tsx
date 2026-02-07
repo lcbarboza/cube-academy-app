@@ -1,7 +1,8 @@
 import { CubeViewer } from '@/components/cube'
 import { useScramblePlayer } from '@/hooks/useScramblePlayer'
+import { useTheme } from '@/hooks/useTheme'
 import { generateScrambleString } from '@/lib/scramble'
-import { Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward } from 'lucide-react'
+import { Moon, Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward, Sun } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -10,7 +11,8 @@ import type { SpeedOption } from '@/hooks/useScramblePlayer'
 const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 1.5, 2]
 
 export function CubeWorldPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const { theme, toggleTheme, isDark } = useTheme()
   const [scramble, setScramble] = useState(() => generateScrambleString())
 
   const player = useScramblePlayer(scramble)
@@ -43,6 +45,11 @@ export function CubeWorldPage() {
     [player],
   )
 
+  const toggleLanguage = useCallback(() => {
+    const newLang = i18n.language === 'pt-BR' ? 'en' : 'pt-BR'
+    i18n.changeLanguage(newLang)
+  }, [i18n])
+
   const canStepBack = player.currentIndex >= 0 && !player.isAnimating
   const canStepForward = player.currentIndex < player.moves.length - 1 && !player.isAnimating
   const canReset = (player.currentIndex >= 0 || player.isPlaying) && !player.isAnimating
@@ -69,14 +76,40 @@ export function CubeWorldPage() {
               CUBE WORLD
             </h1>
           </div>
-          <button
-            type="button"
-            onClick={handleNewScramble}
-            className="btn-neon flex items-center gap-2"
-          >
-            <Shuffle className="w-4 h-4" />
-            <span>{t('scramble.generate', 'New Scramble')}</span>
-          </button>
+
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="settings-btn"
+              aria-label={isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')}
+              title={isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')}
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+
+            {/* Language Toggle */}
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="settings-btn"
+              aria-label={t('settings.changeLanguage', 'Change language')}
+              title={t('settings.changeLanguage', 'Change language')}
+            >
+              {i18n.language === 'pt-BR' ? 'EN' : 'PT'}
+            </button>
+
+            {/* New Scramble Button */}
+            <button
+              type="button"
+              onClick={handleNewScramble}
+              className="btn-neon flex items-center gap-2"
+            >
+              <Shuffle className="w-4 h-4" />
+              <span>{t('scramble.generate', 'New Scramble')}</span>
+            </button>
+          </div>
         </header>
 
         {/* Main grid */}

@@ -35,5 +35,10 @@
     "ready": "Pronto",
     "inProgress": "Em Progresso",
     "controls": "Controles"
+  },
+  "settings": {
+    "lightMode": "Modo claro",
+    "darkMode": "Modo escuro",
+    "changeLanguage": "Mudar idioma"
   }
 }
