@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Homepage / Scramble View -->
+  <url>
+    <loc>https://cubingworld.com/</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://cubingworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cubingworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cubingworld.com/"/>
+  </url>
+  
+  <!-- Timer -->
+  <url>
+    <loc>https://cubingworld.com/timer</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://cubingworld.com/timer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cubingworld.com/timer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cubingworld.com/timer"/>
+  </url>
+  
+  <!-- Scramble (alternative entry point) -->
+  <url>
+    <loc>https://cubingworld.com/scramble</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://cubingworld.com/scramble"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cubingworld.com/scramble"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cubingworld.com/scramble"/>
+  </url>
+  
+</urlset>

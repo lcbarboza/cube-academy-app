@@ -1,0 +1,16 @@
+# Cubing World - Robots.txt
+# https://cubingworld.com
+
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /timer
+Allow: /scramble
+
+# Block development/debug pages
+Disallow: /debug
+Disallow: /test-moves
+
+# Sitemap location
+Sitemap: https://cubingworld.com/sitemap.xml

@@ -2,15 +2,106 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Cubing World - Domine o Cubo Mágico em um universo digital" />
-    <title>Cubing World</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Cubing World - Rubik's Cube Timer & Scramble Generator</title>
+    <meta name="title" content="Cubing World - Rubik's Cube Timer & Scramble Generator" />
+    <meta name="description" content="Free online tools for speedcubers. Generate random scrambles with 3D visualization, track your solve times, and improve your Rubik's Cube skills. Works on desktop and mobile." />
+    <meta name="keywords" content="rubiks cube timer, scramble generator, speedcubing, cube timer, wca scramble, 3x3 timer, cubing tools, solve tracker" />
+    <meta name="author" content="Cubing World" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cubingworld.com/" />
+    
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="pt-BR" href="https://cubingworld.com/" />
+    <link rel="alternate" hreflang="en" href="https://cubingworld.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://cubingworld.com/" />
+    
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#00fff2" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0891b2" media="(prefers-color-scheme: light)" />
+    <meta name="msapplication-TileColor" content="#050510" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cubingworld.com/" />
+    <meta property="og:title" content="Cubing World - Rubik's Cube Timer & Scramble Generator" />
+    <meta property="og:description" content="Free online tools for speedcubers. Generate random scrambles with 3D visualization, track your solve times, and improve your skills." />
+    <meta property="og:image" content="https://cubingworld.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cubing World - 3D Rubik's Cube with neon glow effects" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:site_name" content="Cubing World" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://cubingworld.com/" />
+    <meta name="twitter:title" content="Cubing World - Rubik's Cube Timer & Scramble Generator" />
+    <meta name="twitter:description" content="Free online tools for speedcubers. Generate random scrambles with 3D visualization and track your solve times." />
+    <meta name="twitter:image" content="https://cubingworld.com/og-image.svg" />
+    <meta name="twitter:image:alt" content="Cubing World - 3D Rubik's Cube with neon glow effects" />
+    
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Cubing World",
+      "alternateName": ["CubingWorld", "Cubing World Timer"],
+      "url": "https://cubingworld.com",
+      "description": "Free online Rubik's Cube timer and scramble generator for speedcubers",
+      "inLanguage": ["pt-BR", "en"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://cubingworld.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <!-- Structured Data - SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Cubing World Timer",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "description": "Precision timer for Rubik's Cube speedsolving with scramble generator and statistics tracking",
+      "url": "https://cubingworld.com/timer",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "WCA-compliant scramble generation",
+        "3D cube visualization",
+        "Solve time tracking",
+        "Statistics (ao5, ao12, mo3)",
+        "Multi-language support"
+      ],
+      "screenshot": "https://cubingworld.com/og-image.svg"
+    }
+    </script>
     
     <!-- Fonts: Orbitron for display, JetBrains Mono for technical/mono, Share Tech Mono for timer -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
