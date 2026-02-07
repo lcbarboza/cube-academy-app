@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Cube Academy"
+    "name": "Cube World"
   },
   "welcome": {
     "title": "Aprenda a Resolver o Cubo Mágico",
@@ -10,6 +10,7 @@
   },
   "nav": {
     "scramble": "Scramble",
+    "cubeWorld": "Cube World",
     "tutorials": "Tutoriais",
     "algorithms": "Algoritmos",
     "practice": "Prática",
@@ -17,9 +18,9 @@
   },
   "scramble": {
     "title": "Gerador de Scramble",
-    "sequence": "Sequência de embaralhamento",
-    "generate": "Gerar Novo Scramble",
-    "instructions": "Aplique esta sequência de movimentos ao seu cubo para embaralhá-lo antes de resolver.",
+    "sequence": "Sequência",
+    "generate": "Novo Scramble",
+    "instructions": "Clique em qualquer movimento para ir até essa posição, ou use os controles para avançar passo a passo.",
     "noMoves": "Nenhum movimento",
     "move": "Movimento"
   },
@@ -30,6 +31,9 @@
     "stepForward": "Próximo",
     "stepBack": "Anterior",
     "speed": "Velocidade",
-    "complete": "Completo"
+    "complete": "Completo",
+    "ready": "Pronto",
+    "inProgress": "Em Progresso",
+    "controls": "Controles"
   }
 }

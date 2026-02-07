@@ -2,20 +2,518 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom base styles */
+/* ============================================
+   CUBE WORLD - Cosmic Arcade Theme
+   ============================================ */
+
+:root {
+  /* Deep space background */
+  --void-deep: #050510;
+  --void-mid: #0a0a1a;
+  --void-surface: #12122a;
+  
+  /* Neon accents */
+  --neon-cyan: #00fff2;
+  --neon-magenta: #ff00ff;
+  --neon-orange: #ff6b00;
+  --neon-yellow: #ffe600;
+  
+  /* Cube face colors (enhanced for glow) */
+  --cube-white: #ffffff;
+  --cube-yellow: #ffd000;
+  --cube-orange: #ff6b00;
+  --cube-red: #ff0040;
+  --cube-green: #00ff88;
+  --cube-blue: #0088ff;
+  
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #8888aa;
+  --text-muted: #555577;
+  
+  /* Glow effects */
+  --glow-cyan: 0 0 20px rgba(0, 255, 242, 0.5), 0 0 40px rgba(0, 255, 242, 0.3);
+  --glow-magenta: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
+  --glow-soft: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
 @layer base {
   html {
     @apply antialiased;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900;
+    background: var(--void-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--void-mid);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
   }
 }
 
-/* Custom component classes */
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+.font-display {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.text-glow-cyan {
+  text-shadow: var(--glow-cyan);
+}
+
+.text-glow-magenta {
+  text-shadow: var(--glow-magenta);
+}
+
+/* ============================================
+   COSMIC BACKGROUND
+   ============================================ */
+
+.cosmic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(0, 255, 242, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 0, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 107, 0, 0.02) 0%, transparent 40%),
+    linear-gradient(180deg, var(--void-deep) 0%, var(--void-mid) 100%);
+}
+
+/* Animated stars */
+.cosmic-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 242, 0.6), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(255, 0, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 200px 50px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 250px 150px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 300px 100px, rgba(0, 255, 242, 0.4), transparent);
+  background-size: 320px 200px;
+  animation: twinkle 8s ease-in-out infinite alternate;
+  opacity: 0.6;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+/* ============================================
+   GLASSMORPHISM PANELS
+   ============================================ */
+
+.glass-panel {
+  background: rgba(18, 18, 42, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-glow {
+  position: relative;
+}
+
+.glass-panel-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 17px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 242, 0.3) 0%,
+    transparent 50%,
+    rgba(255, 0, 255, 0.3) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ============================================
+   CUBE CONTAINER
+   ============================================ */
+
+.cube-arena {
+  position: relative;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 107, 0, 0.08) 0%,
+    rgba(0, 255, 242, 0.03) 40%,
+    transparent 70%
+  );
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.cube-arena::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 255, 242, 0.02) 100%
+  );
+  pointer-events: none;
+}
+
+/* Floating cube halo effect */
+.cube-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 230, 0, 0.1) 0%,
+    transparent 70%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ============================================
+   NEON BUTTONS
+   ============================================ */
+
+.btn-neon {
+  position: relative;
+  padding: 12px 24px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--neon-cyan);
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--neon-cyan);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-neon:hover {
+  color: var(--void-deep);
+  box-shadow: var(--glow-cyan);
+}
+
+.btn-neon:hover::before {
+  opacity: 1;
+}
+
+.btn-neon span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-neon:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-neon:disabled:hover::before {
+  opacity: 0;
+}
+
+.btn-neon:disabled:hover {
+  color: var(--neon-cyan);
+}
+
+/* Magenta variant */
+.btn-neon-magenta {
+  color: var(--neon-magenta);
+  border-color: var(--neon-magenta);
+}
+
+.btn-neon-magenta::before {
+  background: var(--neon-magenta);
+}
+
+.btn-neon-magenta:hover {
+  box-shadow: var(--glow-magenta);
+}
+
+/* Icon button variant */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.btn-icon:hover:not(:disabled) {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+  background: rgba(0, 255, 242, 0.1);
+}
+
+.btn-icon:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Play button - larger and highlighted */
+.btn-play {
+  width: 64px;
+  height: 64px;
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  background: rgba(0, 255, 242, 0.1);
+}
+
+.btn-play:hover:not(:disabled) {
+  background: var(--neon-cyan);
+  color: var(--void-deep);
+}
+
+/* ============================================
+   MOVE CHIPS
+   ============================================ */
+
+.move-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 8px 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.move-chip:hover:not(:disabled):not(.move-chip-active):not(.move-chip-past) {
+  border-color: rgba(0, 255, 242, 0.5);
+  color: var(--text-primary);
+  background: rgba(0, 255, 242, 0.05);
+}
+
+.move-chip-active {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  background: rgba(0, 255, 242, 0.15);
+  box-shadow: var(--glow-cyan);
+  transform: scale(1.1);
+}
+
+.move-chip-past {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-muted);
+}
+
+.move-chip:disabled {
+  cursor: not-allowed;
+}
+
+/* ============================================
+   SPEED SELECTOR
+   ============================================ */
+
+.speed-btn {
+  padding: 6px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.speed-btn:hover:not(.speed-btn-active) {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text-secondary);
+}
+
+.speed-btn-active {
+  border-color: var(--neon-magenta);
+  color: var(--neon-magenta);
+  background: rgba(255, 0, 255, 0.1);
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.progress-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 255, 242, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 255, 242, 0.5), 0 0 60px rgba(0, 255, 242, 0.3);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Staggered animations */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+/* ============================================
+   COMPONENT UTILITIES
+   ============================================ */
+
 @layer components {
   .container-app {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+}
+
+/* ============================================
+   HEADER STYLES
+   ============================================ */
+
+.header-glass {
+  background: rgba(5, 5, 16, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-cube {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-magenta) 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 255, 242, 0.3);
+}
+
+.nav-link {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link-active {
+  color: var(--neon-cyan);
+  background: rgba(0, 255, 242, 0.1);
 }

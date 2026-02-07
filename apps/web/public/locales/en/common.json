@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Cube Academy"
+    "name": "Cube World"
   },
   "welcome": {
     "title": "Learn to Solve the Rubik's Cube",
@@ -10,6 +10,7 @@
   },
   "nav": {
     "scramble": "Scramble",
+    "cubeWorld": "Cube World",
     "tutorials": "Tutorials",
     "algorithms": "Algorithms",
     "practice": "Practice",
@@ -17,9 +18,9 @@
   },
   "scramble": {
     "title": "Scramble Generator",
-    "sequence": "Scramble sequence",
-    "generate": "Generate New Scramble",
-    "instructions": "Apply this sequence of moves to your cube to scramble it before solving.",
+    "sequence": "Sequence",
+    "generate": "New Scramble",
+    "instructions": "Click on any move to jump to that position, or use the controls to step through the sequence.",
     "noMoves": "No moves",
     "move": "Move"
   },
@@ -30,6 +31,9 @@
     "stepForward": "Step forward",
     "stepBack": "Step back",
     "speed": "Speed",
-    "complete": "Complete"
+    "complete": "Complete",
+    "ready": "Ready",
+    "inProgress": "In Progress",
+    "controls": "Controls"
   }
 }
