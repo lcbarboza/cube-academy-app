@@ -75,5 +75,15 @@
     "lightMode": "Light mode",
     "darkMode": "Dark mode",
     "changeLanguage": "Change language"
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "heading": "Lost in the Cube",
+    "message": "This page got scrambled beyond recognition. Let's get you back on track.",
+    "goHome": "Go Home",
+    "goTimer": "Try Timer",
+    "goBack": "Go Back",
+    "redirect": "Redirecting to home in {{seconds}}s..."
   }
 }

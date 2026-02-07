@@ -1,5 +1,5 @@
 import { ScrambleProvider, SolveHistoryProvider } from '@/contexts'
-import { CubingWorldPage, HomePage, TimerPage } from '@/pages'
+import { CubingWorldPage, HomePage, NotFoundPage, TimerPage } from '@/pages'
 import { DebugScramblePage } from '@/pages/DebugScramblePage'
 import { ScramblePage } from '@/pages/ScramblePage'
 import { TestMovesPage } from '@/pages/TestMovesPage'
@@ -17,6 +17,7 @@ function App() {
             <Route path="/scramble" element={<ScramblePage />} />
             <Route path="/test-moves" element={<TestMovesPage />} />
             <Route path="/debug" element={<DebugScramblePage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </SolveHistoryProvider>
       </ScrambleProvider>

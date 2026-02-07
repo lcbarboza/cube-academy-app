@@ -75,5 +75,15 @@
     "lightMode": "Modo claro",
     "darkMode": "Modo escuro",
     "changeLanguage": "Mudar idioma"
+  },
+  "notFound": {
+    "title": "404 - Página Não Encontrada",
+    "description": "A página que você está procurando não existe ou foi movida.",
+    "heading": "Perdido no Cubo",
+    "message": "Esta página foi embaralhada além do reconhecimento. Vamos te colocar de volta no caminho.",
+    "goHome": "Ir para Início",
+    "goTimer": "Testar Timer",
+    "goBack": "Voltar",
+    "redirect": "Redirecionando para o início em {{seconds}}s..."
   }
 }
