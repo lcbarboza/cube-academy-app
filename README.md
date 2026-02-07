@@ -72,6 +72,73 @@ npm run format
 - 2-space indentation, single quotes
 - Functional React components with hooks
 
+## Deployment
+
+The application is automatically deployed to AWS Amplify when changes are pushed to the `main` branch.
+
+### Prerequisites
+
+- AWS Account with Amplify access
+- GitHub repository with Actions enabled
+
+### Initial AWS Amplify Setup
+
+1. **Create Amplify App**
+   - Go to [AWS Amplify Console](https://console.aws.amazon.com/amplify/)
+   - Click "New app" > "Host web app"
+   - Choose "Deploy without Git provider" (manual deployment)
+   - Name your app (e.g., `cube-academy`)
+   - Note the **App ID** from the app settings
+
+2. **Create IAM User for Deployments**
+   - Go to [IAM Console](https://console.aws.amazon.com/iam/)
+   - Create a new user (e.g., `github-amplify-deploy`)
+   - Attach the following inline policy:
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Action": [
+           "amplify:CreateDeployment",
+           "amplify:StartDeployment",
+           "amplify:GetApp",
+           "amplify:GetBranch"
+         ],
+         "Resource": "arn:aws:amplify:*:*:apps/YOUR_APP_ID/*"
+       }
+     ]
+   }
+   ```
+   - Generate access keys and save them securely
+
+3. **Configure GitHub Secrets**
+   - Go to your repository Settings > Secrets and variables > Actions
+   - Add the following secrets:
+
+   | Secret | Description |
+   |--------|-------------|
+   | `AWS_ACCESS_KEY_ID` | IAM user access key |
+   | `AWS_SECRET_ACCESS_KEY` | IAM user secret key |
+   | `AWS_REGION` | AWS region (e.g., `us-east-1`) |
+   | `AMPLIFY_APP_ID` | Amplify app ID from step 1 |
+   | `AMPLIFY_BRANCH` | Branch name (e.g., `main`) |
+
+### Deployment Triggers
+
+- **Automatic**: Push to `main` branch triggers deployment
+- **Manual**: Go to Actions > "Deploy to AWS Amplify" > "Run workflow"
+
+### Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Build fails | Check `npm run lint` and `npm run build` locally |
+| AWS credentials error | Verify GitHub secrets are set correctly |
+| Deployment not starting | Ensure IAM policy has correct App ID |
+
 ## Contributing
 
 1. Create a feature branch: `feat/your-feature`
