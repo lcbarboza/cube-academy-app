@@ -32,11 +32,11 @@
 //   U[2][2]_new = comes from U face rotation... let me check rotateFaceCW
 //   rotateFaceCW: newFace[i][j] = oldFace[2-j][i]
 //   So U[2][2]_new = U[2-2][2] = U[0][2]
-//   
+//
 //   For F[0][2]:
 //   applyU does: R[0][2] = F[0][2] (F goes to R, not modifying F directly)
 //   Then: F[0][2]_new = L[0][2] (L goes to F)
-//   
+//
 //   For R[0][0]:
 //   applyU does: R[0][0]_new = F[0][0]
 
@@ -61,18 +61,18 @@
 // This matches! The state logic seems correct for U...
 
 // Let me check if maybe the issue is with U' (counter-clockwise)
-console.log("U move state analysis appears correct.");
-console.log("Let me check the animation direction...");
-console.log("");
-console.log("For U move:");
-console.log("  getMoveAngle('U') returns -PI/2");
-console.log("  In Three.js, negative Y rotation = clockwise when looking from above");
-console.log("");
-console.log("For U' move:");
-console.log("  getMoveAngle(\"U'\") starts with PI/2, then negates for prime = -PI/2");
-console.log("  Then negates again for 'U' face = PI/2");
-console.log("  Positive Y rotation = counter-clockwise when looking from above");
-console.log("");
-console.log("State for U':");
-console.log("  U' is applied as R R R (3x CW) or using applyUprime if it exists");
-console.log("  Let me check how prime moves are handled...");
+console.log('U move state analysis appears correct.')
+console.log('Let me check the animation direction...')
+console.log('')
+console.log('For U move:')
+console.log("  getMoveAngle('U') returns -PI/2")
+console.log('  In Three.js, negative Y rotation = clockwise when looking from above')
+console.log('')
+console.log("For U' move:")
+console.log('  getMoveAngle("U\'") starts with PI/2, then negates for prime = -PI/2')
+console.log("  Then negates again for 'U' face = PI/2")
+console.log('  Positive Y rotation = counter-clockwise when looking from above')
+console.log('')
+console.log("State for U':")
+console.log("  U' is applied as R R R (3x CW) or using applyUprime if it exists")
+console.log('  Let me check how prime moves are handled...')

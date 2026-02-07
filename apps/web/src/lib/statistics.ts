@@ -12,7 +12,7 @@ export function calculateMo3(solves: Solve[]): StatResult {
   }
 
   const lastThree = solves.slice(-3)
-  
+
   // If any solve is DNF, mo3 is DNF
   if (lastThree.some(isDnf)) {
     return 'dnf'
@@ -43,13 +43,13 @@ function calculateTrimmedAverage(solves: Solve[], count: number): StatResult {
 
   // Get effective times (DNF = Infinity)
   const times = lastN.map(getEffectiveTime)
-  
+
   // Sort times
   const sorted = [...times].sort((a, b) => a - b)
-  
+
   // Remove best and worst (first and last after sorting)
   const trimmed = sorted.slice(1, -1)
-  
+
   // Calculate average of remaining times
   const sum = trimmed.reduce((acc, time) => acc + time, 0)
   return sum / trimmed.length
@@ -102,7 +102,7 @@ export function calculateBestAo5(solves: Solve[]): StatResult {
   for (let i = 0; i <= solves.length - 5; i++) {
     const window = solves.slice(i, i + 5)
     const ao5 = calculateTrimmedAverage(window, 5)
-    
+
     if (typeof ao5 === 'number') {
       if (best === null || ao5 < best) {
         best = ao5
@@ -126,7 +126,7 @@ export function calculateBestAo12(solves: Solve[]): StatResult {
   for (let i = 0; i <= solves.length - 12; i++) {
     const window = solves.slice(i, i + 12)
     const ao12 = calculateTrimmedAverage(window, 12)
-    
+
     if (typeof ao12 === 'number') {
       if (best === null || ao12 < best) {
         best = ao12

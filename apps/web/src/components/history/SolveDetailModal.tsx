@@ -64,8 +64,7 @@ export function SolveDetailModal({
   }
 
   const effectiveTime = getEffectiveTime(solve)
-  const displayTime =
-    solve.penalty === 'dnf' ? 'DNF' : formatTimeFinal(effectiveTime)
+  const displayTime = solve.penalty === 'dnf' ? 'DNF' : formatTimeFinal(effectiveTime)
 
   // Use portal to render modal at document body level
   // This ensures it's not affected by parent stacking contexts
@@ -102,9 +101,7 @@ export function SolveDetailModal({
             }`}
           >
             {displayTime}
-            {solve.penalty === '+2' && (
-              <span className="text-lg ml-1">+2</span>
-            )}
+            {solve.penalty === '+2' && <span className="text-lg ml-1">+2</span>}
           </p>
           {solve.penalty === '+2' && (
             <p className="text-xs text-[var(--text-muted)] mt-1">

@@ -2,12 +2,36 @@
 
 function createSolvedPieceState() {
   return {
-    U: [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
-    F: [[10, 11, 12], [13, 14, 15], [16, 17, 18]],
-    R: [[19, 20, 21], [22, 23, 24], [25, 26, 27]],
-    B: [[28, 29, 30], [31, 32, 33], [34, 35, 36]],
-    L: [[37, 38, 39], [40, 41, 42], [43, 44, 45]],
-    D: [[46, 47, 48], [49, 50, 51], [52, 53, 54]],
+    U: [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ],
+    F: [
+      [10, 11, 12],
+      [13, 14, 15],
+      [16, 17, 18],
+    ],
+    R: [
+      [19, 20, 21],
+      [22, 23, 24],
+      [25, 26, 27],
+    ],
+    B: [
+      [28, 29, 30],
+      [31, 32, 33],
+      [34, 35, 36],
+    ],
+    L: [
+      [37, 38, 39],
+      [40, 41, 42],
+      [43, 44, 45],
+    ],
+    D: [
+      [46, 47, 48],
+      [49, 50, 51],
+      [52, 53, 54],
+    ],
   }
 }
 
@@ -44,16 +68,18 @@ function piecesEqual(a, b) {
 function printState(p, label) {
   console.log(`\n=== ${label} ===`)
   for (const face of ['U', 'F', 'R', 'B', 'L', 'D']) {
-    console.log(`${face}: ${p[face][0].join(' ')} | ${p[face][1].join(' ')} | ${p[face][2].join(' ')}`)
+    console.log(
+      `${face}: ${p[face][0].join(' ')} | ${p[face][1].join(' ')} | ${p[face][2].join(' ')}`,
+    )
   }
 }
 
 // R move: F[col2] -> U[col2] -> B[col0] -> D[col2] -> F[col2]
 // The issue is I need to trace this CORRECTLY using the 4-cycle.
-// 
+//
 // For a CW rotation of R:
 // - The right column of F goes UP to U
-// - The right column of U goes BACK to B  
+// - The right column of U goes BACK to B
 // - The left column (in net) of B goes DOWN to D
 // - The right column of D goes FRONT to F
 //
@@ -76,7 +102,7 @@ function printState(p, label) {
 //
 // After R CW:
 // - F[0][2]=12 goes UP to U front-right = U[2][2]
-// - F[1][2]=15 goes UP to U mid-right = U[1][2]  
+// - F[1][2]=15 goes UP to U mid-right = U[1][2]
 // - F[2][2]=18 goes UP to U back-right = U[0][2]
 //
 // - U[0][2]=3 goes BACK to B top-right physical = B[0][0]
@@ -124,50 +150,50 @@ function printState(p, label) {
 function applyR(p) {
   const n = clonePieceState(p)
   n.R = rotateFaceCW(p.R)
-  
+
   // Save the 4 edges involved
   const f = [p.F[0][2], p.F[1][2], p.F[2][2]]
   const u = [p.U[0][2], p.U[1][2], p.U[2][2]]
-  const b = [p.B[0][0], p.B[1][0], p.B[2][0]]  // physical right column
+  const b = [p.B[0][0], p.B[1][0], p.B[2][0]] // physical right column
   const d = [p.D[0][2], p.D[1][2], p.D[2][2]]
-  
+
   // Cycle: U -> F -> D -> B -> U
   // U[2][2] -> F[0][2]
   n.F[0][2] = u[2]
   n.F[1][2] = u[1]
   n.F[2][2] = u[0]
-  
+
   // F -> D
   n.D[0][2] = f[0]
   n.D[1][2] = f[1]
   n.D[2][2] = f[2]
-  
+
   // D -> B (reversed: D[0] -> B[2], D[2] -> B[0])
   n.B[2][0] = d[0]
   n.B[1][0] = d[1]
   n.B[0][0] = d[2]
-  
+
   // B -> U (reversed: B[0] -> U[0], B[2] -> U[2])
   n.U[0][2] = b[0]
   n.U[1][2] = b[1]
   n.U[2][2] = b[2]
-  
+
   return n
 }
 
 // Test R^4
-console.log("Testing R^4 = identity:")
-let solved = createSolvedPieceState()
+console.log('Testing R^4 = identity:')
+const solved = createSolvedPieceState()
 let c = solved
-printState(c, "Initial")
+printState(c, 'Initial')
 for (let i = 1; i <= 4; i++) {
   c = applyR(c)
   printState(c, `After R^${i}`)
 }
-console.log("\nR^4 = I:", piecesEqual(c, solved) ? "PASS" : "FAIL")
+console.log('\nR^4 = I:', piecesEqual(c, solved) ? 'PASS' : 'FAIL')
 
 // Now trace positions
-console.log("\n\nTracing position 12 (F[0][2]) through R moves:")
+console.log('\n\nTracing position 12 (F[0][2]) through R moves:')
 c = solved
 for (let i = 0; i < 4; i++) {
   // Find where 12 is

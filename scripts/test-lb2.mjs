@@ -3,7 +3,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
   return true
@@ -16,8 +18,8 @@ function cycle4(cube, a, b, c, d) {
   cube[b] = temp
 }
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 function applyR(cube) {
@@ -91,20 +93,22 @@ function applyB_v3(cube) {
 
 function testAll(applyL, applyB) {
   const MOVES = { R: applyR, L: applyL, U: applyU, D: applyD, F: applyF, B: applyB }
-  
+
   function applyMove(cube, move) {
-    const face = move[0], mod = move.slice(1), fn = MOVES[face]
+    const face = move[0],
+      mod = move.slice(1),
+      fn = MOVES[face]
     if (!fn) return cube
     let r = cube
-    if (mod === "") r = fn(r)
+    if (mod === '') r = fn(r)
     else if (mod === "'") r = fn(fn(fn(r)))
-    else if (mod === "2") r = fn(fn(r))
+    else if (mod === '2') r = fn(fn(r))
     return r
   }
 
   function applyAlg(cube, alg) {
     let r = cube
-    for (const m of alg.split(" ").filter(x => x)) r = applyMove(r, m)
+    for (const m of alg.split(' ').filter((x) => x)) r = applyMove(r, m)
     return r
   }
 
@@ -115,28 +119,28 @@ function testAll(applyL, applyB) {
       cube = applyAlg(cube, alg)
       if (cubesEqual(cube, solved)) return i
     }
-    return ">"+max
+    return '>' + max
   }
 
   const results = {
-    "RU": findOrder("R U R' U'"),
-    "FR": findOrder("F R F' R'"),
-    "LU": findOrder("L U L' U'"),
-    "LF": findOrder("L F L' F'"),
-    "BU": findOrder("B U B' U'"),
-    "BR": findOrder("B R B' R'"),
-    "BL": findOrder("B L B' L'"),
-    "TPerm": findOrder("R U R' U' R' F R2 U' R' U' R U R' F'"),
+    RU: findOrder("R U R' U'"),
+    FR: findOrder("F R F' R'"),
+    LU: findOrder("L U L' U'"),
+    LF: findOrder("L F L' F'"),
+    BU: findOrder("B U B' U'"),
+    BR: findOrder("B R B' R'"),
+    BL: findOrder("B L B' L'"),
+    TPerm: findOrder("R U R' U' R' F R2 U' R' U' R U R' F'"),
   }
   return results
 }
 
-console.log("L_v3 + B_v1:", testAll(applyL_v3, applyB_v1))
-console.log("L_v3 + B_v2:", testAll(applyL_v3, applyB_v2))
-console.log("L_v3 + B_v3:", testAll(applyL_v3, applyB_v3))
+console.log('L_v3 + B_v1:', testAll(applyL_v3, applyB_v1))
+console.log('L_v3 + B_v2:', testAll(applyL_v3, applyB_v2))
+console.log('L_v3 + B_v3:', testAll(applyL_v3, applyB_v3))
 
 // Need to find L that gives [L,U]=6. Let me try more L versions.
-console.log("\n--- Trying more L versions ---")
+console.log('\n--- Trying more L versions ---')
 
 function applyL_v5(cube) {
   const result = cloneCube(cube)
@@ -162,7 +166,7 @@ function applyL_v7(cube) {
   const result = cloneCube(cube)
   rotateFaceCW(result, 10)
   // Try mirror of R
-  // R is: cycle4(3, 39, 48, 21) 
+  // R is: cycle4(3, 39, 48, 21)
   // Mirror L should be: cycle4(1, 37, 46, 19) ?
   cycle4(result, 1, 37, 46, 19)
   cycle4(result, 4, 40, 49, 22)
@@ -180,7 +184,7 @@ function applyL_v8(cube) {
   return result
 }
 
-console.log("L_v5:", testAll(applyL_v5, applyB_v1))
-console.log("L_v6:", testAll(applyL_v6, applyB_v1))
-console.log("L_v7:", testAll(applyL_v7, applyB_v1))
-console.log("L_v8:", testAll(applyL_v8, applyB_v1))
+console.log('L_v5:', testAll(applyL_v5, applyB_v1))
+console.log('L_v6:', testAll(applyL_v6, applyB_v1))
+console.log('L_v7:', testAll(applyL_v7, applyB_v1))
+console.log('L_v8:', testAll(applyL_v8, applyB_v1))

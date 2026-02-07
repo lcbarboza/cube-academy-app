@@ -34,23 +34,119 @@
 
 // R move permutation (from Kociemba):
 const R_kociemba = [
-  0, 1, 20, 3, 4, 23, 6, 7, 26,  // U face: positions 2,5,8 get from F
-  11, 8, 9, 14, 10, 12, 17, 13, 15,  // R face rotates
-  18, 19, 29, 21, 22, 32, 24, 25, 35,  // F: positions 2,5,8 get from D
-  27, 28, 51, 30, 31, 48, 33, 34, 45,  // D: positions 2,5,8 get from B
-  36, 37, 38, 39, 40, 41, 42, 43, 44,  // L unchanged
-  2, 46, 47, 5, 49, 50, 8, 52, 53  // B: positions 0,3,6 get from U (reversed)
-];
+  0,
+  1,
+  20,
+  3,
+  4,
+  23,
+  6,
+  7,
+  26, // U face: positions 2,5,8 get from F
+  11,
+  8,
+  9,
+  14,
+  10,
+  12,
+  17,
+  13,
+  15, // R face rotates
+  18,
+  19,
+  29,
+  21,
+  22,
+  32,
+  24,
+  25,
+  35, // F: positions 2,5,8 get from D
+  27,
+  28,
+  51,
+  30,
+  31,
+  48,
+  33,
+  34,
+  45, // D: positions 2,5,8 get from B
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44, // L unchanged
+  2,
+  46,
+  47,
+  5,
+  49,
+  50,
+  8,
+  52,
+  53, // B: positions 0,3,6 get from U (reversed)
+]
 
 // U move permutation (from Kociemba):
 const U_kociemba = [
-  2, 5, 8, 1, 4, 7, 0, 3, 6,  // U face rotates
-  18, 19, 20, 12, 13, 14, 15, 16, 17,  // R: row0 gets from F
-  45, 46, 47, 21, 22, 23, 24, 25, 26,  // F: row0 gets from L  (WAIT, shouldn't F get from L for U move? Let me verify)
-  27, 28, 29, 30, 31, 32, 33, 34, 35,  // D unchanged
-  9, 10, 11, 39, 40, 41, 42, 43, 44,  // L: row0 gets from R... wait that's wrong for CW U
-  36, 37, 38, 48, 49, 50, 51, 52, 53  // B: row0 gets from L
-];
+  2,
+  5,
+  8,
+  1,
+  4,
+  7,
+  0,
+  3,
+  6, // U face rotates
+  18,
+  19,
+  20,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17, // R: row0 gets from F
+  45,
+  46,
+  47,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26, // F: row0 gets from L  (WAIT, shouldn't F get from L for U move? Let me verify)
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35, // D unchanged
+  9,
+  10,
+  11,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44, // L: row0 gets from R... wait that's wrong for CW U
+  36,
+  37,
+  38,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53, // B: row0 gets from L
+]
 
 // Actually let me look up the correct permutations...
 // The issue is I'm not sure of Kociemba's exact indexing
@@ -93,7 +189,7 @@ const U_kociemba = [
 // After R: UFR position gets the piece from DFR
 // DFR had stickers at D[0][2], F[2][2], R[2][0]
 // So after R:
-//   U[2][2] should have what was at F[0][2] (cubie rotated)... 
+//   U[2][2] should have what was at F[0][2] (cubie rotated)...
 //   No wait, the CUBIE moves, not individual stickers
 
 // Let me think more carefully:
@@ -116,6 +212,6 @@ const U_kociemba = [
 
 // This is the bug! The R move is shuffling stickers incorrectly!
 
-console.log("BUG FOUND: R move sticker transitions are wrong!");
-console.log("Our R: U[2][2] = F[2][2]_old");
-console.log("Correct R: U[2][2] = F[0][2]_old (or D[0][2]_old based on which cubie moves where)");
+console.log('BUG FOUND: R move sticker transitions are wrong!')
+console.log('Our R: U[2][2] = F[2][2]_old')
+console.log('Correct R: U[2][2] = F[0][2]_old (or D[0][2]_old based on which cubie moves where)')

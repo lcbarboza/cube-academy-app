@@ -33,11 +33,11 @@ export function formatTimeRunning(ms: number): string {
     const secondsStr = seconds.toString().padStart(2, '0')
     return `${minutes}:${secondsStr}.${deciseconds}`
   }
-  
+
   if (seconds >= 10) {
     return `${seconds}.${deciseconds}`
   }
-  
+
   return `${seconds}.${deciseconds}`
 }
 
@@ -58,24 +58,24 @@ export function formatTimeFinal(ms: number): string {
     const secondsStr = seconds.toString().padStart(2, '0')
     return `${minutes}:${secondsStr}.${msStr}`
   }
-  
+
   if (seconds >= 10) {
     return `${seconds}.${msStr}`
   }
-  
+
   return `${seconds}.${msStr}`
 }
 
 /**
  * Hook for managing a speedcubing timer with WCA-style interaction.
- * 
+ *
  * Interaction model:
  * 1. Press and hold spacebar (state: holding, display: red)
  * 2. After 300ms, timer is ready (state: ready, display: green)
  * 3. Release spacebar to start (state: running)
  * 4. Press any key to stop (state: stopped)
  * 5. Press spacebar again to restart cycle
- * 
+ *
  * @param onSolveComplete - Callback fired when timer stops with the final time
  */
 export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerResult {
@@ -218,9 +218,8 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
   }, [startTimer, stopTimer])
 
   // Format time based on state: running shows 1 decimal, stopped shows 3 decimals
-  const formattedTime = state === 'running' 
-    ? formatTimeRunning(elapsedMs) 
-    : formatTimeFinal(elapsedMs)
+  const formattedTime =
+    state === 'running' ? formatTimeRunning(elapsedMs) : formatTimeFinal(elapsedMs)
 
   return {
     state,

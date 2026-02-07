@@ -4,12 +4,12 @@
 //              01  02  03
 //              04  05  06
 //              07  08  09
-// 
+//
 // [ L (Left) ] [ F (Front)] [ R (Right)] [ B (Back) ]
 // 10  11  12   19  20  21   28  29  30   37  38  39
 // 13  14  15   22  23  24   31  32  33   40  41  42
 // 16  17  18   25  26  27   34  35  36   43  44  45
-// 
+//
 //              [ D (Down) ]
 //              46  47  48
 //              49  50  51
@@ -25,15 +25,15 @@ const stickers = {}
 
 // U face (y=1, varying x and z)
 // In the net, U row 0 is at back (z=-1), row 2 is at front (z=1)
-stickers[1] = { face: 'U', x: -1, y: 1, z: -1 }  // top-left = back-left
-stickers[2] = { face: 'U', x: 0, y: 1, z: -1 }   // top-center = back-center
-stickers[3] = { face: 'U', x: 1, y: 1, z: -1 }   // top-right = back-right
+stickers[1] = { face: 'U', x: -1, y: 1, z: -1 } // top-left = back-left
+stickers[2] = { face: 'U', x: 0, y: 1, z: -1 } // top-center = back-center
+stickers[3] = { face: 'U', x: 1, y: 1, z: -1 } // top-right = back-right
 stickers[4] = { face: 'U', x: -1, y: 1, z: 0 }
 stickers[5] = { face: 'U', x: 0, y: 1, z: 0 }
 stickers[6] = { face: 'U', x: 1, y: 1, z: 0 }
-stickers[7] = { face: 'U', x: -1, y: 1, z: 1 }   // bottom-left = front-left
+stickers[7] = { face: 'U', x: -1, y: 1, z: 1 } // bottom-left = front-left
 stickers[8] = { face: 'U', x: 0, y: 1, z: 1 }
-stickers[9] = { face: 'U', x: 1, y: 1, z: 1 }    // bottom-right = front-right
+stickers[9] = { face: 'U', x: 1, y: 1, z: 1 } // bottom-right = front-right
 
 // L face (x=-1, varying y and z)
 // row 0 is top (y=1), col 0 is back (z=-1)
@@ -74,9 +74,9 @@ stickers[36] = { face: 'R', x: 1, y: -1, z: -1 }
 // B face (z=-1, varying x and y)
 // Looking at B from behind, row 0 is top (y=1)
 // In the net, B is shown as if looking from behind, so col 0 is cube's right (x=1)
-stickers[37] = { face: 'B', x: 1, y: 1, z: -1 }   // net top-left = cube's back-right-top
+stickers[37] = { face: 'B', x: 1, y: 1, z: -1 } // net top-left = cube's back-right-top
 stickers[38] = { face: 'B', x: 0, y: 1, z: -1 }
-stickers[39] = { face: 'B', x: -1, y: 1, z: -1 }  // net top-right = cube's back-left-top
+stickers[39] = { face: 'B', x: -1, y: 1, z: -1 } // net top-right = cube's back-left-top
 stickers[40] = { face: 'B', x: 1, y: 0, z: -1 }
 stickers[41] = { face: 'B', x: 0, y: 0, z: -1 }
 stickers[42] = { face: 'B', x: -1, y: 0, z: -1 }
@@ -136,30 +136,48 @@ function getFaceFromCoord(coord) {
 
 function computeMove(moveName) {
   const perm = {}
-  
+
   for (let pos = 1; pos <= 54; pos++) {
     const s = stickers[pos]
     let onLayer = false
     let rotateFn = null
-    
+
     switch (moveName) {
-      case 'R': onLayer = s.x === 1; rotateFn = rotateX_CW; break
-      case 'L': onLayer = s.x === -1; rotateFn = (c) => { 
-        // L is CCW from positive x, which is CW from negative x
-        // Rotate 3 times CW = 1 time CCW
-        let r = rotateX_CW(rotateX_CW(rotateX_CW(c)))
-        return r
-      }; break
-      case 'U': onLayer = s.y === 1; rotateFn = rotateY_CW; break
-      case 'D': onLayer = s.y === -1; rotateFn = (c) => {
-        return rotateY_CW(rotateY_CW(rotateY_CW(c)))
-      }; break
-      case 'F': onLayer = s.z === 1; rotateFn = rotateZ_CW; break
-      case 'B': onLayer = s.z === -1; rotateFn = (c) => {
-        return rotateZ_CW(rotateZ_CW(rotateZ_CW(c)))
-      }; break
+      case 'R':
+        onLayer = s.x === 1
+        rotateFn = rotateX_CW
+        break
+      case 'L':
+        onLayer = s.x === -1
+        rotateFn = (c) => {
+          // L is CCW from positive x, which is CW from negative x
+          // Rotate 3 times CW = 1 time CCW
+          const r = rotateX_CW(rotateX_CW(rotateX_CW(c)))
+          return r
+        }
+        break
+      case 'U':
+        onLayer = s.y === 1
+        rotateFn = rotateY_CW
+        break
+      case 'D':
+        onLayer = s.y === -1
+        rotateFn = (c) => {
+          return rotateY_CW(rotateY_CW(rotateY_CW(c)))
+        }
+        break
+      case 'F':
+        onLayer = s.z === 1
+        rotateFn = rotateZ_CW
+        break
+      case 'B':
+        onLayer = s.z === -1
+        rotateFn = (c) => {
+          return rotateZ_CW(rotateZ_CW(rotateZ_CW(c)))
+        }
+        break
     }
-    
+
     if (onLayer) {
       const newCoord = rotateFn({ x: s.x, y: s.y, z: s.z })
       const newFace = getFaceFromCoord(newCoord)
@@ -170,7 +188,7 @@ function computeMove(moveName) {
       perm[pos] = pos
     }
   }
-  
+
   return perm
 }
 
@@ -192,7 +210,7 @@ function findCycles(perm) {
   return cycles
 }
 
-console.log("=== Derived moves from 3D coordinates ===\n")
+console.log('=== Derived moves from 3D coordinates ===\n')
 
 for (const move of ['R', 'U', 'F', 'L', 'D', 'B']) {
   const perm = computeMove(move)
@@ -201,7 +219,7 @@ for (const move of ['R', 'U', 'F', 'L', 'D', 'B']) {
   for (const cycle of cycles) {
     console.log(`  (${cycle.join(' -> ')})`)
   }
-  
+
   // Generate cycle4 calls
   console.log(`  // cycle4 calls:`)
   for (const cycle of cycles) {
@@ -213,13 +231,13 @@ for (const move of ['R', 'U', 'F', 'L', 'D', 'B']) {
 }
 
 // Verify by checking key relationships
-console.log("=== Verification ===")
-console.log("\nChecking that U7 and F19 share the same 3D location (UFL corner):")
-console.log("U7:", stickers[7])
-console.log("F19:", stickers[19])
-console.log("L12:", stickers[12])
+console.log('=== Verification ===')
+console.log('\nChecking that U7 and F19 share the same 3D location (UFL corner):')
+console.log('U7:', stickers[7])
+console.log('F19:', stickers[19])
+console.log('L12:', stickers[12])
 
-console.log("\nChecking that U9, F21, R28 share same corner (URF):")
-console.log("U9:", stickers[9])
-console.log("F21:", stickers[21])
-console.log("R28:", stickers[28])
+console.log('\nChecking that U9, F21, R28 share same corner (URF):')
+console.log('U9:', stickers[9])
+console.log('F21:', stickers[21])
+console.log('R28:', stickers[28])

@@ -3,7 +3,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cycle4(cube, a, b, c, d) {
   const temp = cube[a]
   cube[a] = cube[d]
@@ -12,8 +14,8 @@ function cycle4(cube, a, b, c, d) {
   cube[b] = temp
 }
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 function applyR_current(cube) {
@@ -25,27 +27,27 @@ function applyR_current(cube) {
   return result
 }
 
-let s = createSolvedCube()
-let r = applyR_current(s)
+const s = createSolvedCube()
+const r = applyR_current(s)
 
-console.log("After R (current implementation):")
-console.log("=== Top row ===")
-console.log("  Position 3 has value", r[3], "(expected 21)")
-console.log("  Position 39 has value", r[39], "(expected 3)")
-console.log("  Position 48 has value", r[48], "(expected 39)")
-console.log("  Position 21 has value", r[21], "(expected 48)")
+console.log('After R (current implementation):')
+console.log('=== Top row ===')
+console.log('  Position 3 has value', r[3], '(expected 21)')
+console.log('  Position 39 has value', r[39], '(expected 3)')
+console.log('  Position 48 has value', r[48], '(expected 39)')
+console.log('  Position 21 has value', r[21], '(expected 48)')
 
-console.log("=== Middle row ===")
-console.log("  Position 6 has value", r[6], "(expected 24)")
-console.log("  Position 42 has value", r[42], "(expected 6)")
-console.log("  Position 51 has value", r[51], "(expected 42)")
-console.log("  Position 24 has value", r[24], "(expected 51)")
+console.log('=== Middle row ===')
+console.log('  Position 6 has value', r[6], '(expected 24)')
+console.log('  Position 42 has value', r[42], '(expected 6)')
+console.log('  Position 51 has value', r[51], '(expected 42)')
+console.log('  Position 24 has value', r[24], '(expected 51)')
 
-console.log("=== Bottom row ===")
-console.log("  Position 9 has value", r[9], "(expected 27)")
-console.log("  Position 45 has value", r[45], "(expected 9)")
-console.log("  Position 54 has value", r[54], "(expected 45)")
-console.log("  Position 27 has value", r[27], "(expected 54)")
+console.log('=== Bottom row ===')
+console.log('  Position 9 has value', r[9], '(expected 27)')
+console.log('  Position 45 has value', r[45], '(expected 9)')
+console.log('  Position 54 has value', r[54], '(expected 45)')
+console.log('  Position 27 has value', r[27], '(expected 54)')
 
 // The expectations above are WRONG. Let me reconsider.
 // R CW (from right): F->U->B->D->F
@@ -56,14 +58,14 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 
 // But wait, this doesnt account for the orientation flip on B!
 // When a sticker goes from U to B, does it flip?
-// 
+//
 // U right column: 3 (row 0), 6 (row 1), 9 (row 2) - top to bottom
 // B right column: 39 (row 0), 42 (row 1), 45 (row 2) - in the net, but physically this is also top to bottom when looking from behind
-// 
+//
 // When R turns CW:
 // - U3 (top of U right col) goes to B39 (top of B right col) - no flip needed, both are "top" positions
 // - U9 (bottom of U right col) goes to B45 (bottom of B right col)
-// 
+//
 // OK so no flip for U->B. What about B->D?
 // B right col: 39, 42, 45 (top to bottom when looking from behind)
 // D right col: 48, 51, 54 (row 0 to row 2)
@@ -91,14 +93,14 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 //              01  02  03
 //              04  05  06
 //              07  08  09
-// 
+//
 // U row 0 (1,2,3) is at the TOP of the diagram, which connects to B.
 // U row 2 (7,8,9) is at the BOTTOM of the diagram, which connects to F.
 // So U right col is: 3 (back/top of diagram), 6 (middle), 9 (front/bottom of diagram)
-// 
+//
 // For R CW:
 // F21 (top of F right col, adjacent to U) goes UP. "Up" means it goes to U face.
-// But which position on U? 
+// But which position on U?
 // F21 is at the top-right of F, which is the front-right corner of the top layer (when looking at the cube).
 // After R CW, this corner moves to back-right of top layer.
 // Back-right of U is... U3 (row 0, col 2)!
@@ -109,7 +111,7 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 // - F is in front
 // - U is on top, with row 0 at the back and row 2 at the front
 // - R is on the right
-// 
+//
 // R CW (from right side view):
 // - Front face (F) moves UP (to U)
 // - Top face (U) moves BACK (to B)
@@ -124,7 +126,7 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 // For the corner sticker U3 (top-right of U, at back-right of cube):
 // - After R CW, back-right-top goes to back-right-bottom = B face
 // - B right col in net is 39, 42, 45. The top of this (physically at top when looking from behind) is 39.
-// - But wait, U3 is at back-right-TOP, and after R it goes to back-right-??? 
+// - But wait, U3 is at back-right-TOP, and after R it goes to back-right-???
 // - From right view: top-back goes to mid-back? No, it goes to back-top on B!
 // - B39 is top-right of B. So U3 -> B39. Position 39 gets value 3. CORRECT!
 
@@ -149,7 +151,7 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 
 // Let me reconsider the cycles:
 // For the top row of R-adjacent faces (positions 3, 39, 48, 21):
-// These are NOT all part of the same corner! 
+// These are NOT all part of the same corner!
 // - Position 3: U3 is part of UBR corner
 // - Position 39: B39 is part of... UBR corner? Or URF corner?
 //   Looking at the net, B39 is top-right of B. Which corner is that?
@@ -160,7 +162,7 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 //   But in the net, B is flipped! B left side in net = cubes right, B right side in net = cubes left.
 //   So B39 (net right) = cubes left = UBL corner!
 //   And B37 (net left) = cubes right = UBR corner!
-//   
+//
 // So position 39 is part of UBL corner, not UBR!
 // And position 37 is part of UBR corner!
 
@@ -168,7 +170,7 @@ console.log("  Position 27 has value", r[27], "(expected 54)")
 // R should use B37, B40, B43, not B39, B42, B45!
 
 // Let me test this:
-console.log("\n=== Testing alternate R move ===")
+console.log('\n=== Testing alternate R move ===')
 
 function applyR_alt(cube) {
   const result = cloneCube(cube)
@@ -180,11 +182,11 @@ function applyR_alt(cube) {
   return result
 }
 
-let r_alt = applyR_alt(s)
+const r_alt = applyR_alt(s)
 // Check R^4 = identity
 let c = s
 for (let i = 0; i < 4; i++) c = applyR_alt(c)
-console.log("R_alt^4 = identity:", JSON.stringify(c) === JSON.stringify(s) ? "PASS" : "FAIL")
+console.log('R_alt^4 = identity:', JSON.stringify(c) === JSON.stringify(s) ? 'PASS' : 'FAIL')
 
 // Check [R,U]^6 = identity
 function applyU(cube) {
@@ -203,9 +205,9 @@ for (let i = 0; i < 6; i++) {
   c = applyR_alt(applyR_alt(applyR_alt(c)))
   c = applyU(applyU(applyU(c)))
 }
-console.log("[R_alt,U]^6 = identity:", JSON.stringify(c) === JSON.stringify(s) ? "PASS" : "FAIL")
+console.log('[R_alt,U]^6 = identity:', JSON.stringify(c) === JSON.stringify(s) ? 'PASS' : 'FAIL')
 
 // Check R_alt * R_alt_inverse = identity
 c = applyR_alt(s)
 c = applyR_alt(applyR_alt(applyR_alt(c)))
-console.log("R_alt * R_alt' = identity:", JSON.stringify(c) === JSON.stringify(s) ? "PASS" : "FAIL")
+console.log("R_alt * R_alt' = identity:", JSON.stringify(c) === JSON.stringify(s) ? 'PASS' : 'FAIL')

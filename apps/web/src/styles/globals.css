@@ -16,13 +16,13 @@
   --void-deep: #050510;
   --void-mid: #0a0a1a;
   --void-surface: #12122a;
-  
+
   /* Neon accents */
   --neon-cyan: #00fff2;
   --neon-magenta: #ff00ff;
   --neon-orange: #ff6b00;
   --neon-yellow: #ffe600;
-  
+
   /* Cube face colors (enhanced for glow) */
   --cube-white: #ffffff;
   --cube-yellow: #ffd000;
@@ -30,27 +30,27 @@
   --cube-red: #ff0040;
   --cube-green: #00ff88;
   --cube-blue: #0088ff;
-  
+
   /* Text */
   --text-primary: #ffffff;
   --text-secondary: #8888aa;
   --text-muted: #555577;
-  
+
   /* Panels */
   --panel-bg: rgba(18, 18, 42, 0.6);
   --panel-border: rgba(255, 255, 255, 0.05);
   --panel-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  
+
   /* Buttons */
   --btn-bg: rgba(255, 255, 255, 0.05);
   --btn-border: rgba(255, 255, 255, 0.2);
   --btn-hover-bg: rgba(0, 255, 242, 0.1);
-  
+
   /* Glow effects */
   --glow-cyan: 0 0 20px rgba(0, 255, 242, 0.5), 0 0 40px rgba(0, 255, 242, 0.3);
   --glow-magenta: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 40px rgba(255, 0, 255, 0.3);
   --glow-soft: 0 0 30px rgba(255, 255, 255, 0.1);
-  
+
   /* Scrollbar */
   --scrollbar-track: var(--void-mid);
   --scrollbar-thumb: var(--text-muted);
@@ -65,13 +65,13 @@
   --void-deep: #f8fafc;
   --void-mid: #f1f5f9;
   --void-surface: #ffffff;
-  
+
   /* Adjusted accents for light mode - deeper for contrast */
   --neon-cyan: #0891b2;
   --neon-magenta: #c026d3;
   --neon-orange: #ea580c;
   --neon-yellow: #ca8a04;
-  
+
   /* Cube face colors (richer for light bg) */
   --cube-white: #ffffff;
   --cube-yellow: #eab308;
@@ -79,27 +79,27 @@
   --cube-red: #ef4444;
   --cube-green: #22c55e;
   --cube-blue: #3b82f6;
-  
+
   /* Text */
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
-  
+
   /* Panels */
   --panel-bg: rgba(255, 255, 255, 0.8);
   --panel-border: rgba(0, 0, 0, 0.08);
   --panel-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  
+
   /* Buttons */
   --btn-bg: rgba(0, 0, 0, 0.03);
   --btn-border: rgba(0, 0, 0, 0.15);
   --btn-hover-bg: rgba(8, 145, 178, 0.1);
-  
+
   /* Adjusted glows for light mode - subtle shadows */
   --glow-cyan: 0 4px 20px rgba(8, 145, 178, 0.25);
   --glow-magenta: 0 4px 20px rgba(192, 38, 211, 0.25);
   --glow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
-  
+
   /* Scrollbar */
   --scrollbar-track: #e2e8f0;
   --scrollbar-thumb: #cbd5e1;
@@ -112,7 +112,7 @@
 @layer base {
   html {
     @apply antialiased;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 
   body {
@@ -147,15 +147,15 @@
    ============================================ */
 
 .font-display {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 .font-mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 .font-timer {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: "Share Tech Mono", monospace;
 }
 
 .text-glow-cyan {
@@ -174,8 +174,7 @@
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: 
-    radial-gradient(ellipse at 20% 20%, rgba(0, 255, 242, 0.03) 0%, transparent 50%),
+  background: radial-gradient(ellipse at 20% 20%, rgba(0, 255, 242, 0.03) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 80%, rgba(255, 0, 255, 0.03) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(255, 107, 0, 0.02) 0%, transparent 40%),
     linear-gradient(180deg, var(--void-deep) 0%, var(--void-mid) 100%);
@@ -183,11 +182,10 @@
 
 /* Animated stars */
 .cosmic-bg::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+  background-image: radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
     radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.5), transparent),
     radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.7), transparent),
     radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 242, 0.6), transparent),
@@ -202,14 +200,18 @@
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.9; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
 }
 
 /* Light theme cosmic bg override */
 .light-theme .cosmic-bg {
-  background: 
-    radial-gradient(ellipse at 20% 20%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
+  background: radial-gradient(ellipse at 20% 20%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 80%, rgba(192, 38, 211, 0.05) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(234, 88, 12, 0.03) 0%, transparent 40%),
     linear-gradient(180deg, var(--void-deep) 0%, var(--void-mid) 100%);
@@ -241,11 +243,7 @@
 
 /* Light theme cube halo */
 .light-theme .cube-halo {
-  background: radial-gradient(
-    circle,
-    rgba(234, 179, 8, 0.15) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, transparent 70%);
 }
 
 /* Light theme logo */
@@ -270,7 +268,7 @@
 }
 
 .glass-panel-glow::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -1px;
   border-radius: 17px;
@@ -281,9 +279,7 @@
     transparent 50%,
     rgba(255, 0, 255, 0.3) 100%
   );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -306,15 +302,10 @@
 }
 
 .cube-arena::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    transparent 60%,
-    rgba(0, 255, 242, 0.02) 100%
-  );
+  background: linear-gradient(180deg, transparent 0%, transparent 60%, rgba(0, 255, 242, 0.02) 100%);
   pointer-events: none;
 }
 
@@ -326,19 +317,22 @@
   transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 230, 0, 0.1) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgba(255, 230, 0, 0.1) 0%, transparent 70%);
   filter: blur(30px);
   pointer-events: none;
   animation: pulse-slow 4s ease-in-out infinite;
 }
 
 @keyframes pulse-slow {
-  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 /* ============================================
@@ -348,7 +342,7 @@
 .btn-neon {
   position: relative;
   padding: 12px 24px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
@@ -363,7 +357,7 @@
 }
 
 .btn-neon::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: var(--neon-cyan);
@@ -476,7 +470,7 @@
   width: 48px;
   height: 48px;
   padding: 0;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
@@ -519,7 +513,7 @@
 
 .speed-btn {
   padding: 6px 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 12px;
   font-weight: 500;
   border-radius: 6px;
@@ -576,7 +570,8 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(0, 255, 242, 0.3);
   }
   50% {
@@ -593,10 +588,18 @@
 }
 
 /* Staggered animations */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
 
 /* ============================================
    COMPONENT UTILITIES
@@ -654,7 +657,7 @@
 }
 
 .nav-link {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -688,7 +691,7 @@
   border: 1px solid var(--panel-border);
   background: var(--btn-bg);
   color: var(--text-secondary);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -725,7 +728,7 @@
 }
 
 .timer-display {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: "Share Tech Mono", monospace;
   font-size: clamp(5rem, 18vw, 10rem);
   font-weight: 400;
   letter-spacing: 0.08em;
@@ -765,13 +768,17 @@
 }
 
 @keyframes timer-pulse {
-  0% { opacity: 0.9; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .timer-hint {
   margin-top: 1.5rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.875rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -797,7 +804,7 @@
 
 /* Scramble display for timer page */
 .timer-scramble {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -814,7 +821,7 @@
    ============================================ */
 
 .scramble-display-connected {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -834,7 +841,7 @@
 }
 
 .scramble-display-connected::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
@@ -1019,7 +1026,7 @@
 }
 
 .transition-timer-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -1050,16 +1057,12 @@
 }
 
 .modal-content {
-  box-shadow: 
-    0 0 0 1px rgba(0, 255, 242, 0.1),
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 100px rgba(0, 255, 242, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 255, 242, 0.1), 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 100px
+    rgba(0, 255, 242, 0.1);
 }
 
 .light-theme .modal-content {
-  box-shadow: 
-    0 0 0 1px rgba(0, 0, 0, 0.05),
-    0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
@@ -1080,19 +1083,14 @@
 }
 
 .hud-stats-bar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 200px;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--neon-cyan) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 50%, transparent 100%);
 }
 
 .light-theme .hud-stats-bar {
@@ -1106,12 +1104,7 @@
 }
 
 .light-theme .hud-stats-bar::before {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--neon-cyan) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, var(--neon-cyan) 50%, transparent 100%);
 }
 
 .hud-stat-item {
@@ -1122,7 +1115,7 @@
 }
 
 .hud-stat-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
@@ -1135,7 +1128,7 @@
 }
 
 .hud-stat-value {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: "Share Tech Mono", monospace;
   font-size: 18px;
   font-weight: 400;
   color: var(--text-primary);
@@ -1155,12 +1148,7 @@
 .hud-stat-divider {
   width: 1px;
   height: 32px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--text-muted) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(180deg, transparent 0%, var(--text-muted) 50%, transparent 100%);
   opacity: 0.3;
 }
 
@@ -1267,14 +1255,10 @@
 }
 
 .solve-chip::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    transparent 50%
-  );
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
   pointer-events: none;
 }
 

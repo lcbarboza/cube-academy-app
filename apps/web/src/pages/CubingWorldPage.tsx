@@ -3,7 +3,17 @@ import { SEO, pageSEO } from '@/components/seo'
 import { Logo } from '@/components/ui'
 import { useScramble } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
-import { Moon, Pause, Play, RotateCcw, Shuffle, SkipBack, SkipForward, Sun, Timer } from 'lucide-react'
+import {
+  Moon,
+  Pause,
+  Play,
+  RotateCcw,
+  Shuffle,
+  SkipBack,
+  SkipForward,
+  Sun,
+  Timer,
+} from 'lucide-react'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -15,10 +25,10 @@ const SPEED_OPTIONS: SpeedOption[] = [0.5, 1, 2, 4]
 export function CubingWorldPage() {
   const { t, i18n } = useTranslation()
   const { isDark, toggleTheme } = useTheme()
-  
+
   // Get SEO content for current language
   const seoContent = pageSEO.home[i18n.language as keyof typeof pageSEO.home] || pageSEO.home.en
-  
+
   // Use shared scramble context
   const {
     scramble,
@@ -65,20 +75,18 @@ export function CubingWorldPage() {
   const canReset = (currentIndex >= 0 || isPlaying) && !isAnimating
 
   // Progress calculation
-  const progress = moves.length > 0 
-    ? ((currentIndex + 1) / moves.length) * 100 
-    : 0
+  const progress = moves.length > 0 ? ((currentIndex + 1) / moves.length) * 100 : 0
 
   return (
     <div className="min-h-screen relative">
       {/* SEO Meta Tags */}
-      <SEO 
+      <SEO
         title={seoContent.title}
         description={seoContent.description}
         keywords={seoContent.keywords}
         canonical="/"
       />
-      
+
       {/* Cosmic background */}
       <div className="cosmic-bg" />
 
@@ -104,8 +112,12 @@ export function CubingWorldPage() {
               type="button"
               onClick={toggleTheme}
               className="settings-btn"
-              aria-label={isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')}
-              title={isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')}
+              aria-label={
+                isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')
+              }
+              title={
+                isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')
+              }
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -159,17 +171,16 @@ export function CubingWorldPage() {
             {/* Progress bar */}
             <div className="mt-4 px-2">
               <div className="progress-track">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.max(0, progress)}%` }} 
-                />
+                <div className="progress-fill" style={{ width: `${Math.max(0, progress)}%` }} />
               </div>
               <div className="flex justify-between mt-2 text-xs font-mono text-[var(--text-muted)]">
-                <span>{Math.max(0, currentIndex + 1)} / {moves.length}</span>
+                <span>
+                  {Math.max(0, currentIndex + 1)} / {moves.length}
+                </span>
                 <span>
                   {currentIndex >= moves.length - 1 && moves.length > 0
                     ? t('player.complete', 'Complete')
-                    : currentIndex < 0 
+                    : currentIndex < 0
                       ? t('player.ready', 'Ready')
                       : t('player.inProgress', 'In Progress')}
                 </span>
@@ -294,7 +305,10 @@ export function CubingWorldPage() {
 
             {/* Instructions */}
             <p className="text-center text-xs text-[var(--text-muted)] font-mono leading-relaxed px-4">
-              {t('scramble.instructions', 'Click on any move to jump to that position, or use the controls to step through the sequence.')}
+              {t(
+                'scramble.instructions',
+                'Click on any move to jump to that position, or use the controls to step through the sequence.',
+              )}
             </p>
           </div>
         </div>

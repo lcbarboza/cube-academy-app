@@ -16,7 +16,8 @@ export function PageTransition({ children }: PageTransitionProps) {
     const connectedRoutes = ['/', '/timer']
     const isFromConnected = connectedRoutes.includes(previousPathRef.current)
     const isToConnected = connectedRoutes.includes(location.pathname)
-    const shouldAnimate = isFromConnected && isToConnected && previousPathRef.current !== location.pathname
+    const shouldAnimate =
+      isFromConnected && isToConnected && previousPathRef.current !== location.pathname
 
     if (shouldAnimate) {
       // Use View Transitions API if available

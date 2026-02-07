@@ -1,8 +1,5 @@
 // Debug sexy move
-import { 
-  createSolvedCube, 
-  applyMove
-} from '../apps/web/src/lib/cube-state.ts'
+import { applyMove, createSolvedCube } from '../apps/web/src/lib/cube-state.ts'
 
 function printCube(cube, label) {
   console.log(`\n${label}:`)
@@ -19,11 +16,11 @@ let c = solved
 
 // R
 c = applyMove(c, 'R')
-printCube(c, "After R")
+printCube(c, 'After R')
 
 // U
 c = applyMove(c, 'U')
-printCube(c, "After R U")
+printCube(c, 'After R U')
 
 // R'
 c = applyMove(c, "R'")

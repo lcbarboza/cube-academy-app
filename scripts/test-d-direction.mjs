@@ -2,7 +2,7 @@
 
 // Standard D move (clockwise when looking at D from below):
 // The bottom row of each face cycles: F -> R -> B -> L -> F
-// 
+//
 // Think of it this way: when you look at the D face from below
 // and rotate it clockwise, the front edge goes to the right.
 
@@ -71,14 +71,14 @@
 // This means the cycle should be F -> R -> B -> L -> F!
 // Our code has F -> L, which is backwards!
 
-console.log("D move cycle analysis:");
-console.log("Current code: F[row2] -> L[row2] -> B[row2] -> R[row2] -> F[row2]");
-console.log("This is BACKWARDS!");
-console.log("");
-console.log("Correct cycle: F[row2] -> R[row2] -> B[row2] -> L[row2] -> F[row2]");
-console.log("");
-console.log("When D rotates CW (viewed from below):");
-console.log("  DF edge (F[2][1]) moves to DR position (R[2][1])");
-console.log("  DR edge (R[2][1]) moves to DB position (B[2][1])");
-console.log("  DB edge (B[2][1]) moves to DL position (L[2][1])");
-console.log("  DL edge (L[2][1]) moves to DF position (F[2][1])");
+console.log('D move cycle analysis:')
+console.log('Current code: F[row2] -> L[row2] -> B[row2] -> R[row2] -> F[row2]')
+console.log('This is BACKWARDS!')
+console.log('')
+console.log('Correct cycle: F[row2] -> R[row2] -> B[row2] -> L[row2] -> F[row2]')
+console.log('')
+console.log('When D rotates CW (viewed from below):')
+console.log('  DF edge (F[2][1]) moves to DR position (R[2][1])')
+console.log('  DR edge (R[2][1]) moves to DB position (B[2][1])')
+console.log('  DB edge (B[2][1]) moves to DL position (L[2][1])')
+console.log('  DL edge (L[2][1]) moves to DF position (F[2][1])')

@@ -30,9 +30,7 @@ export function SolveHistoryPanel({ compact = false }: SolveHistoryPanelProps) {
       if (selectedSolve) {
         updatePenalty(selectedSolve.solve.id, penalty)
         // Update the local selected solve to reflect the change
-        setSelectedSolve((prev) =>
-          prev ? { ...prev, solve: { ...prev.solve, penalty } } : null,
-        )
+        setSelectedSolve((prev) => (prev ? { ...prev, solve: { ...prev.solve, penalty } } : null))
       }
     },
     [selectedSolve, updatePenalty],
@@ -197,7 +195,7 @@ interface SolveChipProps {
 function SolveChip({ solve, index, onClick }: SolveChipProps) {
   const isDnf = solve.penalty === 'dnf'
   const hasPenalty = solve.penalty !== 'none'
-  
+
   const effectiveTime = getEffectiveTime(solve)
   const displayTime = isDnf ? 'DNF' : formatTimeFinal(effectiveTime)
 
@@ -209,11 +207,12 @@ function SolveChip({ solve, index, onClick }: SolveChipProps) {
         solve-chip shrink-0 px-3 py-2 rounded-lg font-mono text-sm
         border transition-all duration-200 cursor-pointer
         hover:scale-105 hover:shadow-lg
-        ${isDnf 
-          ? 'border-[var(--neon-red)]/40 text-[var(--neon-red)] bg-[var(--neon-red)]/5 hover:bg-[var(--neon-red)]/10' 
-          : hasPenalty 
-            ? 'border-[var(--neon-yellow)]/40 text-[var(--neon-yellow)] bg-[var(--neon-yellow)]/5 hover:bg-[var(--neon-yellow)]/10'
-            : 'border-[var(--glass-border)] text-[var(--text-primary)] bg-[var(--glass-bg)] hover:border-[var(--neon-cyan)]/50 hover:bg-[var(--neon-cyan)]/5'
+        ${
+          isDnf
+            ? 'border-[var(--neon-red)]/40 text-[var(--neon-red)] bg-[var(--neon-red)]/5 hover:bg-[var(--neon-red)]/10'
+            : hasPenalty
+              ? 'border-[var(--neon-yellow)]/40 text-[var(--neon-yellow)] bg-[var(--neon-yellow)]/5 hover:bg-[var(--neon-yellow)]/10'
+              : 'border-[var(--glass-border)] text-[var(--text-primary)] bg-[var(--glass-bg)] hover:border-[var(--neon-cyan)]/50 hover:bg-[var(--neon-cyan)]/5'
         }
       `}
     >
@@ -240,7 +239,9 @@ function StatRow({ label, value, isBest }: StatRowProps) {
 
   return (
     <div className="flex items-center justify-between">
-      <span className={`text-[10px] font-mono uppercase tracking-wider ${isBest ? 'text-[var(--neon-green)]' : 'text-[var(--text-muted)]'}`}>
+      <span
+        className={`text-[10px] font-mono uppercase tracking-wider ${isBest ? 'text-[var(--neon-green)]' : 'text-[var(--text-muted)]'}`}
+      >
         {label}
       </span>
       <span
@@ -278,9 +279,11 @@ interface SolveRowItemProps {
 function SolveRowItem({ solve, index, onClick }: SolveRowItemProps) {
   const isDnf = solve.penalty === 'dnf'
   const hasPenalty = solve.penalty !== 'none'
-  
+
   const effectiveTime = getEffectiveTime(solve)
-  const displayTime = isDnf ? 'DNF' : `${formatTimeFinal(effectiveTime)}${solve.penalty === '+2' ? '+' : ''}`
+  const displayTime = isDnf
+    ? 'DNF'
+    : `${formatTimeFinal(effectiveTime)}${solve.penalty === '+2' ? '+' : ''}`
 
   return (
     <button
@@ -291,9 +294,7 @@ function SolveRowItem({ solve, index, onClick }: SolveRowItemProps) {
         border border-transparent hover:border-[var(--glass-border)]
         group cursor-pointer text-left"
     >
-      <span className="text-xs font-mono text-[var(--text-muted)] w-8 shrink-0">
-        {index}.
-      </span>
+      <span className="text-xs font-mono text-[var(--text-muted)] w-8 shrink-0">{index}.</span>
       <span
         className={`font-mono text-sm flex-1 text-right ${
           isDnf
@@ -312,12 +313,7 @@ function SolveRowItem({ solve, index, onClick }: SolveRowItemProps) {
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </span>
     </button>

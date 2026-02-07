@@ -5,7 +5,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
   return true
@@ -20,8 +22,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 // Generate R versions
@@ -29,7 +31,7 @@ function makeR(bCol, dir) {
   // bCol: 0 = use 37,40,43; 1 = use 39,42,45
   // dir: 0 = original order; 1 = reversed order
   const b = bCol === 0 ? [37, 40, 43] : [39, 42, 45]
-  return function(cube) {
+  return (cube) => {
     const result = cloneCube(cube)
     rotateFaceCW(result, 28)
     if (dir === 0) {
@@ -47,7 +49,7 @@ function makeR(bCol, dir) {
 
 // Generate U versions
 function makeU(dir) {
-  return function(cube) {
+  return (cube) => {
     const result = cloneCube(cube)
     rotateFaceCW(result, 1)
     if (dir === 0) {
@@ -65,7 +67,7 @@ function makeU(dir) {
 
 // Generate F versions
 function makeF(dir) {
-  return function(cube) {
+  return (cube) => {
     const result = cloneCube(cube)
     rotateFaceCW(result, 19)
     if (dir === 0) {
@@ -83,20 +85,22 @@ function makeF(dir) {
 
 function testCombination(applyR, applyU, applyF) {
   const MOVES = { R: applyR, U: applyU, F: applyF }
-  
+
   function applyMove(cube, move) {
-    const face = move[0], mod = move.slice(1), fn = MOVES[face]
+    const face = move[0],
+      mod = move.slice(1),
+      fn = MOVES[face]
     if (!fn) return cube
     let r = cube
-    if (mod === "") r = fn(r)
+    if (mod === '') r = fn(r)
     else if (mod === "'") r = fn(fn(fn(r)))
-    else if (mod === "2") r = fn(fn(r))
+    else if (mod === '2') r = fn(fn(r))
     return r
   }
 
   function applyAlg(cube, alg) {
     let r = cube
-    for (const m of alg.split(" ").filter(x => x)) r = applyMove(r, m)
+    for (const m of alg.split(' ').filter((x) => x)) r = applyMove(r, m)
     return r
   }
 
@@ -118,8 +122,8 @@ function testCombination(applyR, applyU, applyF) {
   }
 }
 
-console.log("Testing all combinations of R(bCol,dir), U(dir), F(dir):")
-console.log("Looking for: RU=6, FR=6, FU=6, TPerm=2\n")
+console.log('Testing all combinations of R(bCol,dir), U(dir), F(dir):')
+console.log('Looking for: RU=6, FR=6, FU=6, TPerm=2\n')
 
 for (let rBCol = 0; rBCol <= 1; rBCol++) {
   for (let rDir = 0; rDir <= 1; rDir++) {
@@ -127,10 +131,10 @@ for (let rBCol = 0; rBCol <= 1; rBCol++) {
       for (let fDir = 0; fDir <= 1; fDir++) {
         const result = testCombination(makeR(rBCol, rDir), makeU(uDir), makeF(fDir))
         const label = `R(${rBCol},${rDir}) U(${uDir}) F(${fDir})`
-        
+
         // Only print if all commutators are correct OR if T-Perm is close to 2
         if ((result.RU === 6 && result.FR === 6 && result.FU === 6) || result.TPerm <= 10) {
-          console.log(label + ":", result)
+          console.log(label + ':', result)
         }
       }
     }

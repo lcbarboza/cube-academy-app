@@ -1,9 +1,3 @@
-// Debug F move by tracing stickers
-import { 
-  createSolvedCube, 
-  applyMove
-} from '../apps/web/src/lib/cube-state.ts'
-
 function tracePiece(cube, color) {
   for (const face of ['U', 'F', 'R', 'B', 'L', 'D']) {
     for (let r = 0; r < 3; r++) {
@@ -20,12 +14,36 @@ function tracePiece(cube, color) {
 // Create a marked cube where we can track positions
 function createMarkedCube() {
   return {
-    U: [['U00', 'U01', 'U02'], ['U10', 'U11', 'U12'], ['U20', 'U21', 'U22']],
-    D: [['D00', 'D01', 'D02'], ['D10', 'D11', 'D12'], ['D20', 'D21', 'D22']],
-    F: [['F00', 'F01', 'F02'], ['F10', 'F11', 'F12'], ['F20', 'F21', 'F22']],
-    B: [['B00', 'B01', 'B02'], ['B10', 'B11', 'B12'], ['B20', 'B21', 'B22']],
-    R: [['R00', 'R01', 'R02'], ['R10', 'R11', 'R12'], ['R20', 'R21', 'R22']],
-    L: [['L00', 'L01', 'L02'], ['L10', 'L11', 'L12'], ['L20', 'L21', 'L22']],
+    U: [
+      ['U00', 'U01', 'U02'],
+      ['U10', 'U11', 'U12'],
+      ['U20', 'U21', 'U22'],
+    ],
+    D: [
+      ['D00', 'D01', 'D02'],
+      ['D10', 'D11', 'D12'],
+      ['D20', 'D21', 'D22'],
+    ],
+    F: [
+      ['F00', 'F01', 'F02'],
+      ['F10', 'F11', 'F12'],
+      ['F20', 'F21', 'F22'],
+    ],
+    B: [
+      ['B00', 'B01', 'B02'],
+      ['B10', 'B11', 'B12'],
+      ['B20', 'B21', 'B22'],
+    ],
+    R: [
+      ['R00', 'R01', 'R02'],
+      ['R10', 'R11', 'R12'],
+      ['R20', 'R21', 'R22'],
+    ],
+    L: [
+      ['L00', 'L01', 'L02'],
+      ['L10', 'L11', 'L12'],
+      ['L20', 'L21', 'L22'],
+    ],
   }
 }
 
@@ -42,7 +60,7 @@ function traceMarkedPiece(cube, marker) {
   return 'not found'
 }
 
-console.log("Tracing F move cycles")
+console.log('Tracing F move cycles')
 
 const marked = createMarkedCube()
 
@@ -56,7 +74,7 @@ function applyFManual(cube) {
     R: [[...cube.R[0]], [...cube.R[1]], [...cube.R[2]]],
     L: [[...cube.L[0]], [...cube.L[1]], [...cube.L[2]]],
   }
-  
+
   // Rotate F face CW
   newCube.F = [
     [cube.F[2][0], cube.F[1][0], cube.F[0][0]],
@@ -83,12 +101,12 @@ function applyFManual(cube) {
   newCube.U[2][2] = cube.L[0][2]
   newCube.U[2][1] = cube.L[1][2]
   newCube.U[2][0] = cube.L[2][2]
-  
+
   return newCube
 }
 
 // Trace U20 through 4 F moves
-console.log("\nTracing U20 through F moves:")
+console.log('\nTracing U20 through F moves:')
 let c = marked
 for (let i = 0; i <= 4; i++) {
   console.log(`After F^${i}: U20 at ${traceMarkedPiece(c, 'U20')}`)
@@ -96,7 +114,7 @@ for (let i = 0; i <= 4; i++) {
 }
 
 // Trace R00 through 4 F moves
-console.log("\nTracing R00 through F moves:")
+console.log('\nTracing R00 through F moves:')
 c = marked
 for (let i = 0; i <= 4; i++) {
   console.log(`After F^${i}: R00 at ${traceMarkedPiece(c, 'R00')}`)
@@ -104,7 +122,7 @@ for (let i = 0; i <= 4; i++) {
 }
 
 // Trace D00 through 4 F moves
-console.log("\nTracing D00 through F moves:")
+console.log('\nTracing D00 through F moves:')
 c = marked
 for (let i = 0; i <= 4; i++) {
   console.log(`After F^${i}: D00 at ${traceMarkedPiece(c, 'D00')}`)
@@ -112,7 +130,7 @@ for (let i = 0; i <= 4; i++) {
 }
 
 // Trace L02 through 4 F moves
-console.log("\nTracing L02 through F moves:")
+console.log('\nTracing L02 through F moves:')
 c = marked
 for (let i = 0; i <= 4; i++) {
   console.log(`After F^${i}: L02 at ${traceMarkedPiece(c, 'L02')}`)

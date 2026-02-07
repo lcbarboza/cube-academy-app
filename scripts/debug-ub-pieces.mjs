@@ -1,8 +1,5 @@
 // Check (UB) order using piece tracking
-import { 
-  createSolvedPieceState, 
-  applyPieceMove 
-} from '../apps/web/src/lib/cube-state.ts'
+import { applyPieceMove, createSolvedPieceState } from '../apps/web/src/lib/cube-state.ts'
 
 function piecesEqual(a, b) {
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
@@ -17,7 +14,7 @@ function piecesEqual(a, b) {
 
 const solved = createSolvedPieceState()
 
-console.log("Tracking (UB)^n with piece IDs:")
+console.log('Tracking (UB)^n with piece IDs:')
 
 let p = solved
 const orders = []

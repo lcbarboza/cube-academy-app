@@ -126,14 +126,14 @@
 // This matches! Green sticker that was facing front is now facing right.
 // And orange (from L) is now at front.
 
-console.log("Analysis: U move animation and state should match correctly.");
-console.log("");
-console.log("Before U: position (1,1,1) has green front, red right");
-console.log("Animation: rotates CW, green faces right, red faces back");
-console.log("After U: state says front=orange(from L), right=green(from F)");
-console.log("");
-console.log("The green sticker that animated to face right IS the green from F[0][2]");
-console.log("which is now at R[0][0]. This should appear seamless!");
-console.log("");
-console.log("Unless... there's a bug in how the animation applies the rotation?");
-console.log("Or the state and animation are out of sync in timing?");
+console.log('Analysis: U move animation and state should match correctly.')
+console.log('')
+console.log('Before U: position (1,1,1) has green front, red right')
+console.log('Animation: rotates CW, green faces right, red faces back')
+console.log('After U: state says front=orange(from L), right=green(from F)')
+console.log('')
+console.log('The green sticker that animated to face right IS the green from F[0][2]')
+console.log('which is now at R[0][0]. This should appear seamless!')
+console.log('')
+console.log("Unless... there's a bug in how the animation applies the rotation?")
+console.log('Or the state and animation are out of sync in timing?')

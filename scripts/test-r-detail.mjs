@@ -78,7 +78,7 @@ function applyR_current(cube) {
 // When R rotates CW (looking from right):
 // - F's right column goes UP to U's right column
 // - U's right column goes BACK to B's left column
-// - B's left column goes DOWN to D's right column  
+// - B's left column goes DOWN to D's right column
 // - D's right column goes FRONT to F's right column
 //
 // F2 (top-right of F, front-top corner of cube) -> U2 (top-right of U, but wait - U's row0 is BACK, row2 is FRONT)
@@ -102,25 +102,45 @@ function applyR_current(cube) {
 // B col0 goes to D col2 (REVERSED: B0->D8, B3->D5, B6->D2)
 // D col2 goes to F col2 (same order: D2->F2, D5->F5, D8->F8)
 
-console.log("=== Analyzing R move ===\n")
+console.log('=== Analyzing R move ===\n')
 
 const cube = createSolvedCube()
 const afterR = applyR_current(cube)
 
-console.log("Current implementation after R:")
-console.log("U col2:", [afterR.U[0][2], afterR.U[1][2], afterR.U[2][2]].join(', '))
-console.log("B col0:", [afterR.B[0][0], afterR.B[1][0], afterR.B[2][0]].join(', '))
-console.log("D col2:", [afterR.D[0][2], afterR.D[1][2], afterR.D[2][2]].join(', '))
-console.log("F col2:", [afterR.F[0][2], afterR.F[1][2], afterR.F[2][2]].join(', '))
+console.log('Current implementation after R:')
+console.log('U col2:', [afterR.U[0][2], afterR.U[1][2], afterR.U[2][2]].join(', '))
+console.log('B col0:', [afterR.B[0][0], afterR.B[1][0], afterR.B[2][0]].join(', '))
+console.log('D col2:', [afterR.D[0][2], afterR.D[1][2], afterR.D[2][2]].join(', '))
+console.log('F col2:', [afterR.F[0][2], afterR.F[1][2], afterR.F[2][2]].join(', '))
 
-console.log("\nExpected after R (correct cycle):")
-console.log("U col2 should get: F2, F5, F8 (F col2 same order)")
-console.log("B col0 should get: U8, U5, U2 (U col2 reversed)")
-console.log("D col2 should get: B6, B3, B0 (B col0 reversed)")
-console.log("F col2 should get: D2, D5, D8 (D col2 same order)")
+console.log('\nExpected after R (correct cycle):')
+console.log('U col2 should get: F2, F5, F8 (F col2 same order)')
+console.log('B col0 should get: U8, U5, U2 (U col2 reversed)')
+console.log('D col2 should get: B6, B3, B0 (B col0 reversed)')
+console.log('F col2 should get: D2, D5, D8 (D col2 same order)')
 
-console.log("\n=== Checking what we got ===")
-console.log("U col2:", afterR.U[0][2] === 'F2' && afterR.U[1][2] === 'F5' && afterR.U[2][2] === 'F8' ? "CORRECT" : "WRONG")
-console.log("B col0:", afterR.B[0][0] === 'U8' && afterR.B[1][0] === 'U5' && afterR.B[2][0] === 'U2' ? "CORRECT" : `WRONG - got ${afterR.B[0][0]}, ${afterR.B[1][0]}, ${afterR.B[2][0]}`)
-console.log("D col2:", afterR.D[0][2] === 'B6' && afterR.D[1][2] === 'B3' && afterR.D[2][2] === 'B0' ? "CORRECT" : `WRONG - got ${afterR.D[0][2]}, ${afterR.D[1][2]}, ${afterR.D[2][2]}`)
-console.log("F col2:", afterR.F[0][2] === 'D2' && afterR.F[1][2] === 'D5' && afterR.F[2][2] === 'D8' ? "CORRECT" : "WRONG")
+console.log('\n=== Checking what we got ===')
+console.log(
+  'U col2:',
+  afterR.U[0][2] === 'F2' && afterR.U[1][2] === 'F5' && afterR.U[2][2] === 'F8'
+    ? 'CORRECT'
+    : 'WRONG',
+)
+console.log(
+  'B col0:',
+  afterR.B[0][0] === 'U8' && afterR.B[1][0] === 'U5' && afterR.B[2][0] === 'U2'
+    ? 'CORRECT'
+    : `WRONG - got ${afterR.B[0][0]}, ${afterR.B[1][0]}, ${afterR.B[2][0]}`,
+)
+console.log(
+  'D col2:',
+  afterR.D[0][2] === 'B6' && afterR.D[1][2] === 'B3' && afterR.D[2][2] === 'B0'
+    ? 'CORRECT'
+    : `WRONG - got ${afterR.D[0][2]}, ${afterR.D[1][2]}, ${afterR.D[2][2]}`,
+)
+console.log(
+  'F col2:',
+  afterR.F[0][2] === 'D2' && afterR.F[1][2] === 'D5' && afterR.F[2][2] === 'D8'
+    ? 'CORRECT'
+    : 'WRONG',
+)

@@ -1,8 +1,5 @@
 // Check (UB) order more carefully
-import { 
-  createSolvedCube, 
-  applyMove
-} from '../apps/web/src/lib/cube-state.ts'
+import { applyMove, createSolvedCube } from '../apps/web/src/lib/cube-state.ts'
 
 function cubesEqual(a, b) {
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
@@ -23,7 +20,7 @@ function printCube(cube) {
 
 const solved = createSolvedCube()
 
-console.log("Tracking (UB)^n:")
+console.log('Tracking (UB)^n:')
 
 let c = solved
 const orders = []
@@ -43,7 +40,7 @@ console.log(`\nAll orders found: ${orders}`)
 console.log(`\n105 = 3 * 5 * 7`)
 console.log(`77 = 7 * 11`)
 console.log(`GCD(105, 77) = 7`)
-console.log(`LCM(105, 77) = ${105 * 77 / 7}`)
+console.log(`LCM(105, 77) = ${(105 * 77) / 7}`)
 
 // On a color cube, the order is determined by when colors match
 // This could be different from the permutation order

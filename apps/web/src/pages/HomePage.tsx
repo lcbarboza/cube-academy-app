@@ -7,20 +7,20 @@ import { Link } from 'react-router-dom'
 
 export function HomePage() {
   const { t, i18n } = useTranslation()
-  
+
   // Get SEO content for current language
   const seoContent = pageSEO.home[i18n.language as keyof typeof pageSEO.home] || pageSEO.home.en
 
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* SEO Meta Tags */}
-      <SEO 
+      <SEO
         title={seoContent.title}
         description={seoContent.description}
         keywords={seoContent.keywords}
         canonical="/home"
       />
-      
+
       <Header />
       <Container>
         <main className="py-12">

@@ -3,7 +3,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 
 function cycle4(cube, a, b, c, d) {
   const temp = cube[a]
@@ -14,8 +16,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 // Reference R
@@ -40,37 +42,38 @@ function applyR_alt(cube) {
 
 // Test R^4
 function testR4(applyR) {
-  let s = createSolvedCube(), c = s
+  let s = createSolvedCube(),
+    c = s
   for (let i = 0; i < 4; i++) c = applyR(c)
-  for (let i = 1; i <= 54; i++) if (c[i] !== i) return "FAIL"
-  return "PASS"
+  for (let i = 1; i <= 54; i++) if (c[i] !== i) return 'FAIL'
+  return 'PASS'
 }
 
-console.log("R_ref^4:", testR4(applyR_ref))
-console.log("R_alt^4:", testR4(applyR_alt))
+console.log('R_ref^4:', testR4(applyR_ref))
+console.log('R_alt^4:', testR4(applyR_alt))
 
 // Trace what R does to B face
-console.log("\nAfter R_ref:")
+console.log('\nAfter R_ref:')
 let s = createSolvedCube()
 let c = applyR_ref(s)
-console.log("B col 0 (37,40,43): " + c[37] + " " + c[40] + " " + c[43] + " (unchanged if correct)")
-console.log("B col 2 (39,42,45): " + c[39] + " " + c[42] + " " + c[45] + " (should be 3,6,9)")
+console.log('B col 0 (37,40,43): ' + c[37] + ' ' + c[40] + ' ' + c[43] + ' (unchanged if correct)')
+console.log('B col 2 (39,42,45): ' + c[39] + ' ' + c[42] + ' ' + c[45] + ' (should be 3,6,9)')
 
-console.log("\nAfter R_alt:")
+console.log('\nAfter R_alt:')
 s = createSolvedCube()
 c = applyR_alt(s)
-console.log("B col 0 (37,40,43): " + c[37] + " " + c[40] + " " + c[43] + " (should be 3,6,9)")
-console.log("B col 2 (39,42,45): " + c[39] + " " + c[42] + " " + c[45] + " (unchanged if correct)")
+console.log('B col 0 (37,40,43): ' + c[37] + ' ' + c[40] + ' ' + c[43] + ' (should be 3,6,9)')
+console.log('B col 2 (39,42,45): ' + c[39] + ' ' + c[42] + ' ' + c[45] + ' (unchanged if correct)')
 
 // Physical analysis:
 // In Kociemba layout, B is to the RIGHT of R in the net.
 // When folded, B's LEFT edge (col 0 = 37,40,43) connects to R's RIGHT edge.
-// 
+//
 // But for R rotation, we're affecting the pieces on the RIGHT side of the cube.
 // The RIGHT side of the cube includes:
 // - R face itself
 // - U's right column (col 2 = 3,6,9)
-// - F's right column (col 2 = 21,24,27)  
+// - F's right column (col 2 = 21,24,27)
 // - D's right column (col 2 = 48,51,54)
 // - B's... column that's on the cube's right side
 //
@@ -91,7 +94,7 @@ console.log("B col 2 (39,42,45): " + c[39] + " " + c[42] + " " + c[45] + " (unch
 // The reference seems consistent with "B viewed from front" interpretation.
 // Let's double-check by verifying that UBR's B sticker is indeed B[39]:
 
-console.log("\n--- Corner analysis ---")
+console.log('\n--- Corner analysis ---')
 // UBR corner is at the intersection of U, B, R faces
 // From U's perspective: U[3] is top-right of U face
 // From R's perspective: R[30] is top-right of R face
@@ -100,7 +103,7 @@ console.log("\n--- Corner analysis ---")
 
 // After R CW, UFR -> UBR means:
 // U[9] value -> U[3] position
-// F[21] value -> B[39] position  
+// F[21] value -> B[39] position
 // R[28] value -> R[30] position (this is R face rotation, handled separately)
 
 // With cycle4(3, 39, 48, 21):
@@ -112,7 +115,7 @@ console.log("\n--- Corner analysis ---")
 
 // For R move, the STICKERS that move (not the pieces) are:
 // - U's right column: positions 3, 6, 9 (top, middle, bottom)
-// - F's right column: positions 21, 24, 27 (top, middle, bottom)  
+// - F's right column: positions 21, 24, 27 (top, middle, bottom)
 // - D's right column: positions 48, 51, 54 (top, middle, bottom)
 // - B's ??? column: positions ???
 //
@@ -135,7 +138,7 @@ console.log("\n--- Corner analysis ---")
 
 // So B[39] is the B sticker position that's adjacent to R's right column top.
 // B[39] is row 0, col 2 of B face.
-// 
+//
 // If B is laid out with (0,0) at position 37:
 //   37  38  39   <- row 0
 //   40  41  42   <- row 1

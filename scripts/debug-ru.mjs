@@ -1,8 +1,5 @@
 // Deep debug of R and U moves
-import { 
-  createSolvedPieceState, 
-  applyPieceMove 
-} from '../apps/web/src/lib/cube-state.ts'
+import { applyPieceMove, createSolvedPieceState } from '../apps/web/src/lib/cube-state.ts'
 
 function piecesEqual(a, b) {
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
@@ -31,7 +28,7 @@ const solved = createSolvedPieceState()
 // Trace a corner piece that should be affected by both R and U
 // Piece 3 is at U[0][2] (back-right of U, adjacent to both R and B)
 // Piece 9 is at U[2][2] (front-right of U, adjacent to both R and F)
-console.log("Tracing piece 9 (starts at U[2][2]) through R and U moves:")
+console.log('Tracing piece 9 (starts at U[2][2]) through R and U moves:')
 
 let p = solved
 console.log(`Initial: piece 9 at ${tracePiece(p, 9)}`)
@@ -50,7 +47,7 @@ for (let i = 2; i <= 10; i++) {
 }
 
 // The cycle of piece 9 should have a certain length
-console.log("\n--- Finding cycle length for piece 9 ---")
+console.log('\n--- Finding cycle length for piece 9 ---')
 p = solved
 const positions = [tracePiece(p, 9)]
 for (let i = 1; i <= 110; i++) {

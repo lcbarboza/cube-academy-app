@@ -1,8 +1,5 @@
 // Compare RB and UB orders with pieces
-import { 
-  createSolvedPieceState, 
-  applyPieceMove 
-} from '../apps/web/src/lib/cube-state.ts'
+import { applyPieceMove, createSolvedPieceState } from '../apps/web/src/lib/cube-state.ts'
 
 function piecesEqual(a, b) {
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
@@ -17,7 +14,7 @@ function piecesEqual(a, b) {
 
 const solved = createSolvedPieceState()
 
-console.log("Tracking (RB)^n with piece IDs:")
+console.log('Tracking (RB)^n with piece IDs:')
 let p = solved
 for (let i = 1; i <= 110; i++) {
   p = applyPieceMove(p, 'R')
@@ -28,7 +25,7 @@ for (let i = 1; i <= 110; i++) {
   }
 }
 
-console.log("\nTracking (RF)^n with piece IDs:")
+console.log('\nTracking (RF)^n with piece IDs:')
 p = solved
 for (let i = 1; i <= 110; i++) {
   p = applyPieceMove(p, 'R')
@@ -39,7 +36,7 @@ for (let i = 1; i <= 110; i++) {
   }
 }
 
-console.log("\nTracking (RU)^n with piece IDs:")
+console.log('\nTracking (RU)^n with piece IDs:')
 p = solved
 for (let i = 1; i <= 110; i++) {
   p = applyPieceMove(p, 'R')
@@ -52,9 +49,9 @@ for (let i = 1; i <= 110; i++) {
 
 // Known orders for standard Rubik's cube:
 // (RF) = 105
-// (RU) = 105  
+// (RU) = 105
 // (RB) = 63 (R and B are adjacent but only share one edge)
-console.log("\nKnown theoretical orders:")
-console.log("(RF) = 105")
-console.log("(RU) = 105")
-console.log("(RB) = 63 (R and B share only UBR and DBR corners, not edges)")
+console.log('\nKnown theoretical orders:')
+console.log('(RF) = 105')
+console.log('(RU) = 105')
+console.log('(RB) = 63 (R and B share only UBR and DBR corners, not edges)')

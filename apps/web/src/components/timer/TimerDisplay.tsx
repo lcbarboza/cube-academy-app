@@ -10,7 +10,7 @@ interface TimerDisplayProps {
 
 /**
  * Displays the timer with state-based visual feedback.
- * 
+ *
  * States:
  * - idle/stopped: Default cyan text
  * - holding: Red/warning color indicating user should keep holding
@@ -30,9 +30,7 @@ export function TimerDisplay({ formattedTime, state }: TimerDisplayProps) {
 
   return (
     <div className="timer-display-container">
-      <div className={`timer-display ${stateStyles[state]}`}>
-        {formattedTime}
-      </div>
+      <div className={`timer-display ${stateStyles[state]}`}>{formattedTime}</div>
       <div className="timer-hint">
         {state === 'idle' && <span>{t('timer.holdSpace', 'Press and hold SPACE to start')}</span>}
         {state === 'holding' && <span>{t('timer.keepHolding', 'Keep holding...')}</span>}

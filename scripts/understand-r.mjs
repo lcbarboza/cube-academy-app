@@ -4,7 +4,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
   return true
@@ -17,8 +19,8 @@ function cycle4(cube, a, b, c, d) {
   cube[b] = temp
 }
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 // The key insight: I found R cycles that work with U. Let me verify which U I was using.
@@ -40,14 +42,14 @@ function rotateFaceCW(cube, start) {
 // Corner URF: has stickers at U9, R28, F21
 // After R: URF corner moves to UBR position
 // - U9 sticker goes to U3 position? Or to B position?
-// 
+//
 // Looking at R cycles: 9->21->54->39
 // This means sticker at 9 goes to position 21 (which is F21)
 // And sticker at 21 goes to position 54 (which is D54)
 // Hmm, that doesn't match URF->UBR, it matches something else.
 //
 // Actually, in Kociemba notation, the cycles describe where VALUES go, not where stickers physically move.
-// cycle4(9, 21, 54, 39) means: 
+// cycle4(9, 21, 54, 39) means:
 //   position 9 receives value from position 39
 //   position 21 receives value from position 9
 //   position 54 receives value from position 21
@@ -58,7 +60,7 @@ function rotateFaceCW(cube, start) {
 // For a physical R CW, we need to verify this makes sense.
 // Position 9 is U bottom-right (front-right of U)
 // Position 39 is B top-right (in net)
-// After R CW, should pos 9 have value from B? 
+// After R CW, should pos 9 have value from B?
 
 // Let me think about R CW from the right side:
 // - F (z=1) goes to U (y=1)
@@ -87,9 +89,9 @@ function rotateFaceCW(cube, start) {
 // - F right column (21,24,27 at top,mid,bot) goes to U right column
 // - But U right column (3,6,9) has 3 at back and 9 at front!
 // - So F21 (top) -> U9 (front)? Or U3 (back)?
-// 
+//
 // From the right side, looking at the cube:
-// - F21 (F top-right, at front-top-right of cube) 
+// - F21 (F top-right, at front-top-right of cube)
 // - After R CW, this position moves UP
 // - The "up" from front-top-right is... top-front-right = U9!
 // So F21 -> position U9. Meaning position 9 receives value 21.
@@ -98,7 +100,7 @@ function rotateFaceCW(cube, start) {
 // - F27 (F bottom-right) is at front-bottom-right
 // - After R CW, it moves UP to top-front-right = U... wait, that's wrong.
 // - From right side: F bottom-right moves UP to U bottom-right = U9? No...
-// 
+//
 // Let me be more careful. Looking from the right side:
 // The front face F is on the left of my view
 // The back face B is on the right of my view
@@ -134,7 +136,7 @@ function rotateFaceCW(cube, start) {
 //   cube[d] = cube[c]  -> d gets c's value
 //   cube[c] = cube[b]  -> c gets b's value
 //   cube[b] = temp     -> b gets a's original value
-// 
+//
 // So for cycle4(9, 21, 54, 39):
 //   9 <- 39
 //   39 <- 54
@@ -143,7 +145,7 @@ function rotateFaceCW(cube, start) {
 //
 // But I need: 9 <- 21 (F21 goes to U9)
 // So the cycle should be: 21 -> 9, 9 -> ?, ? -> 21
-// 
+//
 // Full cycle for R (F->U->B->D->F):
 // F21 -> U9 -> B? -> D? -> F21
 // U9 goes to B (top of B's column adjacent to R)
@@ -164,7 +166,7 @@ function rotateFaceCW(cube, start) {
 // Position 12 (L top-right) gets value from 39 (B top-right in net).
 // L12 is at L's top-right = front-left-top of cube (x=-1, y=1, z=1)
 // B39 getting L12's value after U means... B39 is at back-left-top?
-// 
+//
 // Actually the cycle 21->30->39->12 means:
 // After U: pos 30 <- 21, pos 39 <- 30, pos 12 <- 39, pos 21 <- 12
 // So B39 receives R30's value.
@@ -177,7 +179,7 @@ function rotateFaceCW(cube, start) {
 // So B39 is at back-left-top, which means:
 // - B37 (col 0) is at back-right
 // - B39 (col 2) is at back-left
-// 
+//
 // For R move, we affect the right side of the cube (x=1).
 // That's B's right side in physical space = B's LEFT side in net = col 0 = 37,40,43!
 
@@ -197,12 +199,12 @@ function makeR(bPositions) {
     // D54 goes to F27 (bottom-right of F)
     // F27 goes to U3 (back-right of U)
     // Wait, that's a different cycle!
-    
+
     // Let me just test the two candidates
     // Using bPositions[0], bPositions[1], bPositions[2] for top, mid, bot
-    cycle4(result, 21, 9, bPositions[0], 54)   // top row
-    cycle4(result, 24, 6, bPositions[1], 51)   // mid row
-    cycle4(result, 27, 3, bPositions[2], 48)   // bot row
+    cycle4(result, 21, 9, bPositions[0], 54) // top row
+    cycle4(result, 24, 6, bPositions[1], 51) // mid row
+    cycle4(result, 27, 3, bPositions[2], 48) // bot row
     return result
   }
 }
@@ -210,18 +212,18 @@ function makeR(bPositions) {
 const Bcol0 = [37, 40, 43]
 const Bcol2 = [39, 42, 45]
 
-console.log("Testing R with B col 0 (37,40,43):")
+console.log('Testing R with B col 0 (37,40,43):')
 const applyR_col0 = makeR(Bcol0)
 let s = createSolvedCube()
 let c = s
 for (let i = 0; i < 4; i++) c = applyR_col0(c)
-console.log("R^4 = I:", cubesEqual(c, s) ? "PASS" : "FAIL")
+console.log('R^4 = I:', cubesEqual(c, s) ? 'PASS' : 'FAIL')
 
-console.log("\nTesting R with B col 2 (39,42,45):")
+console.log('\nTesting R with B col 2 (39,42,45):')
 const applyR_col2 = makeR(Bcol2)
 c = s
 for (let i = 0; i < 4; i++) c = applyR_col2(c)
-console.log("R^4 = I:", cubesEqual(c, s) ? "PASS" : "FAIL")
+console.log('R^4 = I:', cubesEqual(c, s) ? 'PASS' : 'FAIL')
 
 // The one that gives R^4=I is correct. Let me test with U too.
 function applyU(cube) {
@@ -233,13 +235,16 @@ function applyU(cube) {
   return result
 }
 
-console.log("\nTesting with U:")
-for (const [name, applyR, bpos] of [["col0", applyR_col0, Bcol0], ["col2", applyR_col2, Bcol2]]) {
+console.log('\nTesting with U:')
+for (const [name, applyR, bpos] of [
+  ['col0', applyR_col0, Bcol0],
+  ['col2', applyR_col2, Bcol2],
+]) {
   s = createSolvedCube()
   c = s
   for (let i = 0; i < 4; i++) c = applyR(c)
   const r4 = cubesEqual(c, s)
-  
+
   c = s
   for (let i = 0; i < 6; i++) {
     c = applyR(c)
@@ -248,14 +253,17 @@ for (const [name, applyR, bpos] of [["col0", applyR_col0, Bcol0], ["col2", apply
     c = applyU(applyU(applyU(c)))
   }
   const ruComm = cubesEqual(c, s)
-  
+
   c = s
   let order = 0
   for (let i = 1; i <= 110; i++) {
     c = applyR(c)
     c = applyU(c)
-    if (cubesEqual(c, s)) { order = i; break }
+    if (cubesEqual(c, s)) {
+      order = i
+      break
+    }
   }
-  
+
   console.log(`B ${name}: R^4=${r4}, [R,U]^6=${ruComm}, (RU)=${order}`)
 }

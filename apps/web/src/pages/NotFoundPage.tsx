@@ -27,7 +27,7 @@ export function NotFoundPage() {
       navigate('/')
       return
     }
-    
+
     const timer = setTimeout(() => {
       setCountdown((prev) => prev - 1)
     }, 1000)
@@ -46,9 +46,12 @@ export function NotFoundPage() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* SEO - noindex for 404 pages */}
-      <SEO 
+      <SEO
         title={t('notFound.title', '404 - Page Not Found')}
-        description={t('notFound.description', 'The page you are looking for does not exist or has been moved.')}
+        description={t(
+          'notFound.description',
+          'The page you are looking for does not exist or has been moved.',
+        )}
         noIndex
       />
 
@@ -83,7 +86,9 @@ export function NotFoundPage() {
               type="button"
               onClick={toggleTheme}
               className="settings-btn"
-              aria-label={isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')}
+              aria-label={
+                isDark ? t('settings.lightMode', 'Light mode') : t('settings.darkMode', 'Dark mode')
+              }
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -105,10 +110,11 @@ export function NotFoundPage() {
           <div className="text-center max-w-2xl mx-auto px-4">
             {/* Glitchy 404 Number */}
             <div className="relative mb-8 opacity-0 animate-fade-in-up stagger-1">
-              <h1 
+              <h1
                 className="font-display text-[clamp(8rem,25vw,12rem)] font-black leading-none tracking-tighter select-none"
                 style={{
-                  background: 'linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-magenta) 50%, var(--neon-orange) 100%)',
+                  background:
+                    'linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-magenta) 50%, var(--neon-orange) 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -117,9 +123,9 @@ export function NotFoundPage() {
               >
                 404
               </h1>
-              
+
               {/* Glitch layers */}
-              <span 
+              <span
                 className="absolute inset-0 font-display text-[clamp(8rem,25vw,12rem)] font-black leading-none tracking-tighter select-none pointer-events-none opacity-50"
                 style={{
                   color: 'var(--neon-cyan)',
@@ -131,7 +137,7 @@ export function NotFoundPage() {
               >
                 404
               </span>
-              <span 
+              <span
                 className="absolute inset-0 font-display text-[clamp(8rem,25vw,12rem)] font-black leading-none tracking-tighter select-none pointer-events-none opacity-50"
                 style={{
                   color: 'var(--neon-magenta)',
@@ -151,16 +157,16 @@ export function NotFoundPage() {
                 {t('notFound.heading', 'Lost in the Cube')}
               </h2>
               <p className="text-[var(--text-muted)] text-lg max-w-md mx-auto leading-relaxed">
-                {t('notFound.message', 'This page got scrambled beyond recognition. Let\'s get you back on track.')}
+                {t(
+                  'notFound.message',
+                  "This page got scrambled beyond recognition. Let's get you back on track.",
+                )}
               </p>
             </div>
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 opacity-0 animate-fade-in-up stagger-3">
-              <Link
-                to="/"
-                className="btn-neon flex items-center gap-2 px-6 py-3"
-              >
+              <Link to="/" className="btn-neon flex items-center gap-2 px-6 py-3">
                 <Home className="w-4 h-4" />
                 <span>{t('notFound.goHome', 'Go Home')}</span>
               </Link>
@@ -185,13 +191,15 @@ export function NotFoundPage() {
 
             {/* Auto-redirect notice */}
             <p className="text-xs text-[var(--text-muted)] font-mono opacity-0 animate-fade-in-up stagger-4">
-              {t('notFound.redirect', 'Redirecting to home in {{seconds}}s...', { seconds: countdown })}
+              {t('notFound.redirect', 'Redirecting to home in {{seconds}}s...', {
+                seconds: countdown,
+              })}
             </p>
           </div>
         </main>
 
         {/* Decorative floating cube */}
-        <div 
+        <div
           className="fixed bottom-8 right-8 w-16 h-16 opacity-20 pointer-events-none hidden lg:block"
           style={{
             animation: 'float-cube 6s ease-in-out infinite',
@@ -200,21 +208,9 @@ export function NotFoundPage() {
         >
           <svg viewBox="0 0 48 48" className="w-full h-full">
             <g transform="translate(24, 24)">
-              <polygon
-                points="0,-14 12,-8 0,-2 -12,-8"
-                fill="var(--neon-cyan)"
-                opacity="0.8"
-              />
-              <polygon
-                points="-12,-8 0,-2 0,10 -12,4"
-                fill="var(--neon-magenta)"
-                opacity="0.6"
-              />
-              <polygon
-                points="12,-8 12,4 0,10 0,-2"
-                fill="var(--neon-orange)"
-                opacity="0.6"
-              />
+              <polygon points="0,-14 12,-8 0,-2 -12,-8" fill="var(--neon-cyan)" opacity="0.8" />
+              <polygon points="-12,-8 0,-2 0,10 -12,4" fill="var(--neon-magenta)" opacity="0.6" />
+              <polygon points="12,-8 12,4 0,10 0,-2" fill="var(--neon-orange)" opacity="0.6" />
             </g>
           </svg>
         </div>

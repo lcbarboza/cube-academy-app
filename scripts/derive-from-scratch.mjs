@@ -1,6 +1,6 @@
 // Let me derive all moves from physical cube analysis
 // Using a simple convention: each face is a 3x3 grid numbered 0-8
-// 
+//
 // Face layout:
 //   0 1 2
 //   3 4 5
@@ -16,7 +16,7 @@
 
 // Physical cube with standard color scheme:
 //   U = white (top)
-//   D = yellow (bottom)  
+//   D = yellow (bottom)
 //   F = green (front)
 //   B = blue (back)
 //   R = red (right)
@@ -28,7 +28,7 @@
 // For R move (clockwise looking from right):
 // R face rotates. The ring of stickers around R moves.
 // The ring consists of: U-right-col, B-left-col, D-right-col, F-right-col
-// 
+//
 // U right col (looking at U from above, right column from front perspective):
 //   U[2], U[5], U[8] = positions 3, 6, 9
 // F right col:
@@ -42,7 +42,7 @@
 // Wait, I need to be more careful about B's orientation in the Kociemba layout.
 // In the standard net: L | F | R | B
 // B is unfolded to the RIGHT of R.
-// 
+//
 // When you fold the cube, B's left edge (as displayed in the net) connects to R's right edge.
 // So B[0,3,6] (positions 37,40,43) are physically adjacent to R.
 //
@@ -89,12 +89,12 @@
 //              01  02  03
 //              04  05  06
 //              07  08  09
-// 
+//
 // [ L (Left) ] [ F (Front)] [ R (Right)] [ B (Back) ]
 // 10  11  12   19  20  21   28  29  30   37  38  39
 // 13  14  15   22  23  24   31  32  33   40  41  42
 // 16  17  18   25  26  27   34  35  36   43  44  45
-// 
+//
 //              [ D (Down) ]
 //              46  47  48
 //              49  50  51
@@ -203,4 +203,4 @@
 //
 // B face as viewed from behind:
 //   37 38 39  <- top
-//   40 
+//   40

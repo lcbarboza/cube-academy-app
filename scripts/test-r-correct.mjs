@@ -3,7 +3,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
   return true
@@ -16,8 +18,8 @@ function cycle4(cube, a, b, c, d) {
   cube[b] = temp
 }
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 function applyU(cube) {
@@ -43,12 +45,12 @@ function applyR_correct(cube) {
   return result
 }
 
-let s = createSolvedCube()
+const s = createSolvedCube()
 
 // Test R^4 = identity
 let c = s
 for (let i = 0; i < 4; i++) c = applyR_correct(c)
-console.log("R_correct^4 = identity:", cubesEqual(c, s) ? "PASS" : "FAIL")
+console.log('R_correct^4 = identity:', cubesEqual(c, s) ? 'PASS' : 'FAIL')
 
 // Test [R,U]^6 = identity
 c = s
@@ -58,7 +60,7 @@ for (let i = 0; i < 6; i++) {
   c = applyR_correct(applyR_correct(applyR_correct(c)))
   c = applyU(applyU(applyU(c)))
 }
-console.log("[R_correct,U]^6 = identity:", cubesEqual(c, s) ? "PASS" : "FAIL")
+console.log('[R_correct,U]^6 = identity:', cubesEqual(c, s) ? 'PASS' : 'FAIL')
 
 // Check R U order
 c = s
@@ -66,13 +68,16 @@ let order = 0
 for (let i = 1; i <= 200; i++) {
   c = applyR_correct(c)
   c = applyU(c)
-  if (cubesEqual(c, s)) { order = i; break }
+  if (cubesEqual(c, s)) {
+    order = i
+    break
+  }
 }
-console.log("(R U) order:", order, order === 105 ? "PASS" : "FAIL")
+console.log('(R U) order:', order, order === 105 ? 'PASS' : 'FAIL')
 
 // Show what R does
-let r = applyR_correct(s)
-console.log("\nAfter R_correct, changes:")
+const r = applyR_correct(s)
+console.log('\nAfter R_correct, changes:')
 for (let i = 1; i <= 54; i++) {
-  if (r[i] !== i) console.log("  pos", i, "<-", r[i])
+  if (r[i] !== i) console.log('  pos', i, '<-', r[i])
 }

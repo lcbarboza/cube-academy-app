@@ -2,12 +2,36 @@
 
 function createSolvedPieceState() {
   return {
-    U: [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
-    F: [[10, 11, 12], [13, 14, 15], [16, 17, 18]],
-    R: [[19, 20, 21], [22, 23, 24], [25, 26, 27]],
-    B: [[28, 29, 30], [31, 32, 33], [34, 35, 36]],
-    L: [[37, 38, 39], [40, 41, 42], [43, 44, 45]],
-    D: [[46, 47, 48], [49, 50, 51], [52, 53, 54]],
+    U: [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ],
+    F: [
+      [10, 11, 12],
+      [13, 14, 15],
+      [16, 17, 18],
+    ],
+    R: [
+      [19, 20, 21],
+      [22, 23, 24],
+      [25, 26, 27],
+    ],
+    B: [
+      [28, 29, 30],
+      [31, 32, 33],
+      [34, 35, 36],
+    ],
+    L: [
+      [37, 38, 39],
+      [40, 41, 42],
+      [43, 44, 45],
+    ],
+    D: [
+      [46, 47, 48],
+      [49, 50, 51],
+      [52, 53, 54],
+    ],
   }
 }
 
@@ -34,21 +58,29 @@ function rotateFaceCW(face) {
 function applyR_TestScript(p) {
   const n = clonePieceState(p)
   n.R = rotateFaceCW(p.R)
-  
+
   const f = [p.F[0][2], p.F[1][2], p.F[2][2]]
   const u = [p.U[0][2], p.U[1][2], p.U[2][2]]
   const b = [p.B[0][0], p.B[1][0], p.B[2][0]]
   const d = [p.D[0][2], p.D[1][2], p.D[2][2]]
-  
+
   // F -> U (reversed)
-  n.U[2][2] = f[0]; n.U[1][2] = f[1]; n.U[0][2] = f[2]
+  n.U[2][2] = f[0]
+  n.U[1][2] = f[1]
+  n.U[0][2] = f[2]
   // U -> B (reversed)
-  n.B[2][0] = u[0]; n.B[1][0] = u[1]; n.B[0][0] = u[2]
+  n.B[2][0] = u[0]
+  n.B[1][0] = u[1]
+  n.B[0][0] = u[2]
   // B -> D (reversed)
-  n.D[2][2] = b[0]; n.D[1][2] = b[1]; n.D[0][2] = b[2]
+  n.D[2][2] = b[0]
+  n.D[1][2] = b[1]
+  n.D[0][2] = b[2]
   // D -> F (reversed)
-  n.F[2][2] = d[0]; n.F[1][2] = d[1]; n.F[0][2] = d[2]
-  
+  n.F[2][2] = d[0]
+  n.F[1][2] = d[1]
+  n.F[0][2] = d[2]
+
   return n
 }
 
@@ -104,12 +136,12 @@ function tracePiece(pieces, pieceNum) {
   return 'not found'
 }
 
-console.log("Comparing R implementations\n")
+console.log('Comparing R implementations\n')
 
 const solved = createSolvedPieceState()
 
 // Test R^4 for both versions
-console.log("1. R^4 = identity test:")
+console.log('1. R^4 = identity test:')
 let testScript = solved
 let production = solved
 for (let i = 0; i < 4; i++) {
@@ -120,15 +152,15 @@ console.log(`   Test script R^4 = I: ${piecesEqual(testScript, solved) ? 'PASS' 
 console.log(`   Production R^4 = I: ${piecesEqual(production, solved) ? 'PASS' : 'FAIL'}`)
 
 // Trace piece 12 through R moves
-console.log("\n2. Trace piece 12 (starts at F[0][2]) through R moves:")
-console.log("   Test script version:")
+console.log('\n2. Trace piece 12 (starts at F[0][2]) through R moves:')
+console.log('   Test script version:')
 testScript = solved
 for (let i = 0; i <= 4; i++) {
   console.log(`   After R^${i}: piece 12 at ${tracePiece(testScript, 12)}`)
   testScript = applyR_TestScript(testScript)
 }
 
-console.log("\n   Production version:")
+console.log('\n   Production version:')
 production = solved
 for (let i = 0; i <= 4; i++) {
   console.log(`   After R^${i}: piece 12 at ${tracePiece(production, 12)}`)
@@ -136,15 +168,15 @@ for (let i = 0; i <= 4; i++) {
 }
 
 // Trace piece 3 (U[0][2]) through R moves
-console.log("\n3. Trace piece 3 (starts at U[0][2]) through R moves:")
-console.log("   Test script version:")
+console.log('\n3. Trace piece 3 (starts at U[0][2]) through R moves:')
+console.log('   Test script version:')
 testScript = solved
 for (let i = 0; i <= 4; i++) {
   console.log(`   After R^${i}: piece 3 at ${tracePiece(testScript, 3)}`)
   testScript = applyR_TestScript(testScript)
 }
 
-console.log("\n   Production version:")
+console.log('\n   Production version:')
 production = solved
 for (let i = 0; i <= 4; i++) {
   console.log(`   After R^${i}: piece 3 at ${tracePiece(production, 3)}`)
@@ -152,19 +184,19 @@ for (let i = 0; i <= 4; i++) {
 }
 
 // Now test with U move
-console.log("\n4. Test [R,U]^6 = identity:")
+console.log('\n4. Test [R,U]^6 = identity:')
 
 function applyU(p) {
   const n = clonePieceState(p)
   n.U = rotateFaceCW(p.U)
-  
+
   for (let i = 0; i < 3; i++) {
     n.R[0][i] = p.F[0][i]
     n.B[0][i] = p.R[0][i]
     n.L[0][i] = p.B[0][i]
     n.F[0][i] = p.L[0][i]
   }
-  
+
   return n
 }
 
@@ -178,7 +210,7 @@ for (let i = 0; i < 6; i++) {
 }
 console.log(`   [R,U]^6 with test script R: ${piecesEqual(testScript, solved) ? 'PASS' : 'FAIL'}`)
 
-// Test with production R  
+// Test with production R
 production = solved
 for (let i = 0; i < 6; i++) {
   production = applyR_Production(production)

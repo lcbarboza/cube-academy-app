@@ -1,8 +1,8 @@
 import {
-  calculateAo12,
   calculateAo5,
-  calculateBestAo12,
+  calculateAo12,
   calculateBestAo5,
+  calculateBestAo12,
   calculateBestSingle,
   calculateMo3,
 } from '@/lib/statistics'
@@ -107,9 +107,7 @@ export function SolveHistoryProvider({ children }: SolveHistoryProviderProps) {
 
   // Update penalty for a solve
   const updatePenalty = useCallback((id: string, penalty: SolvePenalty) => {
-    setSolves((prev) =>
-      prev.map((solve) => (solve.id === id ? { ...solve, penalty } : solve)),
-    )
+    setSolves((prev) => prev.map((solve) => (solve.id === id ? { ...solve, penalty } : solve)))
   }, [])
 
   // Clear all solves

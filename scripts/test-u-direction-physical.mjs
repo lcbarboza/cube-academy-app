@@ -23,7 +23,7 @@
 
 // ULF cubie stickers at ULF position:
 //   U[2][0] = white (on U face)
-//   F[0][0] = green (on F face)  
+//   F[0][0] = green (on F face)
 //   L[0][2] = orange (on L face)
 
 // After U, ULF cubie is at UFR position:
@@ -55,12 +55,12 @@
 // Hold a cube. Look at the ULF corner. It has 3 stickers: white(U), green(F), orange(L).
 // Now rotate the U layer clockwise.
 // The ULF corner is now at UFR position.
-// Which sticker is now facing front? 
+// Which sticker is now facing front?
 
 // The cube piece itself rotated 90 degrees around Y axis.
 // - The white sticker (was on top) is still on top
 // - The green sticker (was on front) is now on... LEFT? No, it rotated.
-// 
+//
 // Actually for U layer rotation, the pieces rotate around the Y axis.
 // The sticker facing +Z (front) rotates to face +X (right)
 // The sticker facing -X (left) rotates to face +Z (front)
@@ -78,15 +78,15 @@
 // - F[0][2] = orange (from L)
 // - R[0][0] = green (from F)
 
-console.log("Physical analysis confirms our state is CORRECT!");
-console.log("");
-console.log("After U, at position UFR:");
-console.log("  F sticker (F[0][2]) = orange (from ULF's L-sticker)");
-console.log("  R sticker (R[0][0]) = green (from ULF's F-sticker)");
-console.log("");
-console.log("Our code produces:");
-console.log("  F[0][2] = orange ✓");
-console.log("  R[0][0] = green ✓");
-console.log("");
-console.log("So the state logic is correct!");
-console.log("The visual bug must be elsewhere - maybe the animation direction?");
+console.log('Physical analysis confirms our state is CORRECT!')
+console.log('')
+console.log('After U, at position UFR:')
+console.log("  F sticker (F[0][2]) = orange (from ULF's L-sticker)")
+console.log("  R sticker (R[0][0]) = green (from ULF's F-sticker)")
+console.log('')
+console.log('Our code produces:')
+console.log('  F[0][2] = orange ✓')
+console.log('  R[0][0] = green ✓')
+console.log('')
+console.log('So the state logic is correct!')
+console.log('The visual bug must be elsewhere - maybe the animation direction?')

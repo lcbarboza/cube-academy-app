@@ -274,7 +274,7 @@ for (const [name, move] of Object.entries(MOVES)) {
 }
 
 // Test 2: Move * Move' = Identity
-console.log('\nTest 2: move * move\' = identity (move and inverse cancel)')
+console.log("\nTest 2: move * move' = identity (move and inverse cancel)")
 for (const name of Object.keys(MOVES)) {
   const solved = createSolvedCube()
   let state = applyMove(solved, name)
@@ -296,7 +296,7 @@ for (const [name, move] of Object.entries(MOVES)) {
 }
 
 // Test 4: Sexy move (R U R' U')^6 = Identity
-console.log('\nTest 4: (R U R\' U\')^6 = identity (sexy move cycles back)')
+console.log("\nTest 4: (R U R' U')^6 = identity (sexy move cycles back)")
 {
   const solved = createSolvedCube()
   let state = solved
@@ -318,7 +318,7 @@ console.log('\nTest 5: T-Perm applied twice = identity')
   const moves = tperm.split(' ')
   const solved = createSolvedCube()
   let state = solved
-  
+
   // Apply T-Perm once
   for (const move of moves) {
     state = applyMove(state, move)
@@ -338,21 +338,21 @@ console.log('\nTest 5: T-Perm applied twice = identity')
       if (changed) break
     }
     if (changed) {
-      console.log(`    ${face}: ${state[face].map(r => r.join('')).join(' / ')}`)
+      console.log(`    ${face}: ${state[face].map((r) => r.join('')).join(' / ')}`)
     }
   }
-  
+
   // Apply T-Perm again
   for (const move of moves) {
     state = applyMove(state, move)
   }
-  
+
   const passed = cubesEqual(state, solved)
   console.log(`  T-Perm^2 = identity: ${passed ? 'PASS' : 'FAIL'}`)
   if (!passed) {
     console.log('  Differences after 2x T-Perm:')
     for (const face of faces) {
-      let diffs = []
+      const diffs = []
       for (let r = 0; r < 3; r++) {
         for (let c = 0; c < 3; c++) {
           if (state[face][r][c] !== solved[face][r][c]) {
@@ -390,46 +390,70 @@ console.log('\nTest 7: B move visual check')
 {
   // Create a cube with numbered stickers for tracking
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   // Apply B move using our logic
   const result = cloneCube(numbered)
   result.B = rotateFaceCW(numbered.B)
-  
+
   // U[row0] -> L[col0]
   result.L[0][0] = numbered.U[0][2]
   result.L[1][0] = numbered.U[0][1]
   result.L[2][0] = numbered.U[0][0]
-  
+
   // L[col0] -> D[row2]
   result.D[2][0] = numbered.L[0][0]
   result.D[2][1] = numbered.L[1][0]
   result.D[2][2] = numbered.L[2][0]
-  
+
   // D[row2] -> R[col2]
   result.R[0][2] = numbered.D[2][2]
   result.R[1][2] = numbered.D[2][1]
   result.R[2][2] = numbered.D[2][0]
-  
+
   // R[col2] -> U[row0]
   result.U[0][0] = numbered.R[0][2]
   result.U[0][1] = numbered.R[1][2]
   result.U[0][2] = numbered.R[2][2]
-  
+
   console.log('  After B move:')
   console.log(`  U row0: ${result.U[0].join(', ')} (was: U0, U1, U2)`)
   console.log(`  L col0: ${result.L[0][0]}, ${result.L[1][0]}, ${result.L[2][0]} (was: L0, L3, L6)`)
   console.log(`  D row2: ${result.D[2].join(', ')} (was: D6, D7, D8)`)
   console.log(`  R col2: ${result.R[0][2]}, ${result.R[1][2]}, ${result.R[2][2]} (was: R2, R5, R8)`)
-  
+
   // Expected for B clockwise (looking from back):
-  // - U row0 goes to L col0 (U2->L0, U1->L3, U0->L6) 
+  // - U row0 goes to L col0 (U2->L0, U1->L3, U0->L6)
   // - L col0 goes to D row2 (L0->D6, L3->D7, L6->D8)
   // - D row2 goes to R col2 (D8->R0, D7->R3, D6->R6) - REVERSED!
   // - R col2 goes to U row0 (R2->U0, R5->U1, R8->U2)
@@ -444,40 +468,64 @@ console.log('\nTest 7: B move visual check')
 console.log('\nTest 8: F move visual check')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   const result = cloneCube(numbered)
   result.F = rotateFaceCW(numbered.F)
-  
+
   // Apply our F logic
   result.R[0][0] = numbered.U[2][0]
   result.R[1][0] = numbered.U[2][1]
   result.R[2][0] = numbered.U[2][2]
-  
+
   result.D[0][0] = numbered.R[0][0]
   result.D[0][1] = numbered.R[1][0]
   result.D[0][2] = numbered.R[2][0]
-  
+
   result.L[2][2] = numbered.D[0][0]
   result.L[1][2] = numbered.D[0][1]
   result.L[0][2] = numbered.D[0][2]
-  
+
   result.U[2][0] = numbered.L[2][2]
   result.U[2][1] = numbered.L[1][2]
   result.U[2][2] = numbered.L[0][2]
-  
+
   console.log('  After F move:')
   console.log(`  U row2: ${result.U[2].join(', ')} (was: U6, U7, U8)`)
   console.log(`  R col0: ${result.R[0][0]}, ${result.R[1][0]}, ${result.R[2][0]} (was: R0, R3, R6)`)
   console.log(`  D row0: ${result.D[0].join(', ')} (was: D0, D1, D2)`)
   console.log(`  L col2: ${result.L[0][2]}, ${result.L[1][2]}, ${result.L[2][2]} (was: L2, L5, L8)`)
-  
+
   // F clockwise (looking at front): U row2 -> R col0 -> D row0 -> L col2 -> U row2
   // U6 -> R0, U7 -> R3, U8 -> R6
   // R0 -> D0, R3 -> D1, R6 -> D2
@@ -508,7 +556,7 @@ console.log('\nTest 9: J-Perm applied twice = identity')
     console.log('  Differences:')
     const faces = ['U', 'D', 'F', 'B', 'R', 'L']
     for (const face of faces) {
-      let diffs = []
+      const diffs = []
       for (let r = 0; r < 3; r++) {
         for (let c = 0; c < 3; c++) {
           if (state[face][r][c] !== solved[face][r][c]) {
@@ -524,7 +572,7 @@ console.log('\nTest 9: J-Perm applied twice = identity')
 }
 
 // Test 10: Y-Perm which uses F
-console.log('\nTest 10: F R U\' R\' U\' R U R\' F\' ... (Y-Perm)^2 = identity')
+console.log("\nTest 10: F R U' R' U' R U R' F' ... (Y-Perm)^2 = identity")
 {
   const yperm = "F R U' R' U' R U R' F' R U R' U' R' F R F'"
   const moves = yperm.split(' ')
@@ -541,7 +589,7 @@ console.log('\nTest 10: F R U\' R\' U\' R U R\' F\' ... (Y-Perm)^2 = identity')
     console.log('  Differences:')
     const faces = ['U', 'D', 'F', 'B', 'R', 'L']
     for (const face of faces) {
-      let diffs = []
+      const diffs = []
       for (let r = 0; r < 3; r++) {
         for (let c = 0; c < 3; c++) {
           if (state[face][r][c] !== solved[face][r][c]) {
@@ -557,7 +605,7 @@ console.log('\nTest 10: F R U\' R\' U\' R U R\' F\' ... (Y-Perm)^2 = identity')
 }
 
 // Test 11: Simple F sequence
-console.log('\nTest 11: (F F\')^1 = identity')
+console.log("\nTest 11: (F F')^1 = identity")
 {
   const solved = createSolvedCube()
   let state = applyMove(solved, 'F')
@@ -570,22 +618,46 @@ console.log('\nTest 11: (F F\')^1 = identity')
 console.log('\nTest 12: U move visual check')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   const result = applyU(numbered)
-  
+
   console.log('  After U move (clockwise from above):')
   console.log(`  F row0: ${result.F[0].join(', ')} (was: F0, F1, F2)`)
   console.log(`  R row0: ${result.R[0].join(', ')} (was: R0, R1, R2)`)
   console.log(`  B row0: ${result.B[0].join(', ')} (was: B0, B1, B2)`)
   console.log(`  L row0: ${result.L[0].join(', ')} (was: L0, L1, L2)`)
-  
+
   // When U rotates clockwise (looking from above):
   // - F's front row goes to R (so R gets F's values)
   // - R's front row goes to B (so B gets R's values)
@@ -602,22 +674,46 @@ console.log('\nTest 12: U move visual check')
 console.log('\nTest 13: D move visual check')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   const result = applyD(numbered)
-  
+
   console.log('  After D move (clockwise from below):')
   console.log(`  F row2: ${result.F[2].join(', ')} (was: F6, F7, F8)`)
   console.log(`  R row2: ${result.R[2].join(', ')} (was: R6, R7, R8)`)
   console.log(`  B row2: ${result.B[2].join(', ')} (was: B6, B7, B8)`)
   console.log(`  L row2: ${result.L[2].join(', ')} (was: L6, L7, L8)`)
-  
+
   // When D rotates clockwise (looking from below):
   // From below, looking up at the cube, clockwise means:
   // - F's bottom row goes to L (F → L when viewed from below)
@@ -632,26 +728,50 @@ console.log('\nTest 13: D move visual check')
   console.log('  L row2: F6, F7, F8 (from F)')
 }
 
-// Test 14: R move visual check  
+// Test 14: R move visual check
 console.log('\nTest 14: R move visual check')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   const result = applyR(numbered)
-  
+
   console.log('  After R move (clockwise from right):')
   console.log(`  F col2: ${result.F[0][2]}, ${result.F[1][2]}, ${result.F[2][2]} (was: F2, F5, F8)`)
   console.log(`  U col2: ${result.U[0][2]}, ${result.U[1][2]}, ${result.U[2][2]} (was: U2, U5, U8)`)
   console.log(`  B col0: ${result.B[0][0]}, ${result.B[1][0]}, ${result.B[2][0]} (was: B0, B3, B6)`)
   console.log(`  D col2: ${result.D[0][2]}, ${result.D[1][2]}, ${result.D[2][2]} (was: D2, D5, D8)`)
-  
+
   // When R rotates clockwise (looking from right):
   // - F's right column goes UP to U
   // - U's right column goes to B (with reversal because B is flipped)
@@ -668,13 +788,13 @@ console.log('\nTest 14: R move visual check')
 console.log('\nTest 15: Simple F-based sequences')
 {
   const solved = createSolvedCube()
-  
+
   // F2 should return after 2 more F2s (total F4 = identity)
   let state = applyMove(solved, 'F2')
   state = applyMove(state, 'F2')
   let passed = cubesEqual(state, solved)
   console.log(`  F2 F2 = identity: ${passed ? 'PASS' : 'FAIL'}`)
-  
+
   // (F R F' R')^6 = identity (another common trigger)
   state = solved
   for (let i = 0; i < 6; i++) {
@@ -685,7 +805,7 @@ console.log('\nTest 15: Simple F-based sequences')
   }
   passed = cubesEqual(state, solved)
   console.log(`  (F R F' R')^6 = identity: ${passed ? 'PASS' : 'FAIL'}`)
-  
+
   // R' F R F' (sledgehammer) - should work 6 times
   state = solved
   for (let i = 0; i < 6; i++) {
@@ -703,21 +823,21 @@ console.log('\nTest 16: T-Perm debug (just first few moves)')
 {
   const solved = createSolvedCube()
   let state = solved
-  
+
   // R U R' U' R' F R2 U' R' U' R U R' F'
   state = applyMove(state, 'R')
   state = applyMove(state, 'U')
   state = applyMove(state, "R'")
   state = applyMove(state, "U'")
-  
+
   // After R U R' U', let's see the state
   // This is the first part of the trigger
-  
+
   // Now R' F R2
   state = applyMove(state, "R'")
   state = applyMove(state, 'F')
   state = applyMove(state, 'R2')
-  
+
   // U' R' U' R U R' F'
   state = applyMove(state, "U'")
   state = applyMove(state, "R'")
@@ -726,7 +846,7 @@ console.log('\nTest 16: T-Perm debug (just first few moves)')
   state = applyMove(state, 'U')
   state = applyMove(state, "R'")
   state = applyMove(state, "F'")
-  
+
   console.log('  After 1x T-Perm:')
   // T-Perm should swap UF-UB edges and UFR-UBR corners
   // Only U layer should be affected (well, and some side stickers)
@@ -744,34 +864,58 @@ console.log('\nTest 16: T-Perm debug (just first few moves)')
 console.log('\nTest 17: F R interaction debug')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   let state = applyF(numbered)
-  
+
   console.log('  After F:')
   console.log(`    D row0 (touches F): ${state.D[0].join(', ')}`)
   console.log(`    D col2: ${state.D[0][2]}, ${state.D[1][2]}, ${state.D[2][2]}`)
   console.log(`    R col0 (touches F): ${state.R[0][0]}, ${state.R[1][0]}, ${state.R[2][0]}`)
-  
+
   // F cycle is: U row2 -> R col0 -> D row0 -> L col2 -> U row2
   // So after F:
   // - D row0 should contain what was in R col0: R0, R3, R6
   // Wait, but R col0 was R0, R3, R6 originally
   // And our output shows D row0 = R0, R3, R6 ... that's correct
-  
+
   // Now for R move:
   // R cycle is: F col2 -> U col2 -> B col0 -> D col2 -> F col2
   // After F, what's in each position?
   console.log(`    F col2 (will go to U): ${state.F[0][2]}, ${state.F[1][2]}, ${state.F[2][2]}`)
-  
+
   state = applyR(state)
-  
+
   console.log('  After R:')
   console.log(`    F col2: ${state.F[0][2]}, ${state.F[1][2]}, ${state.F[2][2]}`)
   // F col2 should now have what was in D col2 after F
@@ -782,42 +926,42 @@ console.log('\nTest 17: F R interaction debug')
 }
 
 // Test 18: Find correct cycle for F R F' R'
-console.log('\nTest 18: Finding (F R F\' R\') cycle length')
+console.log("\nTest 18: Finding (F R F' R') cycle length")
 {
   const solved = createSolvedCube()
   let state = solved
-  
+
   let found = false
   for (let i = 1; i <= 200; i++) {
     state = applyMove(state, 'F')
     state = applyMove(state, 'R')
     state = applyMove(state, "F'")
     state = applyMove(state, "R'")
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  (F R F' R')^${i} = identity!`)
       found = true
       break
     }
   }
-  
+
   if (!found) {
     console.log('  No cycle found up to 200 - something is broken!')
   }
 }
 
 // Test 19: Verify sexy move cycle
-console.log('\nTest 19: Finding (R U R\' U\') cycle length')
+console.log("\nTest 19: Finding (R U R' U') cycle length")
 {
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 20; i++) {
     state = applyMove(state, 'R')
     state = applyMove(state, 'U')
     state = applyMove(state, "R'")
     state = applyMove(state, "U'")
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  (R U R' U')^${i} = identity!`)
       break
@@ -832,12 +976,12 @@ console.log('\nTest 20: Finding Sune cycle length')
   const moves = sune.split(' ')
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 20; i++) {
     for (const move of moves) {
       state = applyMove(state, move)
     }
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  Sune^${i} = identity!`)
       break
@@ -852,20 +996,20 @@ console.log('\nTest 21: Finding T-Perm cycle length')
   const moves = tperm.split(' ')
   const solved = createSolvedCube()
   let state = solved
-  
+
   let found = false
   for (let i = 1; i <= 200; i++) {
     for (const move of moves) {
       state = applyMove(state, move)
     }
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  T-Perm^${i} = identity! (expected: 2)`)
       found = true
       break
     }
   }
-  
+
   if (!found) {
     console.log('  No cycle found - algorithm broken!')
   }
@@ -877,7 +1021,7 @@ console.log('\nTest 22: R2 = R R')
   const solved = createSolvedCube()
   const viaR2 = applyMove(solved, 'R2')
   const viaRR = applyMove(applyMove(solved, 'R'), 'R')
-  
+
   const passed = cubesEqual(viaR2, viaRR)
   console.log(`  R2 === R R: ${passed ? 'PASS' : 'FAIL'}`)
 }
@@ -886,32 +1030,32 @@ console.log('\nTest 22: R2 = R R')
 console.log('\nTest 23: Alternative PLL cycle test - just R2 and F')
 {
   const solved = createSolvedCube()
-  
+
   // Simple test: R' F R2 should be reversible
   let state = applyMove(solved, "R'")
   state = applyMove(state, 'F')
   state = applyMove(state, 'R2')
-  
+
   // Reverse it
-  state = applyMove(state, 'R2')  // R2 R2 = identity for R2 part
+  state = applyMove(state, 'R2') // R2 R2 = identity for R2 part
   state = applyMove(state, "F'")
   state = applyMove(state, 'R')
-  
+
   const passed = cubesEqual(state, solved)
   console.log(`  (R' F R2)(R2 F' R) = identity: ${passed ? 'PASS' : 'FAIL'}`)
-  
+
   // Also test: R' F R2 * R2' F' R = R' F R2 R2' F' R = R' F F' R = R' R = identity
   // Actually R2 * R2 = R4 = identity, and R2' = R2
 }
 
 // Test 24: Check if R2' works correctly
-console.log('\nTest 24: R2 = R2\'')
+console.log("\nTest 24: R2 = R2'")
 {
   const solved = createSolvedCube()
   const viaR2 = applyMove(solved, 'R2')
   const viaR2Prime = applyMove(applyMove(applyMove(solved, 'R2'), 'R2'), 'R2') // R2' = R2 R2 R2 = R6 = R2
   // Wait that's wrong. R2' should equal R2 (180 deg both ways is same)
-  
+
   // R2 applied once, then R2 again should give R4 = identity
   let state = applyMove(solved, 'R2')
   state = applyMove(state, 'R2')
@@ -926,16 +1070,16 @@ console.log('\nTest 25: H-Perm cycle test')
   // But we don't have M moves, so let's use R L version:
   // Alternative H-Perm: R2 U2 R U2 R2 U2 R2 U2 R U2 R2
   // Actually simplest: (R2 U2)3
-  
+
   const solved = createSolvedCube()
   let state = solved
-  
+
   // Simpler: just test if R2 U2 R2 U2 R2 U2 = identity (it should be)
   for (let i = 0; i < 3; i++) {
     state = applyMove(state, 'R2')
     state = applyMove(state, 'U2')
   }
-  
+
   const passed = cubesEqual(state, solved)
   console.log(`  (R2 U2)^3 = identity: ${passed ? 'PASS' : 'FAIL'}`)
 }
@@ -944,29 +1088,53 @@ console.log('\nTest 25: H-Perm cycle test')
 console.log('\nTest 26: T-Perm effect analysis')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   const tperm = "R U R' U' R' F R2 U' R' U' R U R' F'"
   const moves = tperm.split(' ')
-  
+
   let state = numbered
   for (const move of moves) {
     state = applyMove(state, move)
   }
-  
+
   console.log('  After T-Perm:')
   console.log(`    U: ${state.U[0].join(' ')} / ${state.U[1].join(' ')} / ${state.U[2].join(' ')}`)
   console.log(`    F row0: ${state.F[0].join(' ')}`)
   console.log(`    R row0: ${state.R[0].join(' ')}`)
   console.log(`    B row0: ${state.B[0].join(' ')}`)
   console.log(`    L row0: ${state.L[0].join(' ')}`)
-  
+
   // Expected T-Perm effect (standard orientation):
   // - UFR corner swaps with UBR corner
   // - UF edge swaps with UB edge
@@ -975,38 +1143,62 @@ console.log('\nTest 26: T-Perm effect analysis')
   console.log('    U: U0 U7 U2 / U3 U4 U5 / U6 U1 U8 (U1<->U7, corners may rotate)')
 }
 
-// Test 27: Debug R2 U2 
+// Test 27: Debug R2 U2
 console.log('\nTest 27: Debug R2 U2 cycle')
 {
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 10; i++) {
     state = applyMove(state, 'R2')
     state = applyMove(state, 'U2')
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  (R2 U2)^${i} = identity`)
       break
     }
   }
-  
+
   // Let's trace what happens
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   state = applyMove(numbered, 'R2')
   console.log('  After R2:')
   console.log(`    F row0: ${state.F[0].join(' ')}`)
   console.log(`    U row0: ${state.U[0].join(' ')}`)
   console.log(`    B row0: ${state.B[0].join(' ')}`)
-  
+
   state = applyMove(state, 'U2')
   console.log('  After R2 U2:')
   console.log(`    F row0: ${state.F[0].join(' ')}`)
@@ -1015,35 +1207,59 @@ console.log('\nTest 27: Debug R2 U2 cycle')
   console.log(`    L row0: ${state.L[0].join(' ')}`)
 }
 
-// Test 28: Detailed R2 trace  
+// Test 28: Detailed R2 trace
 console.log('\nTest 28: Detailed R2 trace')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   console.log('  Initial R face:')
   console.log(`    ${numbered.R[0].join(' ')}`)
   console.log(`    ${numbered.R[1].join(' ')}`)
   console.log(`    ${numbered.R[2].join(' ')}`)
-  
+
   let state = applyMove(numbered, 'R')
   console.log('  After R (face rotates CW):')
   console.log(`    ${state.R[0].join(' ')}`)
   console.log(`    ${state.R[1].join(' ')}`)
   console.log(`    ${state.R[2].join(' ')}`)
-  
+
   state = applyMove(state, 'R')
   console.log('  After R2 (face rotates 180):')
   console.log(`    ${state.R[0].join(' ')}`)
   console.log(`    ${state.R[1].join(' ')}`)
   console.log(`    ${state.R[2].join(' ')}`)
-  
+
   // After R2, R face should be:
   // R8 R7 R6
   // R5 R4 R3
@@ -1058,26 +1274,56 @@ console.log('\nTest 28: Detailed R2 trace')
 console.log('\nTest 29: Detailed U trace')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   console.log('  Initial state row0s:')
-  console.log(`    F: ${numbered.F[0].join(' ')}, R: ${numbered.R[0].join(' ')}, B: ${numbered.B[0].join(' ')}, L: ${numbered.L[0].join(' ')}`)
-  
+  console.log(
+    `    F: ${numbered.F[0].join(' ')}, R: ${numbered.R[0].join(' ')}, B: ${numbered.B[0].join(' ')}, L: ${numbered.L[0].join(' ')}`,
+  )
+
   let state = applyMove(numbered, 'U')
   console.log('  After U (CW from above, F->R->B->L->F):')
-  console.log(`    F: ${state.F[0].join(' ')}, R: ${state.R[0].join(' ')}, B: ${state.B[0].join(' ')}, L: ${state.L[0].join(' ')}`)
+  console.log(
+    `    F: ${state.F[0].join(' ')}, R: ${state.R[0].join(' ')}, B: ${state.B[0].join(' ')}, L: ${state.L[0].join(' ')}`,
+  )
   console.log('  Expected: F gets L, R gets F, B gets R, L gets B')
   console.log('    F: L0 L1 L2, R: F0 F1 F2, B: R0 R1 R2, L: B0 B1 B2')
-  
+
   state = applyMove(state, 'U')
   console.log('  After U2:')
-  console.log(`    F: ${state.F[0].join(' ')}, R: ${state.R[0].join(' ')}, B: ${state.B[0].join(' ')}, L: ${state.L[0].join(' ')}`)
+  console.log(
+    `    F: ${state.F[0].join(' ')}, R: ${state.R[0].join(' ')}, B: ${state.B[0].join(' ')}, L: ${state.L[0].join(' ')}`,
+  )
   console.log('  Expected: F<->B swap, R<->L swap')
   console.log('    F: B0 B1 B2, R: L0 L1 L2, B: F0 F1 F2, L: R0 R1 R2')
 }
@@ -1090,22 +1336,22 @@ console.log('\nTest 30: Superflip existence test')
   const superflip = "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2"
   const moves = superflip.split(' ')
   const solved = createSolvedCube()
-  
+
   // Apply once
   let state = solved
   for (const move of moves) {
     state = applyMove(state, move)
   }
-  
+
   // It should NOT equal solved
   const notSolved = !cubesEqual(state, solved)
   console.log(`  Superflip !== solved: ${notSolved ? 'PASS' : 'FAIL'}`)
-  
+
   // Apply the same algorithm again (superflip is self-inverse)
   for (const move of moves) {
     state = applyMove(state, move)
   }
-  
+
   const backToSolved = cubesEqual(state, solved)
   console.log(`  Superflip^2 = identity: ${backToSolved ? 'PASS' : 'FAIL'}`)
 }
@@ -1124,19 +1370,19 @@ console.log('\nTest 31: Color conservation after algorithms')
     }
     return counts
   }
-  
+
   const solved = createSolvedCube()
   const solvedCounts = countColors(solved)
-  
+
   // Apply some random moves
   let state = solved
   const moves = ['R', 'U', 'F', "R'", 'D', 'L2', 'B', "U'", 'F2']
   for (const m of moves) {
     state = applyMove(state, m)
   }
-  
+
   const afterCounts = countColors(state)
-  
+
   let conserved = true
   for (const color of Object.keys(solvedCounts)) {
     if (solvedCounts[color] !== afterCounts[color]) {
@@ -1144,7 +1390,7 @@ console.log('\nTest 31: Color conservation after algorithms')
       conserved = false
     }
   }
-  
+
   console.log(`  Colors conserved: ${conserved ? 'PASS' : 'FAIL'}`)
 }
 
@@ -1153,29 +1399,36 @@ console.log('\nTest 32: Scramble and reverse')
 {
   const solved = createSolvedCube()
   const scramble = ['R', 'U', 'F', 'D', 'L', 'B']
-  
+
   // Apply scramble
   let state = solved
   for (const m of scramble) {
     state = applyMove(state, m)
   }
-  
+
   // Reverse scramble
-  const reverse = scramble.slice().reverse().map(m => m + "'")
+  const reverse = scramble
+    .slice()
+    .reverse()
+    .map((m) => m + "'")
   for (const m of reverse) {
     state = applyMove(state, m)
   }
-  
+
   const passed = cubesEqual(state, solved)
-  console.log(`  ${scramble.join(' ')} then ${reverse.join(' ')} = identity: ${passed ? 'PASS' : 'FAIL'}`)
-  
+  console.log(
+    `  ${scramble.join(' ')} then ${reverse.join(' ')} = identity: ${passed ? 'PASS' : 'FAIL'}`,
+  )
+
   if (!passed) {
     console.log('  Differences:')
     for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
       for (let r = 0; r < 3; r++) {
         for (let c = 0; c < 3; c++) {
           if (state[face][r][c] !== solved[face][r][c]) {
-            console.log(`    ${face}[${r}][${c}]: ${state[face][r][c]} (expected ${solved[face][r][c]})`)
+            console.log(
+              `    ${face}[${r}][${c}]: ${state[face][r][c]} (expected ${solved[face][r][c]})`,
+            )
           }
         }
       }
@@ -1184,27 +1437,27 @@ console.log('\nTest 32: Scramble and reverse')
 }
 
 // Test 33: Simpler reverse test - just R U R' U'
-console.log('\nTest 33: R U then U\' R\'')
+console.log("\nTest 33: R U then U' R'")
 {
   const solved = createSolvedCube()
   let state = applyMove(solved, 'R')
   state = applyMove(state, 'U')
   state = applyMove(state, "U'")
   state = applyMove(state, "R'")
-  
+
   const passed = cubesEqual(state, solved)
   console.log(`  R U U' R' = identity: ${passed ? 'PASS' : 'FAIL'}`)
 }
 
 // Test 34: Just F B then B' F'
-console.log('\nTest 34: F B then B\' F\'')
+console.log("\nTest 34: F B then B' F'")
 {
   const solved = createSolvedCube()
   let state = applyMove(solved, 'F')
   state = applyMove(state, 'B')
   state = applyMove(state, "B'")
   state = applyMove(state, "F'")
-  
+
   const passed = cubesEqual(state, solved)
   console.log(`  F B B' F' = identity: ${passed ? 'PASS' : 'FAIL'}`)
 }
@@ -1216,12 +1469,12 @@ console.log('\nTest 35: Find superflip cycle')
   const moves = superflip.split(' ')
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 20; i++) {
     for (const move of moves) {
       state = applyMove(state, move)
     }
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  Superflip^${i} = identity`)
       break
@@ -1230,10 +1483,10 @@ console.log('\nTest 35: Find superflip cycle')
 }
 
 // Test 36: Alternative superflip (Roux)
-console.log('\nTest 36: Simple commutator test [R, U] = R U R\' U\'')
+console.log("\nTest 36: Simple commutator test [R, U] = R U R' U'")
 {
   const solved = createSolvedCube()
-  
+
   // [R, U] applied 6 times should return to identity
   // (this is the sexy move)
   let state = solved
@@ -1242,7 +1495,7 @@ console.log('\nTest 36: Simple commutator test [R, U] = R U R\' U\'')
     state = applyMove(state, 'U')
     state = applyMove(state, "R'")
     state = applyMove(state, "U'")
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  [R, U]^${i} = identity`)
       break
@@ -1250,18 +1503,18 @@ console.log('\nTest 36: Simple commutator test [R, U] = R U R\' U\'')
   }
 }
 
-// Test 37: [F, R] commutator  
-console.log('\nTest 37: [F, R] = F R F\' R\' cycle')
+// Test 37: [F, R] commutator
+console.log("\nTest 37: [F, R] = F R F' R' cycle")
 {
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 200; i++) {
     state = applyMove(state, 'F')
     state = applyMove(state, 'R')
     state = applyMove(state, "F'")
     state = applyMove(state, "R'")
-    
+
     if (cubesEqual(state, solved)) {
       console.log(`  [F, R]^${i} = identity`)
       break
@@ -1273,46 +1526,76 @@ console.log('\nTest 37: [F, R] = F R F\' R\' cycle')
 console.log('\nTest 38: F R detailed trace')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   // What happens with F?
   // U row2 (U6, U7, U8) -> R col0 (positions R0, R3, R6)
   // U6 -> R0, U7 -> R3, U8 -> R6
-  
-  let afterF = applyF(numbered)
+
+  const afterF = applyF(numbered)
   console.log('  After F:')
   console.log(`    R col0: ${afterF.R[0][0]}, ${afterF.R[1][0]}, ${afterF.R[2][0]}`)
   console.log(`    (Expected: U6, U7, U8)`)
-  
+
   // Now R is applied
   // R face rotates CW
   // F col2 -> U col2
   // After F, F col2 = (F0, F1, F2) - wait, F face also rotated!
-  console.log(`    F face after rotation: ${afterF.F[0].join(' ')} / ${afterF.F[1].join(' ')} / ${afterF.F[2].join(' ')}`)
+  console.log(
+    `    F face after rotation: ${afterF.F[0].join(' ')} / ${afterF.F[1].join(' ')} / ${afterF.F[2].join(' ')}`,
+  )
   console.log(`    F col2 (will go to U): ${afterF.F[0][2]}, ${afterF.F[1][2]}, ${afterF.F[2][2]}`)
-  
-  let afterFR = applyR(afterF)
+
+  const afterFR = applyR(afterF)
   console.log('  After F R:')
   console.log(`    U col2: ${afterFR.U[0][2]}, ${afterFR.U[1][2]}, ${afterFR.U[2][2]}`)
-  console.log(`    (Expected: F0, F1, F2 after F rotated F face, so should be F6, F7, F8 positions... wait let me recalc)`)
-  
+  console.log(
+    `    (Expected: F0, F1, F2 after F rotated F face, so should be F6, F7, F8 positions... wait let me recalc)`,
+  )
+
   // After F, F face becomes:
   // [F6, F3, F0]   <- row0
   // [F7, F4, F1]   <- row1
   // [F8, F5, F2]   <- row2
   // So F col2 after F = [F0, F1, F2]
-  
+
   // Then R takes F col2 to U col2
   // So U col2 should become [F0, F1, F2]
-  
+
   // Let me check what we actually get
-  console.log(`    F col2 after F was: ${afterF.F[0][2]}, ${afterF.F[1][2]}, ${afterF.F[2][2]} = F0, F1, F2`)
+  console.log(
+    `    F col2 after F was: ${afterF.F[0][2]}, ${afterF.F[1][2]}, ${afterF.F[2][2]} = F0, F1, F2`,
+  )
   console.log(`    After R, U col2: ${afterFR.U[0][2]}, ${afterFR.U[1][2]}, ${afterFR.U[2][2]}`)
   console.log(`    (These should be F0, F1, F2)`)
 }
@@ -1321,20 +1604,44 @@ console.log('\nTest 38: F R detailed trace')
 console.log('\nTest 39: U R detailed trace (for comparison)')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
-  let afterU = applyU(numbered)
+
+  const afterU = applyU(numbered)
   console.log('  After U:')
   console.log(`    R row0: ${afterU.R[0].join(' ')}`)
   console.log(`    F col2: ${afterU.F[0][2]}, ${afterU.F[1][2]}, ${afterU.F[2][2]}`)
-  
-  let afterUR = applyR(afterU)
+
+  const afterUR = applyR(afterU)
   console.log('  After U R:')
   console.log(`    U col2: ${afterUR.U[0][2]}, ${afterUR.U[1][2]}, ${afterUR.U[2][2]}`)
 }
@@ -1348,7 +1655,7 @@ console.log('\nTest 40: Niklas algorithm cycle')
   const moves = niklas.split(' ')
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 10; i++) {
     for (const m of moves) {
       state = applyMove(state, m)
@@ -1361,14 +1668,14 @@ console.log('\nTest 40: Niklas algorithm cycle')
 }
 
 // Test 41: Simple 3-cycle - R L' U2 L R' U2
-console.log('\nTest 41: Edge 3-cycle R L\' U2 L R\' U2')
+console.log("\nTest 41: Edge 3-cycle R L' U2 L R' U2")
 {
   // This cycles 3 edges UF->UB->DF
   const alg = "R L' U2 L R' U2"
   const moves = alg.split(' ')
   const solved = createSolvedCube()
   let state = solved
-  
+
   for (let i = 1; i <= 10; i++) {
     for (const m of moves) {
       state = applyMove(state, m)
@@ -1381,7 +1688,7 @@ console.log('\nTest 41: Edge 3-cycle R L\' U2 L R\' U2')
 }
 
 // Test 42: Allan algorithm - moves 3 edges
-console.log('\nTest 42: Allan (M2 U M2 U2 M2 U M2) - but we don\'t have M')
+console.log("\nTest 42: Allan (M2 U M2 U2 M2 U M2) - but we don't have M")
 {
   // Use slice move equivalent: M = R L' or similar... skip for now
   console.log('  Skipped (no M moves)')
@@ -1391,21 +1698,45 @@ console.log('\nTest 42: Allan (M2 U M2 U2 M2 U M2) - but we don\'t have M')
 console.log('\nTest 43: Sune effect check')
 {
   const numbered = {
-    U: [['U0', 'U1', 'U2'], ['U3', 'U4', 'U5'], ['U6', 'U7', 'U8']],
-    D: [['D0', 'D1', 'D2'], ['D3', 'D4', 'D5'], ['D6', 'D7', 'D8']],
-    F: [['F0', 'F1', 'F2'], ['F3', 'F4', 'F5'], ['F6', 'F7', 'F8']],
-    B: [['B0', 'B1', 'B2'], ['B3', 'B4', 'B5'], ['B6', 'B7', 'B8']],
-    R: [['R0', 'R1', 'R2'], ['R3', 'R4', 'R5'], ['R6', 'R7', 'R8']],
-    L: [['L0', 'L1', 'L2'], ['L3', 'L4', 'L5'], ['L6', 'L7', 'L8']],
+    U: [
+      ['U0', 'U1', 'U2'],
+      ['U3', 'U4', 'U5'],
+      ['U6', 'U7', 'U8'],
+    ],
+    D: [
+      ['D0', 'D1', 'D2'],
+      ['D3', 'D4', 'D5'],
+      ['D6', 'D7', 'D8'],
+    ],
+    F: [
+      ['F0', 'F1', 'F2'],
+      ['F3', 'F4', 'F5'],
+      ['F6', 'F7', 'F8'],
+    ],
+    B: [
+      ['B0', 'B1', 'B2'],
+      ['B3', 'B4', 'B5'],
+      ['B6', 'B7', 'B8'],
+    ],
+    R: [
+      ['R0', 'R1', 'R2'],
+      ['R3', 'R4', 'R5'],
+      ['R6', 'R7', 'R8'],
+    ],
+    L: [
+      ['L0', 'L1', 'L2'],
+      ['L3', 'L4', 'L5'],
+      ['L6', 'L7', 'L8'],
+    ],
   }
-  
+
   const sune = "R U R' U R U2 R'"
   const moves = sune.split(' ')
   let state = numbered
   for (const m of moves) {
     state = applyMove(state, m)
   }
-  
+
   console.log('  After Sune:')
   console.log(`    U: ${state.U[0].join(' ')} / ${state.U[1].join(' ')} / ${state.U[2].join(' ')}`)
   // Sune twists 3 corners on U layer
@@ -1415,35 +1746,38 @@ console.log('\nTest 43: Sune effect check')
 console.log('\nTest 44: Algorithm then inverse')
 {
   const solved = createSolvedCube()
-  
+
   const testAlgs = [
     "R U R' U'",
     "F R U R' U' F'",
     "R U R' U R U2 R'",
     "R U R' U' R' F R2 U' R' U' R U R' F'",
-    "F R' F' R U R U' R'"
+    "F R' F' R U R U' R'",
   ]
-  
+
   for (const alg of testAlgs) {
     const moves = alg.split(' ')
     let state = solved
-    
+
     // Apply forward
     for (const m of moves) {
       state = applyMove(state, m)
     }
-    
+
     // Apply inverse (reverse order, flip prime)
-    const inverse = moves.slice().reverse().map(m => {
-      if (m.endsWith("'")) return m.slice(0, -1)
-      if (m.endsWith("2")) return m
-      return m + "'"
-    })
-    
+    const inverse = moves
+      .slice()
+      .reverse()
+      .map((m) => {
+        if (m.endsWith("'")) return m.slice(0, -1)
+        if (m.endsWith('2')) return m
+        return m + "'"
+      })
+
     for (const m of inverse) {
       state = applyMove(state, m)
     }
-    
+
     const passed = cubesEqual(state, solved)
     console.log(`  ${alg} then inverse = identity: ${passed ? 'PASS' : 'FAIL'}`)
   }
@@ -1455,12 +1789,12 @@ console.log('\nTest 45: Known scramble-solution pair')
   // Using a simple known case:
   // Scramble: R (just one move)
   // Solution: R' (inverse)
-  
+
   const solved = createSolvedCube()
   let state = applyMove(solved, 'R')
   state = applyMove(state, "R'")
   console.log(`  R R' = solved: ${cubesEqual(state, solved) ? 'PASS' : 'FAIL'}`)
-  
+
   // Scramble: R U
   // Solution: U' R'
   state = applyMove(solved, 'R')
@@ -1468,12 +1802,12 @@ console.log('\nTest 45: Known scramble-solution pair')
   state = applyMove(state, "U'")
   state = applyMove(state, "R'")
   console.log(`  R U U' R' = solved: ${cubesEqual(state, solved) ? 'PASS' : 'FAIL'}`)
-  
+
   // Now let's check a property: T-Perm on solved cube should swap 2 edges and 2 corners
   // After T-Perm^2, everything should be back
   // But we found T-Perm^44 = identity
   // This could mean T-Perm is doing more than just swapping, possibly also affecting orientation
-  
+
   // Let's count how many stickers are different after 1 T-Perm
   const tperm = "R U R' U' R' F R2 U' R' U' R U R' F'"
   const moves = tperm.split(' ')
@@ -1481,7 +1815,7 @@ console.log('\nTest 45: Known scramble-solution pair')
   for (const m of moves) {
     state = applyMove(state, m)
   }
-  
+
   let diffCount = 0
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
     for (let r = 0; r < 3; r++) {
@@ -1493,7 +1827,7 @@ console.log('\nTest 45: Known scramble-solution pair')
     }
   }
   console.log(`  Stickers changed by T-Perm: ${diffCount}`)
-  // Standard T-Perm should change: 2 edge pieces (4 stickers each) + 2 corner pieces (6 stickers each) = 8+12 = 20? 
+  // Standard T-Perm should change: 2 edge pieces (4 stickers each) + 2 corner pieces (6 stickers each) = 8+12 = 20?
   // Actually edges have 2 stickers, corners have 3
   // 2 edges * 2 stickers + 2 corners * 3 stickers = 4 + 6 = 10 stickers changed
   // But since they swap, each position gets a different sticker, so we expect ~10 differences
@@ -1522,7 +1856,7 @@ console.log('\nTest 47: Detailed T-Perm sticker changes')
   for (const m of moves) {
     state = applyMove(state, m)
   }
-  
+
   console.log('  Changed stickers:')
   for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
     for (let r = 0; r < 3; r++) {
@@ -1533,11 +1867,11 @@ console.log('\nTest 47: Detailed T-Perm sticker changes')
       }
     }
   }
-  
+
   // T-Perm should only affect U layer pieces:
   // - UF edge swaps with UB edge
   // - UFR corner swaps with UBR corner
-  // 
+  //
   // On a solved cube:
   // - UF edge stickers: U[2][1] (white), F[0][1] (green)
   // - UB edge stickers: U[0][1] (white), B[0][1] (blue)
@@ -1548,7 +1882,7 @@ console.log('\nTest 47: Detailed T-Perm sticker changes')
   // - UF position should have UB piece (blue edge)
   // - UB position should have UF piece (green edge)
   // etc.
-  
+
   console.log('  Expected T-Perm changes:')
   console.log('    Edges: U[2][1]<->U[0][1], F[0][1]<->B[0][1]')
   console.log('    Corners: U[2][2]<->U[0][2], F[0][2]<->B[0][0], R[0][0]<->R[0][2]')

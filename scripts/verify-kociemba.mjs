@@ -1,17 +1,17 @@
 /**
  * Kociemba Convention Cube Implementation (1-54 indexing)
- * 
+ *
  * Layout:
  *              [ U (Up)   ]
  *              01  02  03
  *              04  05  06
  *              07  08  09
- * 
+ *
  * [ L (Left) ] [ F (Front)] [ R (Right)] [ B (Back) ]
  * 10  11  12   19  20  21   28  29  30   37  38  39
  * 13  14  15   22  23  24   31  32  33   40  41  42
  * 16  17  18   25  26  27   34  35  36   43  44  45
- * 
+ *
  *              [ D (Down) ]
  *              46  47  48
  *              49  50  51
@@ -29,7 +29,9 @@ function createSolvedCube() {
   return cube
 }
 
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
@@ -45,8 +47,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+6, start+8, start+2)
-  cycle4(cube, start+1, start+3, start+7, start+5)
+  cycle4(cube, start, start + 6, start + 8, start + 2)
+  cycle4(cube, start + 1, start + 3, start + 7, start + 5)
 }
 
 function applyR(cube) {
@@ -118,7 +120,7 @@ function applyMove(cube, move) {
 }
 
 function applyAlgorithm(cube, alg) {
-  const moves = alg.split(' ').filter(m => m.length > 0)
+  const moves = alg.split(' ').filter((m) => m.length > 0)
   let result = cube
   for (const m of moves) result = applyMove(result, m)
   return result
@@ -148,7 +150,7 @@ for (const name of Object.keys(MOVES)) {
   const solved = createSolvedCube()
   let state = applyMove(solved, name)
   state = applyMove(state, name + "'")
-  test(name + " * " + name + "' = identity", cubesEqual(state, solved))
+  test(name + ' * ' + name + "' = identity", cubesEqual(state, solved))
 }
 
 console.log('\n--- Commutator tests ---')
@@ -158,7 +160,10 @@ let state = solved
 let order = 0
 for (let i = 1; i <= 1000; i++) {
   state = applyAlgorithm(state, "R U R' U'")
-  if (cubesEqual(state, solved)) { order = i; break }
+  if (cubesEqual(state, solved)) {
+    order = i
+    break
+  }
 }
 console.log('  [R,U] cycle length: ' + order)
 test('[R,U] (sexy move) order = 6', order === 6)
@@ -168,7 +173,10 @@ state = solved
 order = 0
 for (let i = 1; i <= 1000; i++) {
   state = applyAlgorithm(state, "F R F' R'")
-  if (cubesEqual(state, solved)) { order = i; break }
+  if (cubesEqual(state, solved)) {
+    order = i
+    break
+  }
 }
 console.log('  [F,R] cycle length: ' + order)
 test('[F,R] order = 6', order === 6)
@@ -192,7 +200,8 @@ test('J-Perm^2 = identity', cubesEqual(state, solved))
 
 solved = createSolvedCube()
 state = solved
-for (let i = 0; i < 2; i++) state = applyAlgorithm(state, "F R U' R' U' R U R' F' R U R' U' R' F R F'")
+for (let i = 0; i < 2; i++)
+  state = applyAlgorithm(state, "F R U' R' U' R U R' F' R U R' U' R' F R F'")
 test('Y-Perm^2 = identity', cubesEqual(state, solved))
 
 console.log('\n--- Advanced tests ---')
@@ -212,6 +221,7 @@ else {
   state = applyAlgorithm(solved, "F R F' R'")
   console.log('Changed positions after [F,R]:')
   for (let i = 1; i <= 54; i++) {
-    if (state[i] !== solved[i]) console.log('  Position ' + i + ': ' + state[i] + ' (was ' + solved[i] + ')')
+    if (state[i] !== solved[i])
+      console.log('  Position ' + i + ': ' + state[i] + ' (was ' + solved[i] + ')')
   }
 }

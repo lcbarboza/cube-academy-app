@@ -3,7 +3,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
   return true
@@ -18,8 +20,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 // Reference R (uses B col 2)
@@ -62,20 +64,22 @@ function applyF(cube) {
 
 function testWithR(applyR) {
   const MOVES = { R: applyR, U: applyU, F: applyF }
-  
+
   function applyMove(cube, move) {
-    const face = move[0], mod = move.slice(1), fn = MOVES[face]
+    const face = move[0],
+      mod = move.slice(1),
+      fn = MOVES[face]
     if (!fn) return cube
     let r = cube
-    if (mod === "") r = fn(r)
+    if (mod === '') r = fn(r)
     else if (mod === "'") r = fn(fn(fn(r)))
-    else if (mod === "2") r = fn(fn(r))
+    else if (mod === '2') r = fn(fn(r))
     return r
   }
 
   function applyAlg(cube, alg) {
     let r = cube
-    for (const m of alg.split(" ").filter(x => x)) r = applyMove(r, m)
+    for (const m of alg.split(' ').filter((x) => x)) r = applyMove(r, m)
     return r
   }
 
@@ -86,19 +90,19 @@ function testWithR(applyR) {
       cube = applyAlg(cube, alg)
       if (cubesEqual(cube, solved)) return i
     }
-    return ">"+max
+    return '>' + max
   }
 
   return {
-    "RU": findOrder("R U R' U'"),
-    "FR": findOrder("F R F' R'"),
-    "FU": findOrder("F U F' U'"),
-    "TPerm": findOrder("R U R' U' R' F R2 U' R' U' R U R' F'"),
+    RU: findOrder("R U R' U'"),
+    FR: findOrder("F R F' R'"),
+    FU: findOrder("F U F' U'"),
+    TPerm: findOrder("R U R' U' R' F R2 U' R' U' R U R' F'"),
   }
 }
 
-console.log("R_v1 (B col 2):", testWithR(applyR_v1))
-console.log("R_v2 (B col 0):", testWithR(applyR_v2))
+console.log('R_v1 (B col 2):', testWithR(applyR_v1))
+console.log('R_v2 (B col 0):', testWithR(applyR_v2))
 
 // Let me also check if maybe U needs to be adjusted
 function applyU_v2(cube) {
@@ -113,20 +117,22 @@ function applyU_v2(cube) {
 
 function testWithU(applyR, applyU) {
   const MOVES = { R: applyR, U: applyU, F: applyF }
-  
+
   function applyMove(cube, move) {
-    const face = move[0], mod = move.slice(1), fn = MOVES[face]
+    const face = move[0],
+      mod = move.slice(1),
+      fn = MOVES[face]
     if (!fn) return cube
     let r = cube
-    if (mod === "") r = fn(r)
+    if (mod === '') r = fn(r)
     else if (mod === "'") r = fn(fn(fn(r)))
-    else if (mod === "2") r = fn(fn(r))
+    else if (mod === '2') r = fn(fn(r))
     return r
   }
 
   function applyAlg(cube, alg) {
     let r = cube
-    for (const m of alg.split(" ").filter(x => x)) r = applyMove(r, m)
+    for (const m of alg.split(' ').filter((x) => x)) r = applyMove(r, m)
     return r
   }
 
@@ -137,17 +143,17 @@ function testWithU(applyR, applyU) {
       cube = applyAlg(cube, alg)
       if (cubesEqual(cube, solved)) return i
     }
-    return ">"+max
+    return '>' + max
   }
 
   return {
-    "RU": findOrder("R U R' U'"),
-    "FR": findOrder("F R F' R'"),
-    "FU": findOrder("F U F' U'"),
-    "TPerm": findOrder("R U R' U' R' F R2 U' R' U' R U R' F'"),
+    RU: findOrder("R U R' U'"),
+    FR: findOrder("F R F' R'"),
+    FU: findOrder("F U F' U'"),
+    TPerm: findOrder("R U R' U' R' F R2 U' R' U' R U R' F'"),
   }
 }
 
-console.log("\nWith U_v2:")
-console.log("R_v1 + U_v2:", testWithU(applyR_v1, applyU_v2))
-console.log("R_v2 + U_v2:", testWithU(applyR_v2, applyU_v2))
+console.log('\nWith U_v2:')
+console.log('R_v1 + U_v2:', testWithU(applyR_v1, applyU_v2))
+console.log('R_v2 + U_v2:', testWithU(applyR_v2, applyU_v2))

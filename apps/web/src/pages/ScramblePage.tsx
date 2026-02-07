@@ -15,7 +15,8 @@ export function ScramblePage() {
   const [scramble, setScramble] = useState(() => generateScrambleString())
 
   // Get SEO content for current language
-  const seoContent = pageSEO.scramble[i18n.language as keyof typeof pageSEO.scramble] || pageSEO.scramble.en
+  const seoContent =
+    pageSEO.scramble[i18n.language as keyof typeof pageSEO.scramble] || pageSEO.scramble.en
 
   const player = useScramblePlayer(scramble)
 

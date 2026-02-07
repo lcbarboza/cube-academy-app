@@ -93,25 +93,45 @@ function applyF_current(cube) {
 // R0 (front-top corner when looking at R) should go to D's right side of row0.
 // So R0 -> D2, R3 -> D1, R6 -> D0 (REVERSED!)
 
-console.log("=== Analyzing F move ===\n")
+console.log('=== Analyzing F move ===\n')
 
 const cube = createSolvedCube()
 const afterF = applyF_current(cube)
 
-console.log("Current implementation after F:")
-console.log("U row2:", [afterF.U[2][0], afterF.U[2][1], afterF.U[2][2]].join(', '))
-console.log("R col0:", [afterF.R[0][0], afterF.R[1][0], afterF.R[2][0]].join(', '))
-console.log("D row0:", [afterF.D[0][0], afterF.D[0][1], afterF.D[0][2]].join(', '))
-console.log("L col2:", [afterF.L[0][2], afterF.L[1][2], afterF.L[2][2]].join(', '))
+console.log('Current implementation after F:')
+console.log('U row2:', [afterF.U[2][0], afterF.U[2][1], afterF.U[2][2]].join(', '))
+console.log('R col0:', [afterF.R[0][0], afterF.R[1][0], afterF.R[2][0]].join(', '))
+console.log('D row0:', [afterF.D[0][0], afterF.D[0][1], afterF.D[0][2]].join(', '))
+console.log('L col2:', [afterF.L[0][2], afterF.L[1][2], afterF.L[2][2]].join(', '))
 
-console.log("\nExpected after F (correct cycle):")
-console.log("U row2 should get: L8, L5, L2 (L col2 reversed)")
-console.log("R col0 should get: U6, U7, U8 (U row2 in order)")
-console.log("D row0 should get: R6, R3, R0 (R col0 reversed)")
-console.log("L col2 should get: D0, D1, D2 (D row0 in order)")
+console.log('\nExpected after F (correct cycle):')
+console.log('U row2 should get: L8, L5, L2 (L col2 reversed)')
+console.log('R col0 should get: U6, U7, U8 (U row2 in order)')
+console.log('D row0 should get: R6, R3, R0 (R col0 reversed)')
+console.log('L col2 should get: D0, D1, D2 (D row0 in order)')
 
-console.log("\n=== Checking what we got ===")
-console.log("U row2:", afterF.U[2][0] === 'L8' && afterF.U[2][1] === 'L5' && afterF.U[2][2] === 'L2' ? "CORRECT" : "WRONG")
-console.log("R col0:", afterF.R[0][0] === 'U6' && afterF.R[1][0] === 'U7' && afterF.R[2][0] === 'U8' ? "CORRECT" : "WRONG")
-console.log("D row0:", afterF.D[0][0] === 'R6' && afterF.D[0][1] === 'R3' && afterF.D[0][2] === 'R0' ? "CORRECT - reversed" : `WRONG - got ${afterF.D[0][0]}, ${afterF.D[0][1]}, ${afterF.D[0][2]}`)
-console.log("L col2:", afterF.L[0][2] === 'D0' && afterF.L[1][2] === 'D1' && afterF.L[2][2] === 'D2' ? "CORRECT" : `WRONG - got ${afterF.L[0][2]}, ${afterF.L[1][2]}, ${afterF.L[2][2]}`)
+console.log('\n=== Checking what we got ===')
+console.log(
+  'U row2:',
+  afterF.U[2][0] === 'L8' && afterF.U[2][1] === 'L5' && afterF.U[2][2] === 'L2'
+    ? 'CORRECT'
+    : 'WRONG',
+)
+console.log(
+  'R col0:',
+  afterF.R[0][0] === 'U6' && afterF.R[1][0] === 'U7' && afterF.R[2][0] === 'U8'
+    ? 'CORRECT'
+    : 'WRONG',
+)
+console.log(
+  'D row0:',
+  afterF.D[0][0] === 'R6' && afterF.D[0][1] === 'R3' && afterF.D[0][2] === 'R0'
+    ? 'CORRECT - reversed'
+    : `WRONG - got ${afterF.D[0][0]}, ${afterF.D[0][1]}, ${afterF.D[0][2]}`,
+)
+console.log(
+  'L col2:',
+  afterF.L[0][2] === 'D0' && afterF.L[1][2] === 'D1' && afterF.L[2][2] === 'D2'
+    ? 'CORRECT'
+    : `WRONG - got ${afterF.L[0][2]}, ${afterF.L[1][2]}, ${afterF.L[2][2]}`,
+)

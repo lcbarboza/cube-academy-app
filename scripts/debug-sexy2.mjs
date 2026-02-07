@@ -1,8 +1,5 @@
 // Debug sexy move step by step with B[0][0] tracking
-import { 
-  createSolvedCube, 
-  applyMove
-} from '../apps/web/src/lib/cube-state.ts'
+import { applyMove, createSolvedCube } from '../apps/web/src/lib/cube-state.ts'
 
 const solved = createSolvedCube()
 
@@ -30,20 +27,22 @@ c = applyMove(c, "U'")
 console.log(`After R U R' U': B[0][0] = ${c.B[0][0]}`)
 
 console.log("\n--- Now let's trace what should happen ---")
-console.log("After R: B col 0 <- U col 2 reversed. U col 2 was [white, white, white], so B col 0 = [white, white, white]")
-console.log("After U: B row 0 <- R row 0. We need to check what R row 0 was after R")
+console.log(
+  'After R: B col 0 <- U col 2 reversed. U col 2 was [white, white, white], so B col 0 = [white, white, white]',
+)
+console.log('After U: B row 0 <- R row 0. We need to check what R row 0 was after R')
 
 c = applyMove(solved, 'R')
 console.log(`After R: R row 0 = [${c.R[0][0]}, ${c.R[0][1]}, ${c.R[0][2]}]`)
 
-console.log("\nSo after R U: B row 0 <- R row 0 = [red, red, red]")
+console.log('\nSo after R U: B row 0 <- R row 0 = [red, red, red]')
 console.log("But the trace shows B[0][0] = white after R U. Something's wrong with U move!")
 
-console.log("\n--- Testing U move on B row 0 ---")
+console.log('\n--- Testing U move on B row 0 ---')
 // Create cube where B row 0 has distinct colors
 const testCube = createSolvedCube()
 testCube.B[0][0] = 'red'
-testCube.B[0][1] = 'green'  
+testCube.B[0][1] = 'green'
 testCube.B[0][2] = 'orange'
 
 console.log(`Before U: B row 0 = [${testCube.B[0][0]}, ${testCube.B[0][1]}, ${testCube.B[0][2]}]`)

@@ -19,7 +19,13 @@ const sizeMap = {
  * Cubing World Logo
  * Isometric Rubik's cube with cosmic arcade styling
  */
-export function Logo({ size = 'md', showText = true, to = '/', className = '', asHeading = false }: LogoProps) {
+export function Logo({
+  size = 'md',
+  showText = true,
+  to = '/',
+  className = '',
+  asHeading = false,
+}: LogoProps) {
   const { cube: cubeSize, text: textClass } = sizeMap[size]
 
   // The text element - can be h1 or span
@@ -47,19 +53,19 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '', a
               <stop offset="0%" stopColor="#ffffff" />
               <stop offset="100%" stopColor="#e8e8e8" />
             </linearGradient>
-            
+
             {/* Gradient for left face (orange) */}
             <linearGradient id="logoLeftFace" x1="100%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="var(--neon-orange, #ff6b00)" />
               <stop offset="100%" stopColor="#cc5500" />
             </linearGradient>
-            
+
             {/* Gradient for right face (blue) */}
             <linearGradient id="logoRightFace" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="var(--cube-blue, #0088ff)" />
               <stop offset="100%" stopColor="#0066cc" />
             </linearGradient>
-            
+
             {/* Glow filter */}
             <filter id="logoGlow" x="-50%" y="-50%" width="200%" height="200%">
               <feGaussianBlur stdDeviation="1" result="blur" />
@@ -71,7 +77,7 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '', a
               </feMerge>
             </filter>
           </defs>
-          
+
           {/* Isometric Rubik's Cube */}
           <g transform="translate(24, 24)" filter="url(#logoGlow)">
             {/* Top face (white) */}
@@ -84,7 +90,7 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '', a
             {/* Top grid lines */}
             <line x1="-4" y1="-10" x2="4" y2="-5" stroke="#bbb" strokeWidth="0.4" />
             <line x1="4" y1="-10" x2="-4" y2="-5" stroke="#bbb" strokeWidth="0.4" />
-            
+
             {/* Left face (orange) */}
             <polygon
               points="-12,-8 0,-2 0,10 -12,4"
@@ -95,7 +101,7 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '', a
             {/* Left grid lines */}
             <line x1="-8" y1="-3" x2="-4" y2="1" stroke="#aa4400" strokeWidth="0.4" />
             <line x1="-8" y1="1" x2="-4" y2="5" stroke="#aa4400" strokeWidth="0.4" />
-            
+
             {/* Right face (blue) */}
             <polygon
               points="12,-8 12,4 0,10 0,-2"
@@ -106,17 +112,35 @@ export function Logo({ size = 'md', showText = true, to = '/', className = '', a
             {/* Right grid lines */}
             <line x1="4" y1="-3" x2="8" y2="1" stroke="#004499" strokeWidth="0.4" />
             <line x1="4" y1="1" x2="8" y2="5" stroke="#004499" strokeWidth="0.4" />
-            
+
             {/* Edge highlights */}
-            <line x1="0" y1="-14" x2="12" y2="-8" stroke="var(--neon-cyan, #00fff2)" strokeWidth="0.8" opacity="0.7" />
-            <line x1="0" y1="-14" x2="-12" y2="-8" stroke="var(--neon-magenta, #ff00ff)" strokeWidth="0.8" opacity="0.5" />
+            <line
+              x1="0"
+              y1="-14"
+              x2="12"
+              y2="-8"
+              stroke="var(--neon-cyan, #00fff2)"
+              strokeWidth="0.8"
+              opacity="0.7"
+            />
+            <line
+              x1="0"
+              y1="-14"
+              x2="-12"
+              y2="-8"
+              stroke="var(--neon-magenta, #ff00ff)"
+              strokeWidth="0.8"
+              opacity="0.5"
+            />
           </g>
         </svg>
       </div>
 
       {/* Text */}
       {showText && (
-        <TextElement className={`font-display font-bold tracking-wider text-glow-cyan ${textClass} ${headingStyles}`}>
+        <TextElement
+          className={`font-display font-bold tracking-wider text-glow-cyan ${textClass} ${headingStyles}`}
+        >
           CUBING WORLD
         </TextElement>
       )}

@@ -16,7 +16,7 @@ export function TimerPage() {
   const { isDark, toggleTheme } = useTheme()
   const { addSolve, stats } = useSolveHistory()
   const [isHistoryExpanded, setIsHistoryExpanded] = useState(false)
-  
+
   // Get SEO content for current language
   const seoContent = pageSEO.timer[i18n.language as keyof typeof pageSEO.timer] || pageSEO.timer.en
 
@@ -78,13 +78,13 @@ export function TimerPage() {
   return (
     <div className="h-screen flex flex-col relative" onKeyDown={handleKeyDown}>
       {/* SEO Meta Tags */}
-      <SEO 
+      <SEO
         title={seoContent.title}
         description={seoContent.description}
         keywords={seoContent.keywords}
         canonical="/timer"
       />
-      
+
       {/* Cosmic background */}
       <div className="cosmic-bg" />
 
@@ -205,17 +205,17 @@ export function TimerPage() {
               </div>
               <div className="hud-stat-divider" />
               <div className="hud-stat-item">
-                <span className="hud-stat-label hud-stat-label-best">{t('history.bestSingle', 'best')}</span>
-                <span className="hud-stat-value hud-stat-value-best">{formatStatValue(stats.bestSingle)}</span>
+                <span className="hud-stat-label hud-stat-label-best">
+                  {t('history.bestSingle', 'best')}
+                </span>
+                <span className="hud-stat-value hud-stat-value-best">
+                  {formatStatValue(stats.bestSingle)}
+                </span>
               </div>
             </div>
 
             {/* Toggle History Button */}
-            <button
-              type="button"
-              onClick={toggleHistoryPanel}
-              className="hud-toggle-btn"
-            >
+            <button type="button" onClick={toggleHistoryPanel} className="hud-toggle-btn">
               <span className="font-mono text-xs">
                 {stats.totalSolves} {t('history.solves', 'solves')}
               </span>
@@ -225,16 +225,19 @@ export function TimerPage() {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 15l7-7 7 7"
+                />
               </svg>
             </button>
           </div>
         </div>
 
         {/* Expandable History Panel */}
-        <div
-          className={`hud-history-panel ${isHistoryExpanded ? 'hud-history-expanded' : ''}`}
-        >
+        <div className={`hud-history-panel ${isHistoryExpanded ? 'hud-history-expanded' : ''}`}>
           <div className="max-w-5xl mx-auto px-6">
             <SolveHistoryPanel compact />
           </div>
@@ -250,12 +253,12 @@ export function TimerPage() {
 function formatStatValue(value: number | 'dnf' | null): string {
   if (value === null) return '--.--'
   if (value === 'dnf') return 'DNF'
-  
+
   const totalMs = Math.round(value)
   const minutes = Math.floor(totalMs / 60000)
   const seconds = Math.floor((totalMs % 60000) / 1000)
   const centiseconds = Math.floor((totalMs % 1000) / 10)
-  
+
   if (minutes > 0) {
     return `${minutes}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`
   }

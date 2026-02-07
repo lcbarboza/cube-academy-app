@@ -3,7 +3,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
   return true
@@ -16,8 +18,8 @@ function cycle4(cube, a, b, c, d) {
   cube[b] = temp
 }
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 function applyR(cube) {
@@ -75,18 +77,20 @@ function applyB(cube) {
 const MOVES = { R: applyR, L: applyL, U: applyU, D: applyD, F: applyF, B: applyB }
 
 function applyMove(cube, move) {
-  const face = move[0], mod = move.slice(1), fn = MOVES[face]
+  const face = move[0],
+    mod = move.slice(1),
+    fn = MOVES[face]
   if (!fn) return cube
   let r = cube
-  if (mod === "") r = fn(r)
+  if (mod === '') r = fn(r)
   else if (mod === "'") r = fn(fn(fn(r)))
-  else if (mod === "2") r = fn(fn(r))
+  else if (mod === '2') r = fn(fn(r))
   return r
 }
 
 function applyAlg(cube, alg) {
   let r = cube
-  for (const m of alg.split(" ").filter(x => x)) r = applyMove(r, m)
+  for (const m of alg.split(' ').filter((x) => x)) r = applyMove(r, m)
   return r
 }
 
@@ -94,60 +98,72 @@ function applyAlg(cube, alg) {
 // This only uses R, U, F - no L or B!
 // If it fails, the problem must be in R, U, or F
 
-console.log("T-Perm uses only R, U, F")
-console.log("Testing individual commutators again:")
-console.log("[R,U]:", (() => {
-  const s = createSolvedCube()
-  let c = s
-  for (let i = 1; i <= 100; i++) {
-    c = applyAlg(c, "R U R' U'")
-    if (cubesEqual(c, s)) return i
-  }
-  return ">100"
-})())
+console.log('T-Perm uses only R, U, F')
+console.log('Testing individual commutators again:')
+console.log(
+  '[R,U]:',
+  (() => {
+    const s = createSolvedCube()
+    let c = s
+    for (let i = 1; i <= 100; i++) {
+      c = applyAlg(c, "R U R' U'")
+      if (cubesEqual(c, s)) return i
+    }
+    return '>100'
+  })(),
+)
 
-console.log("[F,R]:", (() => {
-  const s = createSolvedCube()
-  let c = s
-  for (let i = 1; i <= 100; i++) {
-    c = applyAlg(c, "F R F' R'")
-    if (cubesEqual(c, s)) return i
-  }
-  return ">100"
-})())
+console.log(
+  '[F,R]:',
+  (() => {
+    const s = createSolvedCube()
+    let c = s
+    for (let i = 1; i <= 100; i++) {
+      c = applyAlg(c, "F R F' R'")
+      if (cubesEqual(c, s)) return i
+    }
+    return '>100'
+  })(),
+)
 
-console.log("[F,U]:", (() => {
-  const s = createSolvedCube()
-  let c = s
-  for (let i = 1; i <= 100; i++) {
-    c = applyAlg(c, "F U F' U'")
-    if (cubesEqual(c, s)) return i
-  }
-  return ">100"
-})())
+console.log(
+  '[F,U]:',
+  (() => {
+    const s = createSolvedCube()
+    let c = s
+    for (let i = 1; i <= 100; i++) {
+      c = applyAlg(c, "F U F' U'")
+      if (cubesEqual(c, s)) return i
+    }
+    return '>100'
+  })(),
+)
 
 // T-Perm order
-console.log("\nT-Perm order:", (() => {
-  const s = createSolvedCube()
-  let c = s
-  for (let i = 1; i <= 100; i++) {
-    c = applyAlg(c, "R U R' U' R' F R2 U' R' U' R U R' F'")
-    if (cubesEqual(c, s)) return i
-  }
-  return ">100"
-})())
+console.log(
+  '\nT-Perm order:',
+  (() => {
+    const s = createSolvedCube()
+    let c = s
+    for (let i = 1; i <= 100; i++) {
+      c = applyAlg(c, "R U R' U' R' F R2 U' R' U' R U R' F'")
+      if (cubesEqual(c, s)) return i
+    }
+    return '>100'
+  })(),
+)
 
 // Let me trace what T-Perm does
-console.log("\n--- Tracing T-Perm ---")
-let s = createSolvedCube()
-let c = applyAlg(s, "R U R' U' R' F R2 U' R' U' R U R' F'")
+console.log('\n--- Tracing T-Perm ---')
+const s = createSolvedCube()
+const c = applyAlg(s, "R U R' U' R' F R2 U' R' U' R U R' F'")
 
 // Find which positions changed
 const changed = []
 for (let i = 1; i <= 54; i++) {
-  if (c[i] !== i) changed.push(i + ":" + c[i])
+  if (c[i] !== i) changed.push(i + ':' + c[i])
 }
-console.log("Changed positions (pos:value):", changed.join(", "))
+console.log('Changed positions (pos:value):', changed.join(', '))
 
 // T-Perm should swap 2 edges and 2 corners on U face
 // Expected changes: positions on U layer edges/corners swap

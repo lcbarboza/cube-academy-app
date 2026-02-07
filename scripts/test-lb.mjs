@@ -5,7 +5,9 @@ function createSolvedCube() {
   return cube
 }
 
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 
 function cubesEqual(a, b) {
   for (let i = 1; i <= 54; i++) if (a[i] !== b[i]) return false
@@ -21,8 +23,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 function applyR(cube) {
@@ -143,20 +145,22 @@ function applyB_v4(cube) {
 
 function testCommutator(applyL, applyB, alg) {
   const MOVES = { R: applyR, L: applyL, U: applyU, D: applyD, F: applyF, B: applyB }
-  
+
   function applyMove(cube, move) {
-    const face = move[0], mod = move.slice(1), fn = MOVES[face]
+    const face = move[0],
+      mod = move.slice(1),
+      fn = MOVES[face]
     if (!fn) return cube
     let r = cube
-    if (mod === "") r = fn(r)
+    if (mod === '') r = fn(r)
     else if (mod === "'") r = fn(fn(fn(r)))
-    else if (mod === "2") r = fn(fn(r))
+    else if (mod === '2') r = fn(fn(r))
     return r
   }
 
   function applyAlg(cube, alg) {
     let r = cube
-    for (const m of alg.split(" ").filter(x => x)) r = applyMove(r, m)
+    for (const m of alg.split(' ').filter((x) => x)) r = applyMove(r, m)
     return r
   }
 
@@ -166,29 +170,29 @@ function testCommutator(applyL, applyB, alg) {
     cube = applyAlg(cube, alg)
     if (cubesEqual(cube, solved)) return i
   }
-  return ">200"
+  return '>200'
 }
 
-console.log("Testing [L,U] order (should be 6):")
-console.log("  L_v1:", testCommutator(applyL_v1, applyB_v1, "L U L' U'"))
-console.log("  L_v2:", testCommutator(applyL_v2, applyB_v1, "L U L' U'"))
-console.log("  L_v3:", testCommutator(applyL_v3, applyB_v1, "L U L' U'"))
-console.log("  L_v4:", testCommutator(applyL_v4, applyB_v1, "L U L' U'"))
+console.log('Testing [L,U] order (should be 6):')
+console.log('  L_v1:', testCommutator(applyL_v1, applyB_v1, "L U L' U'"))
+console.log('  L_v2:', testCommutator(applyL_v2, applyB_v1, "L U L' U'"))
+console.log('  L_v3:', testCommutator(applyL_v3, applyB_v1, "L U L' U'"))
+console.log('  L_v4:', testCommutator(applyL_v4, applyB_v1, "L U L' U'"))
 
-console.log("\nTesting [B,U] order (should be 6):")
-console.log("  B_v1:", testCommutator(applyL_v1, applyB_v1, "B U B' U'"))
-console.log("  B_v2:", testCommutator(applyL_v1, applyB_v2, "B U B' U'"))
-console.log("  B_v3:", testCommutator(applyL_v1, applyB_v3, "B U B' U'"))
-console.log("  B_v4:", testCommutator(applyL_v1, applyB_v4, "B U B' U'"))
+console.log('\nTesting [B,U] order (should be 6):')
+console.log('  B_v1:', testCommutator(applyL_v1, applyB_v1, "B U B' U'"))
+console.log('  B_v2:', testCommutator(applyL_v1, applyB_v2, "B U B' U'"))
+console.log('  B_v3:', testCommutator(applyL_v1, applyB_v3, "B U B' U'"))
+console.log('  B_v4:', testCommutator(applyL_v1, applyB_v4, "B U B' U'"))
 
-console.log("\nTesting [L,F] order (should be 6):")
-console.log("  L_v1:", testCommutator(applyL_v1, applyB_v1, "L F L' F'"))
-console.log("  L_v2:", testCommutator(applyL_v2, applyB_v1, "L F L' F'"))
-console.log("  L_v3:", testCommutator(applyL_v3, applyB_v1, "L F L' F'"))
-console.log("  L_v4:", testCommutator(applyL_v4, applyB_v1, "L F L' F'"))
+console.log('\nTesting [L,F] order (should be 6):')
+console.log('  L_v1:', testCommutator(applyL_v1, applyB_v1, "L F L' F'"))
+console.log('  L_v2:', testCommutator(applyL_v2, applyB_v1, "L F L' F'"))
+console.log('  L_v3:', testCommutator(applyL_v3, applyB_v1, "L F L' F'"))
+console.log('  L_v4:', testCommutator(applyL_v4, applyB_v1, "L F L' F'"))
 
-console.log("\nTesting [B,R] order (should be 6):")
-console.log("  B_v1:", testCommutator(applyL_v1, applyB_v1, "B R B' R'"))
-console.log("  B_v2:", testCommutator(applyL_v1, applyB_v2, "B R B' R'"))
-console.log("  B_v3:", testCommutator(applyL_v1, applyB_v3, "B R B' R'"))
-console.log("  B_v4:", testCommutator(applyL_v1, applyB_v4, "B R B' R'"))
+console.log('\nTesting [B,R] order (should be 6):')
+console.log('  B_v1:', testCommutator(applyL_v1, applyB_v1, "B R B' R'"))
+console.log('  B_v2:', testCommutator(applyL_v1, applyB_v2, "B R B' R'"))
+console.log('  B_v3:', testCommutator(applyL_v1, applyB_v3, "B R B' R'"))
+console.log('  B_v4:', testCommutator(applyL_v1, applyB_v4, "B R B' R'"))

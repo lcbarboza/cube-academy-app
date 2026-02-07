@@ -87,8 +87,8 @@ function applyF(cube) {
 function applyMove(cube, move) {
   const face = move[0]
   const modifier = move.slice(1)
-  let baseMove = face === 'R' ? applyR : applyF
-  
+  const baseMove = face === 'R' ? applyR : applyF
+
   let result = cube
   switch (modifier) {
     case '':
@@ -103,21 +103,21 @@ function applyMove(cube, move) {
 
 function printCube(cube, label) {
   console.log(`\n=== ${label} ===`)
-  console.log('U:', cube.U.map(r => r.join(' ')).join(' | '))
-  console.log('F:', cube.F.map(r => r.join(' ')).join(' | '))
-  console.log('R:', cube.R.map(r => r.join(' ')).join(' | '))
-  console.log('D:', cube.D.map(r => r.join(' ')).join(' | '))
+  console.log('U:', cube.U.map((r) => r.join(' ')).join(' | '))
+  console.log('F:', cube.F.map((r) => r.join(' ')).join(' | '))
+  console.log('R:', cube.R.map((r) => r.join(' ')).join(' | '))
+  console.log('D:', cube.D.map((r) => r.join(' ')).join(' | '))
 }
 
 // Execute F R F' R' step by step
 let cube = createSolvedCube()
-printCube(cube, "Initial")
+printCube(cube, 'Initial')
 
 cube = applyMove(cube, 'F')
-printCube(cube, "After F")
+printCube(cube, 'After F')
 
 cube = applyMove(cube, 'R')
-printCube(cube, "After F R")
+printCube(cube, 'After F R')
 
 cube = applyMove(cube, "F'")
 printCube(cube, "After F R F'")
@@ -126,7 +126,7 @@ cube = applyMove(cube, "R'")
 printCube(cube, "After F R F' R' = [F,R]")
 
 // Check what changes from solved
-console.log("\n=== Changed positions from solved ===")
+console.log('\n=== Changed positions from solved ===')
 const solved = createSolvedCube()
 for (const face of ['U', 'D', 'F', 'B', 'R', 'L']) {
   for (let r = 0; r < 3; r++) {

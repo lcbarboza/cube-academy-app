@@ -1,7 +1,7 @@
 // When U rotates clockwise (looking from above):
 // - Front top row moves to RIGHT (not left)
 // - Right top row moves to BACK
-// - Back top row moves to LEFT  
+// - Back top row moves to LEFT
 // - Left top row moves to FRONT
 //
 // So the cycle is: F -> R -> B -> L -> F
@@ -40,7 +40,9 @@ function createSolvedCube() {
   for (let i = 1; i <= 54; i++) cube[i] = i
   return cube
 }
-function cloneCube(cube) { return [...cube] }
+function cloneCube(cube) {
+  return [...cube]
+}
 
 function cycle4(cube, a, b, c, d) {
   const temp = cube[a]
@@ -51,8 +53,8 @@ function cycle4(cube, a, b, c, d) {
 }
 
 function rotateFaceCW(cube, start) {
-  cycle4(cube, start, start+2, start+8, start+6)
-  cycle4(cube, start+1, start+5, start+7, start+3)
+  cycle4(cube, start, start + 2, start + 8, start + 6)
+  cycle4(cube, start + 1, start + 5, start + 7, start + 3)
 }
 
 function applyR(cube) {
@@ -153,7 +155,7 @@ function applyF(cube) {
 //
 // I think I'm overcomplicating this. Let me just compare with a known reference.
 
-console.log("Checking F face rotation starts:")
+console.log('Checking F face rotation starts:')
 // F face starts at position 19
 // After rotateFaceCW(19), the face layout:
 //   19 20 21     becomes   25 22 19
@@ -165,14 +167,14 @@ console.log("Checking F face rotation starts:")
 let s = createSolvedCube()
 let c = cloneCube(s)
 rotateFaceCW(c, 19)
-console.log("F face after rotation:")
-console.log("  19-21-27-25:", c[19], c[21], c[27], c[25], "(should be 25,19,21,27)")
-console.log("  20-24-26-22:", c[20], c[24], c[26], c[22], "(should be 22,20,24,26)")
+console.log('F face after rotation:')
+console.log('  19-21-27-25:', c[19], c[21], c[27], c[25], '(should be 25,19,21,27)')
+console.log('  20-24-26-22:', c[20], c[24], c[26], c[22], '(should be 22,20,24,26)')
 
 // Actually our cycle4 goes a->b->c->d->a for VALUES
 // cycle4(19, 21, 27, 25) means:
 //   position 19 gets old value from 25
-//   position 21 gets old value from 19  
+//   position 21 gets old value from 19
 //   position 27 gets old value from 21
 //   position 25 gets old value from 27
 // So after: 19=25, 21=19, 27=21, 25=27 - that's what we get!
@@ -184,10 +186,16 @@ console.log("  20-24-26-22:", c[20], c[24], c[26], c[22], "(should be 22,20,24,2
 // The ring cycles should be checked too. Let me verify F's ring:
 s = createSolvedCube()
 c = applyF(s)
-console.log("\nAfter full F move:")
-console.log("Ring cycle 1 (7,28,48,18): pos 7=" + c[7] + " 28=" + c[28] + " 48=" + c[48] + " 18=" + c[18])
-console.log("  Expected: 7=18, 28=7, 48=28, 18=48")
-console.log("Ring cycle 2 (8,31,47,15): pos 8=" + c[8] + " 31=" + c[31] + " 47=" + c[47] + " 15=" + c[15])
-console.log("  Expected: 8=15, 31=8, 47=31, 15=47")
-console.log("Ring cycle 3 (9,34,46,12): pos 9=" + c[9] + " 34=" + c[34] + " 46=" + c[46] + " 12=" + c[12])
-console.log("  Expected: 9=12, 34=9, 46=34, 12=46")
+console.log('\nAfter full F move:')
+console.log(
+  'Ring cycle 1 (7,28,48,18): pos 7=' + c[7] + ' 28=' + c[28] + ' 48=' + c[48] + ' 18=' + c[18],
+)
+console.log('  Expected: 7=18, 28=7, 48=28, 18=48')
+console.log(
+  'Ring cycle 2 (8,31,47,15): pos 8=' + c[8] + ' 31=' + c[31] + ' 47=' + c[47] + ' 15=' + c[15],
+)
+console.log('  Expected: 8=15, 31=8, 47=31, 15=47')
+console.log(
+  'Ring cycle 3 (9,34,46,12): pos 9=' + c[9] + ' 34=' + c[34] + ' 46=' + c[46] + ' 12=' + c[12],
+)
+console.log('  Expected: 9=12, 34=9, 46=34, 12=46')

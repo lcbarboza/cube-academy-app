@@ -43,7 +43,7 @@ export function CubeViewer({
 
   useEffect(() => {
     let resizeTimeout: ReturnType<typeof setTimeout>
-    
+
     const handleResize = () => {
       // Debounce resize events to avoid excessive re-renders
       clearTimeout(resizeTimeout)
