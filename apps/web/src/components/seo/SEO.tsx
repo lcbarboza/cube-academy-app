@@ -90,7 +90,7 @@ function setLinkTag(rel: string, href: string, hreflang?: string) {
  */
 function setStructuredData(id: string, data: object) {
   let element = document.querySelector(
-    `script[type="application/ld+json"][data-seo-id="${id}"]`
+    `script[type="application/ld+json"][data-seo-id="${id}"]`,
   ) as HTMLScriptElement | null
 
   if (!element) {
@@ -107,9 +107,7 @@ function setStructuredData(id: string, data: object) {
  * Removes a JSON-LD script tag by ID
  */
 function removeStructuredData(id: string) {
-  const element = document.querySelector(
-    `script[type="application/ld+json"][data-seo-id="${id}"]`
-  )
+  const element = document.querySelector(`script[type="application/ld+json"][data-seo-id="${id}"]`)
   if (element) {
     element.remove()
   }
