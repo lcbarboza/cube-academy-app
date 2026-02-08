@@ -139,6 +139,65 @@ The application is automatically deployed to AWS Amplify when changes are pushed
 | AWS credentials error | Verify GitHub secrets are set correctly |
 | Deployment not starting | Ensure IAM policy has correct App ID |
 
+## SEO & Search Console
+
+### Google Search Console Setup
+
+After deploying, set up Google Search Console to monitor your site's search performance:
+
+1. **Verify Domain Ownership**
+   - Go to [Google Search Console](https://search.google.com/search-console/)
+   - Add property > Enter `cubing.world`
+   - Choose verification method:
+     - **DNS verification** (recommended): Add TXT record to your domain DNS
+     - **HTML file**: Upload verification file to `apps/web/public/`
+     - **HTML tag**: Add meta tag to `apps/web/index.html`
+
+2. **Submit Sitemap**
+   - In Search Console, go to Sitemaps
+   - Enter: `https://cubing.world/sitemap.xml`
+   - Click Submit
+
+3. **Request Indexing for Key Pages**
+   - Use URL Inspection tool for each page:
+     - `https://cubing.world/`
+     - `https://cubing.world/timer`
+     - `https://cubing.world/scramble`
+   - Click "Request Indexing" if not already indexed
+
+4. **Monitor Performance**
+   - Check Coverage report for crawl errors
+   - Review Performance report for search queries
+   - Fix any issues in the Core Web Vitals report
+
+### SEO Files
+
+| File | Purpose |
+|------|---------|
+| `apps/web/public/robots.txt` | Crawler instructions |
+| `apps/web/public/sitemap.xml` | Page listing for search engines |
+| `customHttp.yml` | Amplify rewrites for SPA routing |
+
+### Testing SEO
+
+```bash
+# Test structured data
+# Visit: https://search.google.com/test/rich-results
+# Enter: https://cubing.world
+
+# Run Lighthouse SEO audit
+npx lighthouse https://cubing.world --only-categories=seo --output=html
+```
+
+### Future SEO Improvements
+
+For better international SEO, consider implementing URL-based language routing:
+- `/en/timer` and `/pt-br/timer` instead of client-side language detection
+- Update hreflang tags to point to language-specific URLs
+- Add language prefix to canonical URLs
+
+This would require router restructuring and is documented for future implementation.
+
 ## Contributing
 
 1. Create a feature branch: `feat/your-feature`

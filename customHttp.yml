@@ -1,0 +1,64 @@
+# AWS Amplify Custom Headers and Rewrites Configuration
+# Documentation: https://docs.aws.amazon.com/amplify/latest/userguide/custom-headers.html
+
+# Custom Headers for caching and security
+customHeaders:
+  # Cache immutable assets (JS/CSS with hash in filename) for 1 year
+  - pattern: '**/*.js'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=31536000, immutable'
+  - pattern: '**/*.css'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=31536000, immutable'
+  - pattern: '**/*.woff2'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=31536000, immutable'
+  - pattern: '**/*.woff'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=31536000, immutable'
+  
+  # Cache images for 1 week
+  - pattern: '**/*.svg'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=604800'
+  - pattern: '**/*.png'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=604800'
+  - pattern: '**/*.jpg'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=604800'
+  - pattern: '**/*.webp'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=604800'
+  
+  # Cache JSON files for 1 day (translations, manifest)
+  - pattern: '**/*.json'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=86400'
+  
+  # HTML should not be cached aggressively
+  - pattern: 'index.html'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=0, must-revalidate'
+
+# Custom Rewrite Rules for SPA routing
+# This ensures all routes are served by index.html with HTTP 200
+customRules:
+  # Rewrite all non-file routes to index.html for SPA client-side routing
+  # The regex matches:
+  # - Routes without any file extension (e.g., /timer, /scramble)
+  # - Routes with extensions that are NOT static assets
+  # Static assets (.js, .css, .svg, .png, etc.) are excluded and served directly
+  - source: '</^[^.]+$|\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|eot|map|json|webp|xml)$)([^.]+$)/>'
+    target: /index.html
+    status: '200'

@@ -72,7 +72,7 @@
     }
     </script>
     
-    <!-- Structured Data - SoftwareApplication -->
+    <!-- Structured Data - SoftwareApplication (Timer) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -88,19 +88,53 @@
         "priceCurrency": "USD"
       },
       "featureList": [
-        "WCA-compliant scramble generation",
-        "3D cube visualization",
-        "Solve time tracking",
-        "Statistics (ao5, ao12, mo3)",
-        "Multi-language support"
+        "Keyboard-activated precision timer",
+        "Automatic scramble generation",
+        "Session statistics (mo3, ao5, ao12)",
+        "Personal best tracking",
+        "Solve history with scramble records",
+        "DNF and +2 penalty support"
       ],
       "screenshot": "https://cubing.world/og-image.svg"
     }
     </script>
     
-    <!-- Fonts: Orbitron for display, JetBrains Mono for technical/mono, Share Tech Mono for timer -->
+    <!-- Structured Data - SoftwareApplication (Scramble Generator) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Cubing World Scramble Generator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "description": "WCA-compliant scramble generator with interactive 3D cube visualization for Rubik's Cube practice",
+      "url": "https://cubing.world/scramble",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "20-move random state scrambles",
+        "Interactive 3D cube visualization",
+        "Step-by-step scramble playback",
+        "Adjustable animation speed",
+        "Copy scramble to clipboard",
+        "Multi-language support (EN, PT-BR)"
+      ],
+      "screenshot": "https://cubing.world/og-image.svg"
+    }
+    </script>
+    
+    <!-- Resource Hints for Performance -->
+    <!-- Preconnect to font origins for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- DNS prefetch as fallback for older browsers -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    
+    <!-- Fonts: Orbitron for display, JetBrains Mono for technical/mono, Share Tech Mono for timer -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   </head>
   <body>
@@ -109,7 +143,7 @@
       <div id="seo-content" style="font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem;">
         <header style="margin-bottom: 2rem;">
           <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">Cubing World</h1>
-          <p style="color: #666;">Rubik's Cube Timer & Scramble Generator for Speedcubers</p>
+          <p style="color: #666;">Free Online Rubik's Cube Timer & Scramble Generator for Speedcubers</p>
         </header>
         
         <main>
@@ -117,34 +151,59 @@
             <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Free Online Cubing Tools</h2>
             <p style="margin-bottom: 1rem;">
               Cubing World provides free, professional-grade tools for Rubik's Cube speedcubers of all levels. 
-              Whether you're just starting out or training for competition, our tools help you practice smarter.
+              Whether you're just starting out or training for WCA competitions, our tools help you practice smarter and improve your solve times.
+            </p>
+            <p style="margin-bottom: 1rem;">
+              Our web-based tools work on any device - desktop, tablet, or mobile phone - with no downloads required. 
+              Practice your 3x3 speedcubing anywhere with our precision timer and WCA-compliant scramble generator.
             </p>
           </section>
           
-          <section style="margin-bottom: 2rem;">
-            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Scramble Generator</h2>
+          <section id="scramble-generator" style="margin-bottom: 2rem;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Scramble Generator with 3D Visualization</h2>
             <p style="margin-bottom: 0.5rem;">
-              Generate random, WCA-compliant scrambles for your 3x3 Rubik's Cube. Our scramble generator features:
+              Generate random, WCA-compliant scrambles for your 3x3 Rubik's Cube. Our scramble generator uses the same algorithms as official competitions to ensure fair and random starting positions.
             </p>
+            <h3 style="font-size: 1rem; font-weight: 500; margin: 0.75rem 0 0.5rem;">Features:</h3>
             <ul style="list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li>20-move random state scrambles</li>
-              <li>Interactive 3D cube visualization</li>
-              <li>Step-by-step scramble playback</li>
-              <li>Adjustable animation speed</li>
+              <li>20-move random state scrambles following WCA regulations</li>
+              <li>Interactive 3D cube visualization showing the scrambled state</li>
+              <li>Step-by-step scramble playback with adjustable animation speed</li>
+              <li>Copy scramble notation to clipboard</li>
+              <li>Generate new scrambles instantly with one click</li>
             </ul>
+            <p style="margin-bottom: 0.5rem;">
+              <a href="/scramble" style="color: #0891b2; text-decoration: underline; font-weight: 500;">Try the Scramble Generator</a>
+            </p>
+          </section>
+          
+          <section id="speedcubing-timer" style="margin-bottom: 2rem;">
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Speedcubing Timer - Track Your Solves</h2>
+            <p style="margin-bottom: 0.5rem;">
+              Precision timer for tracking your Rubik's Cube solve times, just like in WCA competitions. Improve your speedcubing skills by analyzing your performance with detailed statistics.
+            </p>
+            <h3 style="font-size: 1rem; font-weight: 500; margin: 0.75rem 0 0.5rem;">Features:</h3>
+            <ul style="list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem;">
+              <li>Keyboard activation - hold Space to start, release to begin solving</li>
+              <li>Automatic scramble generation after each solve</li>
+              <li>Session statistics: mo3 (mean of 3), ao5 (average of 5), ao12 (average of 12)</li>
+              <li>Personal best (PB) tracking for single solves and averages</li>
+              <li>Complete solve history with scramble records for each attempt</li>
+              <li>Delete times or mark as DNF (Did Not Finish) or +2 penalty</li>
+            </ul>
+            <p style="margin-bottom: 0.5rem;">
+              <a href="/timer" style="color: #0891b2; text-decoration: underline; font-weight: 500;">Start the Speedcubing Timer</a>
+            </p>
           </section>
           
           <section style="margin-bottom: 2rem;">
-            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Speedcubing Timer</h2>
-            <p style="margin-bottom: 0.5rem;">
-              Precision timer for tracking your solve times. Features include:
-            </p>
+            <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;">Why Choose Cubing World?</h2>
             <ul style="list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li>Keyboard activation (hold Space to start)</li>
-              <li>Automatic scramble generation</li>
-              <li>Session statistics (mo3, ao5, ao12)</li>
-              <li>Personal best tracking</li>
-              <li>Solve history with scramble records</li>
+              <li><strong>100% Free</strong> - No ads, no subscriptions, no hidden costs</li>
+              <li><strong>Works Offline</strong> - Use the timer even without internet connection</li>
+              <li><strong>Multi-Language</strong> - Available in English and Portuguese (PT-BR)</li>
+              <li><strong>Mobile Friendly</strong> - Responsive design works on all screen sizes</li>
+              <li><strong>Privacy First</strong> - Your solve times stay on your device</li>
             </ul>
           </section>
           
@@ -159,8 +218,9 @@
         </main>
         
         <footer style="border-top: 1px solid #ddd; padding-top: 1rem; color: #666; font-size: 0.875rem;">
-          <p>Available in English and Portuguese (PT-BR). Works on desktop and mobile browsers.</p>
-          <p style="margin-top: 0.5rem;">&copy; 2024 Cubing World. Free tools for the speedcubing community.</p>
+          <p>Cubing World - Free online tools for the speedcubing community.</p>
+          <p style="margin-top: 0.5rem;">Available in English and Portuguese (PT-BR). Works on desktop and mobile browsers.</p>
+          <p style="margin-top: 0.5rem;">&copy; 2024 Cubing World. All rights reserved.</p>
         </footer>
       </div>
     </div>

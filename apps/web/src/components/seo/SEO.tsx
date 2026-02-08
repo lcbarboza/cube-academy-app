@@ -1,6 +1,39 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
+/**
+ * Structured data types for JSON-LD
+ */
+interface WebApplicationSchema {
+  type: 'WebApplication'
+  name: string
+  description: string
+  url: string
+  applicationCategory?: string
+  operatingSystem?: string
+  offers?: {
+    price: string
+    priceCurrency: string
+  }
+  featureList?: string[]
+}
+
+interface SoftwareApplicationSchema {
+  type: 'SoftwareApplication'
+  name: string
+  description: string
+  url: string
+  applicationCategory?: string
+  operatingSystem?: string
+  offers?: {
+    price: string
+    priceCurrency: string
+  }
+  featureList?: string[]
+}
+
+type StructuredDataSchema = WebApplicationSchema | SoftwareApplicationSchema
+
 interface SEOProps {
   title?: string
   description?: string
@@ -9,6 +42,8 @@ interface SEOProps {
   ogImage?: string
   ogType?: 'website' | 'article'
   noIndex?: boolean
+  /** Page-specific structured data to inject as JSON-LD */
+  structuredData?: StructuredDataSchema
 }
 
 const BASE_URL = 'https://cubing.world'
@@ -51,6 +86,36 @@ function setLinkTag(rel: string, href: string, hreflang?: string) {
 }
 
 /**
+ * Injects or updates a JSON-LD script tag for structured data
+ */
+function setStructuredData(id: string, data: object) {
+  let element = document.querySelector(
+    `script[type="application/ld+json"][data-seo-id="${id}"]`
+  ) as HTMLScriptElement | null
+
+  if (!element) {
+    element = document.createElement('script')
+    element.setAttribute('type', 'application/ld+json')
+    element.setAttribute('data-seo-id', id)
+    document.head.appendChild(element)
+  }
+
+  element.textContent = JSON.stringify(data)
+}
+
+/**
+ * Removes a JSON-LD script tag by ID
+ */
+function removeStructuredData(id: string) {
+  const element = document.querySelector(
+    `script[type="application/ld+json"][data-seo-id="${id}"]`
+  )
+  if (element) {
+    element.remove()
+  }
+}
+
+/**
  * SEO Component for dynamic meta tags per page
  * Uses native DOM manipulation for React 19 compatibility
  */
@@ -62,6 +127,7 @@ export function SEO({
   ogImage = DEFAULT_OG_IMAGE,
   ogType = 'website',
   noIndex = false,
+  structuredData,
 }: SEOProps) {
   const { i18n } = useTranslation()
 
@@ -140,6 +206,24 @@ export function SEO({
     alternateLocale,
   ])
 
+  // Handle page-specific structured data
+  useEffect(() => {
+    if (structuredData) {
+      const { type, ...rest } = structuredData
+      const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': type,
+        ...rest,
+      }
+      setStructuredData('page-specific', jsonLd)
+    }
+
+    // Cleanup: remove structured data when component unmounts or data changes
+    return () => {
+      removeStructuredData('page-specific')
+    }
+  }, [structuredData])
+
   // This component doesn't render anything
   return null
 }
@@ -195,5 +279,74 @@ export const pageSEO = {
       keywords:
         'gerador scramble, scramble wca, scramble aleatorio, scramble 3x3, gerador embaralhamento cubo',
     },
+  },
+}
+
+/**
+ * Pre-defined structured data for each page
+ */
+export const pageStructuredData = {
+  timer: {
+    type: 'WebApplication' as const,
+    name: 'Cubing World Timer',
+    description:
+      "Precision timer for tracking Rubik's Cube solve times with statistics like ao5, ao12, mo3, and personal bests",
+    url: 'https://cubing.world/timer',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      'Keyboard-activated precision timer',
+      'Automatic scramble generation',
+      'Session statistics (mo3, ao5, ao12)',
+      'Personal best tracking',
+      'Solve history with scramble records',
+      'DNF and +2 penalty support',
+    ],
+  },
+  scramble: {
+    type: 'SoftwareApplication' as const,
+    name: 'Cubing World Scramble Generator',
+    description:
+      "WCA-compliant scramble generator with interactive 3D cube visualization for Rubik's Cube practice",
+    url: 'https://cubing.world/scramble',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      '20-move random state scrambles',
+      'Interactive 3D cube visualization',
+      'Step-by-step scramble playback',
+      'Adjustable animation speed',
+      'Copy scramble to clipboard',
+      'Multi-language support',
+    ],
+  },
+  home: {
+    type: 'SoftwareApplication' as const,
+    name: 'Cubing World',
+    description:
+      "Free online tools for speedcubers - Rubik's Cube timer and scramble generator with 3D visualization",
+    url: 'https://cubing.world',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      'WCA-compliant scramble generation',
+      '3D cube visualization',
+      'Precision speedcubing timer',
+      'Session statistics tracking',
+      'Multi-language support (EN, PT-BR)',
+      'Works on desktop and mobile',
+    ],
   },
 }
