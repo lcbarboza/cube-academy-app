@@ -15,6 +15,13 @@ export interface UseTimerResult {
   formattedTime: string
   /** Reset timer to idle state */
   reset: () => void
+  /** Touch/click handlers for mobile support */
+  touchHandlers: {
+    onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void
+    onTouchEnd: (e: React.TouchEvent | React.MouseEvent) => void
+    onMouseDown: (e: React.MouseEvent) => void
+    onMouseUp: (e: React.MouseEvent) => void
+  }
 }
 
 /**
@@ -143,6 +150,72 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
     setElapsedMs(0)
   }, [])
 
+  // Handle touch/click start (for mobile/tablet support)
+  const handlePointerDown = useCallback(() => {
+    const currentState = stateRef.current
+
+    if (currentState === 'running') {
+      // Touch/click stops the timer
+      stopTimer()
+      return
+    }
+
+    if (currentState === 'idle' || currentState === 'stopped') {
+      // Start holding
+      holdStartRef.current = performance.now()
+      setState('holding')
+
+      // Set timeout to transition to ready state
+      holdTimeoutRef.current = setTimeout(() => {
+        setState('ready')
+      }, HOLD_THRESHOLD_MS)
+    }
+  }, [stopTimer])
+
+  // Handle touch/click end (for mobile/tablet support)
+  const handlePointerUp = useCallback(() => {
+    const currentState = stateRef.current
+
+    if (currentState === 'holding') {
+      // Released before threshold - cancel
+      if (holdTimeoutRef.current) {
+        clearTimeout(holdTimeoutRef.current)
+        holdTimeoutRef.current = null
+      }
+      setState('idle')
+    } else if (currentState === 'ready') {
+      // Release after threshold - start timer
+      if (holdTimeoutRef.current) {
+        clearTimeout(holdTimeoutRef.current)
+        holdTimeoutRef.current = null
+      }
+      startTimer()
+    }
+  }, [startTimer])
+
+  // Touch handlers for the timer display (mobile/tablet support)
+  const touchHandlers = {
+    onTouchStart: (e: React.TouchEvent | React.MouseEvent) => {
+      e.preventDefault() // Prevent default to avoid double-firing with mouse events
+      handlePointerDown()
+    },
+    onTouchEnd: (e: React.TouchEvent | React.MouseEvent) => {
+      e.preventDefault()
+      handlePointerUp()
+    },
+    onMouseDown: (e: React.MouseEvent) => {
+      // Only handle mouse events on non-touch devices to avoid double-firing
+      if ((e.nativeEvent as PointerEvent).pointerType === 'mouse' || !('ontouchstart' in window)) {
+        handlePointerDown()
+      }
+    },
+    onMouseUp: (e: React.MouseEvent) => {
+      if ((e.nativeEvent as PointerEvent).pointerType === 'mouse' || !('ontouchstart' in window)) {
+        handlePointerUp()
+      }
+    },
+  }
+
   // Handle keydown events
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -226,5 +299,6 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
     elapsedMs,
     formattedTime,
     reset,
+    touchHandlers,
   }
 }

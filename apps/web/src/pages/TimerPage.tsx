@@ -153,7 +153,13 @@ export function TimerPage() {
         {/* Timer + Cube side by side */}
         <div className="flex items-center justify-center gap-8 opacity-0 animate-fade-in-up stagger-2">
           {/* Timer Display - The hero */}
-          <div className="glass-panel glass-panel-glow timer-hero-panel">
+          <div
+            className="glass-panel glass-panel-glow timer-hero-panel timer-touchable"
+            onTouchStart={timer.touchHandlers.onTouchStart}
+            onTouchEnd={timer.touchHandlers.onTouchEnd}
+            onMouseDown={timer.touchHandlers.onMouseDown}
+            onMouseUp={timer.touchHandlers.onMouseUp}
+          >
             <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
           </div>
 

@@ -727,6 +727,16 @@
   min-height: 280px;
 }
 
+/* Make timer clickable/tappable for mobile/tablet */
+.timer-touchable {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .timer-display {
   font-family: "Share Tech Mono", monospace;
   font-size: clamp(5rem, 18vw, 10rem);
