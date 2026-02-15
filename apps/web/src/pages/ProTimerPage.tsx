@@ -6,10 +6,11 @@ import { useScramble, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { formatTimeFinal } from '@/hooks/useTimer'
 import { useTimer } from '@/hooks/useTimer'
+import { useWakeLock } from '@/hooks/useWakeLock'
 import type { Solve, StatResult } from '@/types/solve'
 import { getEffectiveTime } from '@/types/solve'
 import { Box, ChevronDown, ChevronUp, Moon, RotateCcw, Sun, Trash2, X } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -37,6 +38,16 @@ export function ProTimerPage() {
   )
 
   const timer = useTimer(handleSolveComplete)
+  const wakeLock = useWakeLock()
+
+  // Keep screen on while timer is running
+  useEffect(() => {
+    if (timer.state === 'running') {
+      wakeLock.request()
+    } else {
+      wakeLock.release()
+    }
+  }, [timer.state, wakeLock])
 
   const handleNewScramble = useCallback(() => {
     generateNewScrambleAnimated()

@@ -6,8 +6,9 @@ import { Logo } from '@/components/ui'
 import { useScramble, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { useTimer } from '@/hooks/useTimer'
+import { useWakeLock } from '@/hooks/useWakeLock'
 import { Box, Moon, RotateCcw, Sun, Zap } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -42,6 +43,16 @@ export function TimerPage() {
   )
 
   const timer = useTimer(handleSolveComplete)
+  const wakeLock = useWakeLock()
+
+  // Keep screen on while timer is running
+  useEffect(() => {
+    if (timer.state === 'running') {
+      wakeLock.request()
+    } else {
+      wakeLock.release()
+    }
+  }, [timer.state, wakeLock])
 
   // Generate new scramble with animation
   const handleNewScramble = useCallback(() => {
