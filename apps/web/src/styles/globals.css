@@ -1229,6 +1229,32 @@
   padding: 1rem 0;
 }
 
+/* Timer page scramble - aligned with timer+cube */
+.timer-scramble-container {
+  /* Match the width of timer (400px min) + gap (32px) + cube (184px) */
+  width: 616px;
+  max-width: calc(100vw - 3rem);
+}
+
+.scramble-display-timer {
+  font-size: 1.35rem;
+  letter-spacing: 0.14em;
+  word-spacing: 0.7em;
+  padding: 1rem 1.5rem;
+  line-height: 2;
+}
+
+@media (max-width: 768px) {
+  .timer-scramble-container {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .scramble-display-timer {
+    font-size: 1.125rem;
+  }
+}
+
 /* ============================================
    CUBE PREVIEW SIDE (Timer page companion)
    ============================================ */

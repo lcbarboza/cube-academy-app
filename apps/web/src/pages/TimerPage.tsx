@@ -143,10 +143,10 @@ export function TimerPage() {
 
       {/* Main Content - Timer centered */}
       <main className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 -mt-8">
-        {/* Scramble Display - Compact above timer */}
-        <div className="w-full max-w-3xl mb-6 opacity-0 animate-fade-in-up stagger-1">
+        {/* Scramble Display - Aligned with timer+cube width */}
+        <div className="mb-6 opacity-0 animate-fade-in-up stagger-1 timer-scramble-container">
           <div className="glass-panel glass-panel-glow">
-            <div className="scramble-display-connected text-base py-3 px-4">{scramble}</div>
+            <div className="scramble-display-connected scramble-display-timer">{scramble}</div>
           </div>
         </div>
 
