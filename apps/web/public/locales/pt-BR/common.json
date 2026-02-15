@@ -12,6 +12,7 @@
     "scramble": "Scramble",
     "cubingWorld": "Cubing World",
     "timer": "Timer",
+    "proTimer": "Timer Pro",
     "tutorials": "Tutoriais",
     "algorithms": "Algoritmos",
     "practice": "Prática",
@@ -48,6 +49,16 @@
     "pressToStop": "Pressione qualquer tecla para parar",
     "pressForNew": "Pressione ESPAÇO para nova resolução",
     "cubePreview": "Estado Embaralhado"
+  },
+  "proTimer": {
+    "title": "Timer Pro",
+    "current": "Atual",
+    "best": "Melhor",
+    "sessionBest": "Melhor da Sessão",
+    "backToTimer": "Timer Padrão",
+    "instructions": "Segure ESPAÇO por 300ms até ficar verde, depois solte para iniciar. Pressione qualquer tecla para parar.",
+    "time": "Tempo",
+    "number": "#"
   },
   "history": {
     "title": "Histórico",

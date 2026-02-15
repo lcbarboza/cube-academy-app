@@ -278,6 +278,39 @@ export const pageSEO = {
         'gerador scramble, scramble wca, scramble aleatorio, scramble 3x3, gerador embaralhamento cubo',
     },
   },
+  timerPro: {
+    en: {
+      title: 'Pro Timer - Advanced Speedcubing Timer',
+      description:
+        'Professional speedcubing timer with detailed history table, ao5/ao12 snapshots per solve, and session best comparisons. Designed for competitive cubers.',
+      keywords:
+        'pro cube timer, speedcubing timer, ao5 ao12 tracker, competitive cubing, advanced cube timer',
+    },
+    'pt-BR': {
+      title: 'Timer Pro - Timer Avançado para Speedcubing',
+      description:
+        'Timer profissional para speedcubing com tabela detalhada de histórico, snapshots de ao5/ao12 por resolução e comparações com melhores da sessão. Projetado para cubers competitivos.',
+      keywords:
+        'timer pro cubo, timer speedcubing, rastreador ao5 ao12, cubing competitivo, timer cubo avançado',
+    },
+  },
+  // Alias for backward compatibility
+  proTimer: {
+    en: {
+      title: 'Pro Timer - Advanced Speedcubing Timer',
+      description:
+        'Professional speedcubing timer with detailed history table, ao5/ao12 snapshots per solve, and session best comparisons. Designed for competitive cubers.',
+      keywords:
+        'pro cube timer, speedcubing timer, ao5 ao12 tracker, competitive cubing, advanced cube timer',
+    },
+    'pt-BR': {
+      title: 'Timer Pro - Timer Avançado para Speedcubing',
+      description:
+        'Timer profissional para speedcubing com tabela detalhada de histórico, snapshots de ao5/ao12 por resolução e comparações com melhores da sessão. Projetado para cubers competitivos.',
+      keywords:
+        'timer pro cubo, timer speedcubing, rastreador ao5 ao12, cubing competitivo, timer cubo avançado',
+    },
+  },
 }
 
 /**
@@ -345,6 +378,27 @@ export const pageStructuredData = {
       'Session statistics tracking',
       'Multi-language support (EN, PT-BR)',
       'Works on desktop and mobile',
+    ],
+  },
+  timerPro: {
+    type: 'WebApplication' as const,
+    name: 'Cubing World Pro Timer',
+    description:
+      'Professional speedcubing timer with detailed history table, ao5/ao12 snapshots per solve, and session best comparisons',
+    url: 'https://cubing.world/timer-pro',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      'Large centered timer display',
+      'Detailed history table with ao5/ao12 snapshots',
+      'Current vs session best comparison',
+      'Personal best highlighting',
+      'Keyboard-activated precision timer',
+      'Data-focused interface for competitive cubers',
     ],
   },
 }

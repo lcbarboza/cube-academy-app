@@ -94,10 +94,22 @@ export function SolveHistoryProvider({ children }: SolveHistoryProviderProps) {
     saveSolves(solves)
   }, [solves])
 
-  // Add a new solve
+  // Add a new solve with ao5/ao12 snapshots
   const addSolve = useCallback((timeMs: number, scramble: string) => {
-    const newSolve = createSolve(timeMs, scramble)
-    setSolves((prev) => [...prev, newSolve])
+    setSolves((prev) => {
+      // Create a temporary solve to compute stats including the new solve
+      const tempSolve = createSolve(timeMs, scramble)
+      const allSolvesWithNew = [...prev, tempSolve]
+
+      // Compute ao5 and ao12 snapshots including the new solve
+      const ao5Snapshot = calculateAo5(allSolvesWithNew)
+      const ao12Snapshot = calculateAo12(allSolvesWithNew)
+
+      // Create the actual solve with snapshots
+      const newSolve = createSolve(timeMs, scramble, { ao5Snapshot, ao12Snapshot })
+
+      return [...prev, newSolve]
+    })
   }, [])
 
   // Delete a solve by ID

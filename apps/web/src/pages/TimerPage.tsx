@@ -6,7 +6,7 @@ import { Logo } from '@/components/ui'
 import { useScramble, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { useTimer } from '@/hooks/useTimer'
-import { Box, Moon, RotateCcw, Sun } from 'lucide-react'
+import { Box, Moon, RotateCcw, Sun, Zap } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -106,6 +106,16 @@ export function TimerPage() {
           >
             <Box className="w-3.5 h-3.5" />
             <span>{t('nav.scramble', 'Scramble')}</span>
+          </Link>
+
+          {/* Pro Timer Mode */}
+          <Link
+            to="/timer-pro"
+            className="btn-neon btn-neon-cyan flex items-center gap-2 py-2 px-4 text-xs"
+            title={t('nav.proTimer', 'Pro Timer')}
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>{t('nav.proTimer', 'Pro')}</span>
           </Link>
 
           {/* Theme Toggle */}

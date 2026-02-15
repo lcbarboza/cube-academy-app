@@ -1,4 +1,5 @@
 export { HomePage } from './HomePage'
 export { CubingWorldPage } from './CubingWorldPage'
 export { TimerPage } from './TimerPage'
+export { ProTimerPage } from './ProTimerPage'
 export { NotFoundPage } from './NotFoundPage'

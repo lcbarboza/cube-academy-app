@@ -12,6 +12,7 @@
     "scramble": "Scramble",
     "cubingWorld": "Cubing World",
     "timer": "Timer",
+    "proTimer": "Pro Timer",
     "tutorials": "Tutorials",
     "algorithms": "Algorithms",
     "practice": "Practice",
@@ -48,6 +49,16 @@
     "pressToStop": "Press any key to stop",
     "pressForNew": "Press SPACE for new solve",
     "cubePreview": "Scrambled State"
+  },
+  "proTimer": {
+    "title": "Pro Timer",
+    "current": "Current",
+    "best": "Best",
+    "sessionBest": "Session Best",
+    "backToTimer": "Standard Timer",
+    "instructions": "Hold SPACE for 300ms until green, then release to start. Press any key to stop.",
+    "time": "Time",
+    "number": "#"
   },
   "history": {
     "title": "History",

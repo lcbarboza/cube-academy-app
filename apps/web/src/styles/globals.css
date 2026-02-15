@@ -1307,3 +1307,176 @@
 .light-theme {
   --neon-green: #16a34a;
 }
+
+/* Neon Red */
+:root,
+.dark-theme {
+  --neon-red: #ff4444;
+}
+
+.light-theme {
+  --neon-red: #dc2626;
+}
+
+/* ============================================
+   PRO TIMER STYLES
+   Minimalist, data-focused interface
+   ============================================ */
+
+.pro-timer-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, var(--void-deep) 0%, var(--void-mid) 100%);
+}
+
+/* Subtle gradient accent for dark theme */
+.pro-timer-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(180deg, rgba(0, 255, 242, 0.02) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.light-theme .pro-timer-bg {
+  background: linear-gradient(180deg, var(--void-deep) 0%, var(--void-mid) 100%);
+}
+
+.light-theme .pro-timer-bg::before {
+  background: linear-gradient(180deg, rgba(8, 145, 178, 0.03) 0%, transparent 100%);
+}
+
+/* Sidebar */
+.pro-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Stats Panel */
+.pro-stats-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 242, 0.02) 0%,
+    transparent 50%,
+    rgba(68, 255, 136, 0.02) 100%
+  );
+}
+
+.light-theme .pro-stats-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(8, 145, 178, 0.03) 0%,
+    transparent 50%,
+    rgba(22, 163, 74, 0.03) 100%
+  );
+}
+
+.pro-stat-glow-green {
+  text-shadow: 0 0 8px rgba(68, 255, 136, 0.4);
+}
+
+.light-theme .pro-stat-glow-green {
+  text-shadow: none;
+}
+
+/* History scroll area */
+.pro-history-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.pro-history-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pro-history-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pro-history-scroll::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 2px;
+}
+
+/* Scramble display */
+.pro-scramble-display {
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 255, 242, 0.03);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  word-spacing: 0.5em;
+  line-height: 1.6;
+}
+
+.light-theme .pro-scramble-display {
+  background: rgba(8, 145, 178, 0.04);
+}
+
+/* Pro Timer Hero - larger, more prominent */
+.pro-timer-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.pro-timer-hero .timer-display {
+  font-size: clamp(6rem, 22vw, 14rem);
+}
+
+.pro-timer-hero .timer-display-container {
+  padding: 0;
+  min-height: auto;
+}
+
+.pro-timer-hero .timer-hint {
+  margin-top: 1rem;
+}
+
+/* Delta indicator glow */
+.pro-delta-glow-green {
+  text-shadow: 0 0 15px rgba(68, 255, 136, 0.5);
+}
+
+.light-theme .pro-delta-glow-green {
+  text-shadow: none;
+}
+
+/* History header */
+.pro-history-header {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.light-theme .pro-history-header {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pro-sidebar {
+    width: 240px;
+  }
+
+  .pro-timer-hero .timer-display {
+    font-size: clamp(4rem, 15vw, 8rem);
+  }
+
+  .pro-scramble-display {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .pro-sidebar {
+    display: none;
+  }
+
+  .pro-scramble-display {
+    font-size: 0.75rem;
+  }
+}

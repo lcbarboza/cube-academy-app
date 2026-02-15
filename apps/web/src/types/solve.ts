@@ -20,6 +20,10 @@ export interface Solve {
   timestamp: string
   /** Penalty status for this solve */
   penalty: SolvePenalty
+  /** Snapshot of ao5 at the moment this solve was recorded (optional for backward compatibility) */
+  ao5Snapshot?: StatResult
+  /** Snapshot of ao12 at the moment this solve was recorded (optional for backward compatibility) */
+  ao12Snapshot?: StatResult
 }
 
 /**
@@ -48,15 +52,27 @@ export interface SessionStats {
 }
 
 /**
+ * Options for creating a solve with optional statistics snapshots
+ */
+export interface CreateSolveOptions {
+  /** Snapshot of ao5 at the moment of solve */
+  ao5Snapshot?: StatResult
+  /** Snapshot of ao12 at the moment of solve */
+  ao12Snapshot?: StatResult
+}
+
+/**
  * Creates a new solve with default values
  */
-export function createSolve(timeMs: number, scramble: string): Solve {
+export function createSolve(timeMs: number, scramble: string, options?: CreateSolveOptions): Solve {
   return {
     id: crypto.randomUUID(),
     timeMs,
     scramble,
     timestamp: new Date().toISOString(),
     penalty: 'none',
+    ao5Snapshot: options?.ao5Snapshot,
+    ao12Snapshot: options?.ao12Snapshot,
   }
 }
 
