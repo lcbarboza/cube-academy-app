@@ -1,4 +1,4 @@
-import { CubeViewer } from '@/components/cube'
+import { LazyCubeViewer } from '@/components/cube'
 import { SolveHistoryPanel } from '@/components/history'
 import { SEO, pageSEO } from '@/components/seo'
 import { TimerDisplay } from '@/components/timer'
@@ -168,7 +168,7 @@ export function TimerPage() {
             <div className="cube-arena glass-panel glass-panel-glow cube-preview-side">
               <div className="cube-preview-container">
                 <div className="cube-halo cube-halo-side" />
-                <CubeViewer
+                <LazyCubeViewer
                   cubeState={cubeState}
                   currentMove={cubeCurrentMove}
                   isAnimating={cubeIsAnimating}

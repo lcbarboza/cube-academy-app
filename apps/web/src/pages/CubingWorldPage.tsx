@@ -1,4 +1,4 @@
-import { CubeViewer } from '@/components/cube'
+import { LazyCubeViewer } from '@/components/cube'
 import { SEO, pageSEO } from '@/components/seo'
 import { Logo } from '@/components/ui'
 import { useScramble } from '@/contexts'
@@ -14,7 +14,7 @@ import {
   Sun,
   Timer,
 } from 'lucide-react'
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -49,6 +49,20 @@ export function CubingWorldPage() {
     reset,
     onAnimationComplete,
   } = useScramble()
+
+  // Track if we already auto-played on initial load
+  const hasAutoPlayedRef = useRef(false)
+
+  // Auto-play scramble when cube finishes loading (only on first load)
+  const handleCubeLoad = useCallback(() => {
+    if (!hasAutoPlayedRef.current && moves.length > 0 && currentIndex === -1) {
+      hasAutoPlayedRef.current = true
+      // Small delay to ensure smooth animation start
+      setTimeout(() => {
+        play()
+      }, 100)
+    }
+  }, [moves.length, currentIndex, play])
 
   const handlePlayPause = useCallback(() => {
     if (isPlaying) {
@@ -157,12 +171,13 @@ export function CubingWorldPage() {
             <div className="cube-arena glass-panel glass-panel-glow p-2">
               <div className="relative">
                 <div className="cube-halo" />
-                <CubeViewer
+                <LazyCubeViewer
                   cubeState={displayState}
                   currentMove={currentMove}
                   isAnimating={isAnimating}
                   speed={speed}
                   onAnimationComplete={onAnimationComplete}
+                  onLoad={handleCubeLoad}
                   height={400}
                 />
               </div>

@@ -62,6 +62,7 @@ export function NotFoundPage() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
+            // biome-ignore lint/suspicious/noArrayIndexKey: static decorative particles never reorder
             key={`particle-${i}`}
             className="absolute w-1 h-1 bg-[var(--neon-cyan)] rounded-full opacity-30"
             style={{

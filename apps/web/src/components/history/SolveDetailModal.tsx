@@ -83,9 +83,10 @@ export function SolveDetailModal({
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4 modal-backdrop"
       onClick={handleBackdropClick}
       onKeyDown={handleBackdropKeyDown}
-      role="button"
-      tabIndex={0}
-      aria-label={t('common.close', 'Close')}
+      // biome-ignore lint/a11y/useSemanticElements: using portal-based modal pattern, not native dialog
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('history.solveDetails', 'Solve details')}
     >
       <div className="modal-content glass-panel glass-panel-glow w-full max-w-md p-6 animate-fade-in-up">
         {/* Header */}
