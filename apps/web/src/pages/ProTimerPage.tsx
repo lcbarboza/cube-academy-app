@@ -151,8 +151,8 @@ export function ProTimerPage() {
         </div>
       </header>
 
-      {/* Desktop Layout: Sidebar + Timer Area */}
-      <div className="hidden md:flex flex-1 overflow-hidden">
+      {/* Desktop Layout: Sidebar + Timer Area (only on large screens) */}
+      <div className="hidden lg:flex flex-1 overflow-hidden">
         {/* Left Sidebar: Stats + History */}
         <aside className="pro-sidebar w-72 flex-shrink-0 flex flex-col border-r border-[var(--panel-border)] bg-[var(--void-deep)]/60 backdrop-blur-sm">
           {/* Stats Comparison Panel */}
@@ -311,24 +311,26 @@ export function ProTimerPage() {
         </main>
       </div>
 
-      {/* Mobile Layout: Vertical stack */}
-      <div className="flex md:hidden flex-1 flex-col overflow-hidden">
-        {/* Scramble Section - 10% */}
-        <div className="flex-shrink-0 h-[10%] min-h-[3rem] flex items-center justify-center px-4 border-b border-[var(--panel-border)]/50">
-          <span className="font-display text-sm tracking-wider text-[var(--text-secondary)] text-center line-clamp-2">
+      {/* Mobile/Tablet Layout: Vertical stack (up to lg breakpoint) */}
+      <div className="flex lg:hidden flex-1 flex-col overflow-hidden">
+        {/* Scramble Section - auto height with padding */}
+        <div className="flex-shrink-0 py-3 md:py-4 px-4 md:px-6 flex items-center justify-center border-b border-[var(--panel-border)]/50 overflow-hidden">
+          <span className="font-display text-sm md:text-base lg:text-lg tracking-wider text-[var(--text-secondary)] text-center leading-relaxed break-words">
             {scramble}
           </span>
         </div>
 
-        {/* Timer Section - 60% */}
+        {/* Timer Section - takes remaining space, centered */}
         <div
-          className="flex-shrink-0 h-[60%] flex flex-col items-center justify-center timer-touchable"
+          className="flex-1 flex flex-col items-center justify-center timer-touchable min-h-0 px-4"
           onTouchStart={timer.touchHandlers.onTouchStart}
           onTouchEnd={timer.touchHandlers.onTouchEnd}
           onMouseDown={timer.touchHandlers.onMouseDown}
           onMouseUp={timer.touchHandlers.onMouseUp}
         >
-          <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
+          <div className="pro-timer-mobile">
+            <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
+          </div>
 
           {/* Delta indicator */}
           {timer.state === 'stopped' && solves.length > 0 && stats.bestSingle !== null && (
@@ -339,8 +341,8 @@ export function ProTimerPage() {
           )}
         </div>
 
-        {/* History Section - 30% (collapsible) */}
-        <div className="flex-shrink-0 h-[30%] flex flex-col border-t border-[var(--panel-border)] bg-[var(--void-deep)]/80 backdrop-blur-sm">
+        {/* History Section - fixed height */}
+        <div className="flex-shrink-0 h-[28%] min-h-[140px] max-h-[220px] flex flex-col border-t border-[var(--panel-border)] bg-[var(--void-deep)]/80 backdrop-blur-sm">
           {/* History Header - Clickable to expand */}
           <button
             type="button"
@@ -395,9 +397,9 @@ export function ProTimerPage() {
         </div>
       </div>
 
-      {/* Mobile Expanded History Overlay */}
+      {/* Mobile/Tablet Expanded History Overlay */}
       {isMobileHistoryExpanded && (
-        <div className="md:hidden fixed inset-0 z-50 bg-[var(--void-deep)] flex flex-col">
+        <div className="lg:hidden fixed inset-0 z-50 bg-[var(--void-deep)] flex flex-col">
           {/* Expanded Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--panel-border)]">
             <h2 className="font-display text-sm font-bold uppercase tracking-wider text-[var(--neon-cyan)]">

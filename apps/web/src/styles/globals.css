@@ -1456,27 +1456,58 @@
   background: rgba(0, 0, 0, 0.03);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .pro-sidebar {
-    width: 240px;
+/* Mobile/Tablet Timer - responsive sizing that fits screen */
+.pro-timer-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.pro-timer-mobile .timer-display-container {
+  padding: 0;
+  min-height: auto;
+}
+
+.pro-timer-mobile .timer-display {
+  /* Responsive font size: scales with viewport but has reasonable bounds */
+  font-size: clamp(3.5rem, 18vw, 10rem);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.pro-timer-mobile .timer-hint {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Tablet-specific adjustments (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pro-timer-mobile .timer-display {
+    font-size: clamp(5rem, 14vw, 9rem);
   }
 
-  .pro-timer-hero .timer-display {
-    font-size: clamp(4rem, 15vw, 8rem);
-  }
-
-  .pro-scramble-display {
+  .pro-timer-mobile .timer-hint {
+    margin-top: 1rem;
     font-size: 0.875rem;
   }
 }
 
-@media (max-width: 640px) {
+/* Responsive adjustments */
+@media (max-width: 1023px) {
   .pro-sidebar {
     display: none;
   }
+}
 
+@media (max-width: 640px) {
   .pro-scramble-display {
     font-size: 0.75rem;
+  }
+
+  .pro-timer-mobile .timer-display {
+    font-size: clamp(3rem, 20vw, 6rem);
   }
 }
