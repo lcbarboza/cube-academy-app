@@ -188,14 +188,20 @@ export function ProTimerPage() {
               <div className="pt-2 border-t border-[var(--panel-border)]">
                 <ProStatRow
                   label={t('proTimer.single', 'single')}
-                  current={solves.length > 0 ? getEffectiveTime(solves[solves.length - 1]) : null}
+                  current={(() => {
+                    const lastSolve = solves[solves.length - 1]
+                    return lastSolve ? getEffectiveTime(lastSolve) : null
+                  })()}
                   best={stats.bestSingle}
-                  isBest={
-                    solves.length > 0 &&
-                    stats.bestSingle !== null &&
-                    stats.bestSingle !== 'dnf' &&
-                    getEffectiveTime(solves[solves.length - 1]) === stats.bestSingle
-                  }
+                  isBest={(() => {
+                    const lastSolve = solves[solves.length - 1]
+                    return (
+                      lastSolve !== undefined &&
+                      stats.bestSingle !== null &&
+                      stats.bestSingle !== 'dnf' &&
+                      getEffectiveTime(lastSolve) === stats.bestSingle
+                    )
+                  })()}
                 />
               </div>
             </div>
@@ -589,7 +595,7 @@ function ProHistoryRow({ solve, index, onClick }: ProHistoryRowProps) {
     return formatTimeFinal(ms)
   }
 
-  const formatSnapshot = (value: StatResult): string => {
+  const formatSnapshot = (value: StatResult | undefined): string => {
     if (value === undefined || value === null) return '-'
     if (value === 'dnf') return 'DNF'
     return formatTimeFinal(value)
@@ -637,7 +643,7 @@ function ProHistoryRowCompact({ solve, index, onClick }: ProHistoryRowProps) {
     return formatTimeFinal(ms)
   }
 
-  const formatSnapshot = (value: StatResult): string => {
+  const formatSnapshot = (value: StatResult | undefined): string => {
     if (value === undefined || value === null) return '-'
     if (value === 'dnf') return 'DNF'
     return formatTimeFinal(value)
