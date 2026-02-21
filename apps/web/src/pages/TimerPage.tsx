@@ -178,6 +178,8 @@ export function TimerPage() {
             className="glass-panel glass-panel-glow timer-hero-panel timer-touchable"
             onTouchStart={timer.touchHandlers.onTouchStart}
             onTouchEnd={timer.touchHandlers.onTouchEnd}
+            onTouchCancel={timer.touchHandlers.onTouchCancel}
+            onContextMenu={timer.touchHandlers.onContextMenu}
             onMouseDown={timer.touchHandlers.onMouseDown}
             onMouseUp={timer.touchHandlers.onMouseUp}
           >

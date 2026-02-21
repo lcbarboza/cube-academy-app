@@ -7,10 +7,11 @@ import { useTheme } from '@/hooks/useTheme'
 import { formatTimeFinal } from '@/hooks/useTimer'
 import { useTimer } from '@/hooks/useTimer'
 import { useWakeLock } from '@/hooks/useWakeLock'
+import { calculateBestSingle } from '@/lib/statistics'
 import type { Solve, StatResult } from '@/types/solve'
 import { getEffectiveTime } from '@/types/solve'
 import { Box, ChevronDown, ChevronUp, Moon, RotateCcw, Sun, Trash2, X } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -28,26 +29,30 @@ export function ProTimerPage() {
     pageSEO.timer.en
 
   // Use shared scramble context
-  const { scramble, generateNewScrambleAnimated } = useScramble()
+  const { scramble, generateNewScramble, generateNewScrambleAnimated } = useScramble()
 
   const handleSolveComplete = useCallback(
     (timeMs: number) => {
       addSolve(timeMs, scramble)
+      // Automatically generate a new scramble after completing a solve
+      // Use a small delay to let the user see their time before the scramble changes
+      setTimeout(() => {
+        generateNewScramble()
+      }, 100)
     },
-    [addSolve, scramble],
+    [addSolve, scramble, generateNewScramble],
   )
 
   const timer = useTimer(handleSolveComplete)
   const wakeLock = useWakeLock()
 
-  // Keep screen on while timer is running
+  // Keep screen always on in Pro Timer mode
   useEffect(() => {
-    if (timer.state === 'running') {
-      wakeLock.request()
-    } else {
+    wakeLock.request()
+    return () => {
       wakeLock.release()
     }
-  }, [timer.state, wakeLock])
+  }, [wakeLock])
 
   const handleNewScramble = useCallback(() => {
     generateNewScrambleAnimated()
@@ -58,15 +63,6 @@ export function ProTimerPage() {
     const newLang = i18n.language === 'pt-BR' ? 'en' : 'pt-BR'
     i18n.changeLanguage(newLang)
   }, [i18n])
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.code === 'Space' && timer.state === 'stopped') {
-        generateNewScrambleAnimated()
-      }
-    },
-    [timer.state, generateNewScrambleAnimated],
-  )
 
   const handleSolveClick = useCallback((solve: Solve, index: number) => {
     setSelectedSolve({ solve, index })
@@ -86,11 +82,21 @@ export function ProTimerPage() {
     setIsMobileHistoryExpanded((prev) => !prev)
   }, [])
 
+  // Calculate the previous best single (excluding the last solve)
+  // This is used for delta comparison so that when you get a new PR,
+  // it compares against the previous PR, not itself
+  const previousBestSingle = useMemo(() => {
+    if (solves.length <= 1) return null
+    const solvesWithoutLast = solves.slice(0, -1)
+    const best = calculateBestSingle(solvesWithoutLast)
+    return best === 'dnf' ? null : best
+  }, [solves])
+
   // Reversed solves for display (most recent first)
   const reversedSolves = [...solves].reverse()
 
   return (
-    <div className="h-screen flex flex-col relative overflow-hidden" onKeyDown={handleKeyDown}>
+    <div className="h-screen flex flex-col relative overflow-hidden">
       <SEO
         title={seoContent.title}
         description={seoContent.description}
@@ -287,17 +293,16 @@ export function ProTimerPage() {
             className="pro-timer-hero timer-touchable"
             onTouchStart={timer.touchHandlers.onTouchStart}
             onTouchEnd={timer.touchHandlers.onTouchEnd}
+            onTouchCancel={timer.touchHandlers.onTouchCancel}
+            onContextMenu={timer.touchHandlers.onContextMenu}
             onMouseDown={timer.touchHandlers.onMouseDown}
             onMouseUp={timer.touchHandlers.onMouseUp}
           >
             <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
 
-            {/* Delta indicator */}
-            {timer.state === 'stopped' && solves.length > 0 && stats.bestSingle !== null && (
-              <DeltaIndicator
-                currentTime={timer.elapsedMs}
-                bestTime={stats.bestSingle === 'dnf' ? null : stats.bestSingle}
-              />
+            {/* Delta indicator - compares against previous PR, not current */}
+            {timer.state === 'stopped' && solves.length > 0 && (
+              <DeltaIndicator currentTime={timer.elapsedMs} bestTime={previousBestSingle} />
             )}
           </div>
 
@@ -325,6 +330,8 @@ export function ProTimerPage() {
           className="flex-1 flex flex-col items-center justify-center timer-touchable min-h-0 px-4"
           onTouchStart={timer.touchHandlers.onTouchStart}
           onTouchEnd={timer.touchHandlers.onTouchEnd}
+          onTouchCancel={timer.touchHandlers.onTouchCancel}
+          onContextMenu={timer.touchHandlers.onContextMenu}
           onMouseDown={timer.touchHandlers.onMouseDown}
           onMouseUp={timer.touchHandlers.onMouseUp}
         >
@@ -332,12 +339,9 @@ export function ProTimerPage() {
             <TimerDisplay formattedTime={timer.formattedTime} state={timer.state} />
           </div>
 
-          {/* Delta indicator */}
-          {timer.state === 'stopped' && solves.length > 0 && stats.bestSingle !== null && (
-            <DeltaIndicator
-              currentTime={timer.elapsedMs}
-              bestTime={stats.bestSingle === 'dnf' ? null : stats.bestSingle}
-            />
+          {/* Delta indicator - compares against previous PR, not current */}
+          {timer.state === 'stopped' && solves.length > 0 && (
+            <DeltaIndicator currentTime={timer.elapsedMs} bestTime={previousBestSingle} />
           )}
         </div>
 

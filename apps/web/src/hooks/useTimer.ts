@@ -17,8 +17,10 @@ export interface UseTimerResult {
   reset: () => void
   /** Touch/click handlers for mobile support */
   touchHandlers: {
-    onTouchStart: (e: React.TouchEvent | React.MouseEvent) => void
-    onTouchEnd: (e: React.TouchEvent | React.MouseEvent) => void
+    onTouchStart: (e: React.TouchEvent) => void
+    onTouchEnd: (e: React.TouchEvent) => void
+    onTouchCancel: (e: React.TouchEvent) => void
+    onContextMenu: (e: React.MouseEvent | React.TouchEvent) => void
     onMouseDown: (e: React.MouseEvent) => void
     onMouseUp: (e: React.MouseEvent) => void
   }
@@ -95,6 +97,11 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
   const holdTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const animationFrameRef = useRef<number | null>(null)
   const stateRef = useRef<TimerState>('idle')
+
+  // Track active touch to prevent synthetic mouse events from interfering
+  const isTouchActiveRef = useRef<boolean>(false)
+  // Timestamp of last touch event to debounce synthetic mouse events
+  const lastTouchTimeRef = useRef<number>(0)
 
   // Keep stateRef in sync
   useEffect(() => {
@@ -193,30 +200,80 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
     }
   }, [startTimer])
 
+  // Handle touch cancel - critical for tablets where OS can interrupt touch events
+  const handlePointerCancel = useCallback(() => {
+    const currentState = stateRef.current
+
+    // If we were holding or ready, cancel the hold and return to idle
+    if (currentState === 'holding' || currentState === 'ready') {
+      if (holdTimeoutRef.current) {
+        clearTimeout(holdTimeoutRef.current)
+        holdTimeoutRef.current = null
+      }
+      setState('idle')
+    }
+  }, [])
+
   // Touch handlers for the timer display (mobile/tablet support)
   const touchHandlers = {
-    onTouchStart: (e: React.TouchEvent | React.MouseEvent) => {
+    onTouchStart: (e: React.TouchEvent) => {
       e.preventDefault() // Prevent default to avoid double-firing with mouse events
+      e.stopPropagation() // Stop event from bubbling up
+      // Mark touch as active and record timestamp
+      isTouchActiveRef.current = true
+      lastTouchTimeRef.current = Date.now()
       handlePointerDown()
     },
-    onTouchEnd: (e: React.TouchEvent | React.MouseEvent) => {
+    onTouchEnd: (e: React.TouchEvent) => {
       e.preventDefault()
+      e.stopPropagation()
+      // Clear touch active flag after a delay to block synthetic mouse events
+      setTimeout(() => {
+        isTouchActiveRef.current = false
+      }, 400) // 400ms delay to block any synthetic mouse events
+      lastTouchTimeRef.current = Date.now()
       handlePointerUp()
     },
+    // Handle touch cancel - fired when OS interrupts touch (e.g., system gestures, notifications)
+    onTouchCancel: (e: React.TouchEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setTimeout(() => {
+        isTouchActiveRef.current = false
+      }, 400)
+      lastTouchTimeRef.current = Date.now()
+      handlePointerCancel()
+    },
+    // Prevent context menu on long press (tablets/mobile show context menu on hold)
+    onContextMenu: (e: React.MouseEvent | React.TouchEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      return false
+    },
     onMouseDown: (e: React.MouseEvent) => {
+      // Block mouse events if touch is active or was recently active (synthetic events)
+      if (isTouchActiveRef.current || Date.now() - lastTouchTimeRef.current < 500) {
+        e.preventDefault()
+        return
+      }
       // Only handle mouse events on non-touch devices to avoid double-firing
       if ((e.nativeEvent as PointerEvent).pointerType === 'mouse' || !('ontouchstart' in window)) {
         handlePointerDown()
       }
     },
     onMouseUp: (e: React.MouseEvent) => {
+      // Block mouse events if touch is active or was recently active (synthetic events)
+      if (isTouchActiveRef.current || Date.now() - lastTouchTimeRef.current < 500) {
+        e.preventDefault()
+        return
+      }
       if ((e.nativeEvent as PointerEvent).pointerType === 'mouse' || !('ontouchstart' in window)) {
         handlePointerUp()
       }
     },
   }
 
-  // Handle keydown events
+  // Handle keydown events and global touch events
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Prevent default for spacebar to avoid page scroll
@@ -273,12 +330,55 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
       }
     }
 
+    // Global touch end handler - catches touch releases that happen outside the element
+    // This is critical for tablets where the finger might slightly move off the timer area
+    const handleGlobalTouchEnd = () => {
+      if (isTouchActiveRef.current) {
+        const currentState = stateRef.current
+        if (currentState === 'holding' || currentState === 'ready') {
+          // Touch ended globally while we were holding - treat as pointer up
+          handlePointerUp()
+        }
+        setTimeout(() => {
+          isTouchActiveRef.current = false
+        }, 400)
+        lastTouchTimeRef.current = Date.now()
+      }
+    }
+
+    // Global touch cancel handler - catches OS interruptions
+    const handleGlobalTouchCancel = () => {
+      if (isTouchActiveRef.current) {
+        handlePointerCancel()
+        setTimeout(() => {
+          isTouchActiveRef.current = false
+        }, 400)
+        lastTouchTimeRef.current = Date.now()
+      }
+    }
+
+    // Global context menu handler - prevents context menu during touch interactions
+    const handleGlobalContextMenu = (e: MouseEvent) => {
+      // If touch is active or was recently active, prevent context menu
+      if (isTouchActiveRef.current || Date.now() - lastTouchTimeRef.current < 1000) {
+        e.preventDefault()
+        e.stopPropagation()
+        return false
+      }
+    }
+
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
+    window.addEventListener('touchend', handleGlobalTouchEnd)
+    window.addEventListener('touchcancel', handleGlobalTouchCancel)
+    window.addEventListener('contextmenu', handleGlobalContextMenu, { capture: true })
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
+      window.removeEventListener('touchend', handleGlobalTouchEnd)
+      window.removeEventListener('touchcancel', handleGlobalTouchCancel)
+      window.removeEventListener('contextmenu', handleGlobalContextMenu, { capture: true })
 
       // Cleanup timeouts and animation frames
       if (holdTimeoutRef.current) {
@@ -288,7 +388,7 @@ export function useTimer(onSolveComplete?: (timeMs: number) => void): UseTimerRe
         cancelAnimationFrame(animationFrameRef.current)
       }
     }
-  }, [startTimer, stopTimer])
+  }, [startTimer, stopTimer, handlePointerUp, handlePointerCancel])
 
   // Format time based on state: running shows 1 decimal, stopped shows 3 decimals
   const formattedTime =

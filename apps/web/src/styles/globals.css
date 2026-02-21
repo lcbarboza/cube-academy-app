@@ -730,11 +730,20 @@
 /* Make timer clickable/tappable for mobile/tablet */
 .timer-touchable {
   cursor: pointer;
-  touch-action: manipulation;
+  /* Use 'none' instead of 'manipulation' to prevent ALL browser touch behaviors
+     including double-tap zoom, pan, and pinch-zoom that can interrupt long-press */
+  touch-action: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  /* Prevent text selection and context menu on long press */
+  -webkit-user-drag: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  /* Disable pointer events passthrough that could trigger system UI */
+  pointer-events: auto;
 }
 
 .timer-display {
