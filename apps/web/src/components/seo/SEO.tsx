@@ -230,6 +230,22 @@ export function SEO({
  * Pre-defined SEO configurations for each page
  */
 export const pageSEO = {
+  hub: {
+    en: {
+      title: 'Hub - Speedcubing Tools',
+      description:
+        "Your central hub for speedcubing tools. Access the timer, scramble generator, and tutorials. Free online tools for Rubik's Cube practice.",
+      keywords:
+        'speedcubing tools, rubiks cube timer, scramble generator, cubing hub, cube practice',
+    },
+    'pt-BR': {
+      title: 'Hub - Ferramentas de Speedcubing',
+      description:
+        'Seu hub central para ferramentas de speedcubing. Acesse o timer, gerador de scramble e tutoriais. Ferramentas online gratuitas para praticar Cubo Mágico.',
+      keywords:
+        'ferramentas speedcubing, timer cubo magico, gerador scramble, hub cubing, pratica cubo',
+    },
+  },
   home: {
     en: {
       title: 'Scramble Generator & 3D Cube Visualizer',
@@ -309,6 +325,22 @@ export const pageSEO = {
         'Timer profissional para speedcubing com tabela detalhada de histórico, snapshots de ao5/ao12 por resolução e comparações com melhores da sessão. Projetado para cubers competitivos.',
       keywords:
         'timer pro cubo, timer speedcubing, rastreador ao5 ao12, cubing competitivo, timer cubo avançado',
+    },
+  },
+  tutorials: {
+    en: {
+      title: 'Tutorials - Learn to Solve the Cube',
+      description:
+        "Coming soon: Step-by-step guides, algorithms, and practice drills to help you master the Rubik's Cube. From beginner to advanced.",
+      keywords:
+        'rubiks cube tutorial, cube solving guide, cfop tutorial, beginner cube method, speedcubing algorithms',
+    },
+    'pt-BR': {
+      title: 'Tutoriais - Aprenda a Resolver o Cubo',
+      description:
+        'Em breve: Guias passo a passo, algoritmos e exercícios práticos para ajudar você a dominar o Cubo Mágico. Do iniciante ao avançado.',
+      keywords:
+        'tutorial cubo magico, guia resolver cubo, tutorial cfop, metodo iniciante cubo, algoritmos speedcubing',
     },
   },
 }
@@ -399,6 +431,47 @@ export const pageStructuredData = {
       'Personal best highlighting',
       'Keyboard-activated precision timer',
       'Data-focused interface for competitive cubers',
+    ],
+  },
+  hub: {
+    type: 'WebApplication' as const,
+    name: 'Cubing World Hub',
+    description:
+      "Central hub for speedcubing tools - access the timer, scramble generator, and tutorials for Rubik's Cube practice",
+    url: 'https://cubing.world',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      'Quick access to all tools',
+      'Precision speedcubing timer',
+      'Pro Timer for competitive cubers',
+      '3D scramble visualization',
+      'Multi-language support (EN, PT-BR)',
+      'Works on desktop and mobile',
+    ],
+  },
+  tutorials: {
+    type: 'WebApplication' as const,
+    name: 'Cubing World Tutorials',
+    description:
+      "Coming soon: Step-by-step guides and algorithms to help you learn and master the Rubik's Cube",
+    url: 'https://cubing.world/tutorials',
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      'Beginner-friendly guides',
+      'Step-by-step tutorials',
+      'Algorithm reference',
+      'Practice drills',
+      'Multi-language support (EN, PT-BR)',
     ],
   },
 }

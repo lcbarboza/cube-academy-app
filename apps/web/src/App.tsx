@@ -1,6 +1,13 @@
 import { ScrambleProvider, SessionProvider, SolveHistoryProvider } from '@/contexts'
-import { CubingWorldPage, HomePage, NotFoundPage, ProTimerPage, TimerPage } from '@/pages'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {
+  CubingWorldPage,
+  HubPage,
+  NotFoundPage,
+  ProTimerPage,
+  TimerPage,
+  TutorialsPage,
+} from '@/pages'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 function App() {
   return (
@@ -9,11 +16,13 @@ function App() {
         <ScrambleProvider>
           <SolveHistoryProvider>
             <Routes>
-              <Route path="/" element={<CubingWorldPage />} />
+              <Route path="/" element={<HubPage />} />
               <Route path="/scramble" element={<CubingWorldPage />} />
-              <Route path="/home" element={<HomePage />} />
               <Route path="/timer" element={<TimerPage />} />
               <Route path="/timer-pro" element={<ProTimerPage />} />
+              <Route path="/tutorials" element={<TutorialsPage />} />
+              {/* Redirect legacy /home to hub */}
+              <Route path="/home" element={<Navigate to="/" replace />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </SolveHistoryProvider>

@@ -1,4 +1,5 @@
 import { LazyCubeViewer } from '@/components/cube'
+import { BottomNav } from '@/components/layout'
 import { SEO, pageSEO } from '@/components/seo'
 import { Logo } from '@/components/ui'
 import { useScramble } from '@/contexts'
@@ -92,13 +93,13 @@ export function CubingWorldPage() {
   const progress = moves.length > 0 ? ((currentIndex + 1) / moves.length) * 100 : 0
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative has-bottom-nav">
       {/* SEO Meta Tags */}
       <SEO
         title={seoContent.title}
         description={seoContent.description}
         keywords={seoContent.keywords}
-        canonical="/"
+        canonical="/scramble"
       />
 
       {/* Cosmic background */}
@@ -328,6 +329,9 @@ export function CubingWorldPage() {
           </div>
         </div>
       </div>
+
+      {/* Bottom Navigation */}
+      <BottomNav />
     </div>
   )
 }

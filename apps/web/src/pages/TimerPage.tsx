@@ -1,5 +1,6 @@
 import { LazyCubeViewer } from '@/components/cube'
 import { SolveHistoryPanel } from '@/components/history'
+import { BottomNav } from '@/components/layout'
 import { SEO, pageSEO } from '@/components/seo'
 import { SessionRenameModal, SessionSelector } from '@/components/session'
 import { TimerDisplay } from '@/components/timer'
@@ -312,6 +313,9 @@ export function TimerPage() {
           onCancel={handleRenameCancel}
         />
       )}
+
+      {/* Bottom Navigation */}
+      <BottomNav />
     </div>
   )
 }

@@ -9,6 +9,7 @@
     "learnMore": "Learn More"
   },
   "nav": {
+    "hub": "Hub",
     "scramble": "Scramble",
     "cubingWorld": "Cubing World",
     "timer": "Timer",
@@ -16,7 +17,18 @@
     "tutorials": "Tutorials",
     "algorithms": "Algorithms",
     "practice": "Practice",
-    "progress": "Progress"
+    "progress": "Progress",
+    "main": "Main navigation"
+  },
+  "hub": {
+    "subtitle": "Tools for speedcubers",
+    "timerDescription": "Track your solve times with precision timing and statistics.",
+    "scrambleDescription": "Generate random scrambles with 3D visualization and step-by-step playback.",
+    "tutorialsDescription": "Learn to solve the cube with step-by-step guides and algorithms."
+  },
+  "tutorials": {
+    "comingSoonDescription": "We are working on step-by-step guides, algorithms, and practice drills to help you master the cube. Stay tuned!",
+    "backToHub": "Back to Hub"
   },
   "scramble": {
     "title": "Scramble Generator",
@@ -101,7 +113,8 @@
     "close": "Close",
     "cancel": "Cancel",
     "save": "Save",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "comingSoon": "Coming soon"
   },
   "settings": {
     "lightMode": "Light mode",

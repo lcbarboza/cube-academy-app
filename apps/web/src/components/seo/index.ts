@@ -1,1 +1,1 @@
-export { SEO, pageSEO } from './SEO'
+export { SEO, pageSEO, pageStructuredData } from './SEO'

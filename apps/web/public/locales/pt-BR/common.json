@@ -9,6 +9,7 @@
     "learnMore": "Saiba Mais"
   },
   "nav": {
+    "hub": "Hub",
     "scramble": "Scramble",
     "cubingWorld": "Cubing World",
     "timer": "Timer",
@@ -16,7 +17,18 @@
     "tutorials": "Tutoriais",
     "algorithms": "Algoritmos",
     "practice": "Prática",
-    "progress": "Progresso"
+    "progress": "Progresso",
+    "main": "Navegação principal"
+  },
+  "hub": {
+    "subtitle": "Ferramentas para speedcubers",
+    "timerDescription": "Acompanhe seus tempos de resolução com cronômetro de precisão e estatísticas.",
+    "scrambleDescription": "Gere scrambles aleatórios com visualização 3D e reprodução passo a passo.",
+    "tutorialsDescription": "Aprenda a resolver o cubo com guias passo a passo e algoritmos."
+  },
+  "tutorials": {
+    "comingSoonDescription": "Estamos trabalhando em guias passo a passo, algoritmos e exercícios práticos para ajudar você a dominar o cubo. Fique ligado!",
+    "backToHub": "Voltar ao Hub"
   },
   "scramble": {
     "title": "Gerador de Scramble",
@@ -101,7 +113,8 @@
     "close": "Fechar",
     "cancel": "Cancelar",
     "save": "Salvar",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "comingSoon": "Em breve"
   },
   "settings": {
     "lightMode": "Modo claro",

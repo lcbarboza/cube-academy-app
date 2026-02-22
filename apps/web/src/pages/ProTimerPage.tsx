@@ -1,4 +1,5 @@
 import { SolveDetailModal } from '@/components/history'
+import { BottomNav } from '@/components/layout'
 import { SEO, pageSEO } from '@/components/seo'
 import { SessionRenameModal, SessionSelector } from '@/components/session'
 import { TimerDisplay } from '@/components/timer'
@@ -399,7 +400,7 @@ export function ProTimerPage() {
           </button>
 
           {/* Table Header */}
-          <div className="grid grid-cols-[2rem_1fr_3.5rem_3.5rem] gap-1 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--panel-border)]">
+          <div className="grid grid-cols-[2rem_1fr_3rem_3rem] gap-2 px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--panel-border)]">
             <span>#</span>
             <span>{t('proTimer.time', 'Time')}</span>
             <span className="text-right">ao5</span>
@@ -554,6 +555,9 @@ export function ProTimerPage() {
           onCancel={handleRenameCancel}
         />
       )}
+
+      {/* Bottom Navigation */}
+      <BottomNav />
     </div>
   )
 }
@@ -714,7 +718,7 @@ function ProHistoryRowCompact({ solve, index, onClick }: ProHistoryRowProps) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full grid grid-cols-[2rem_1fr_3.5rem_3.5rem] gap-1 px-3 py-1 hover:bg-[var(--btn-hover-bg)] transition-colors text-left"
+      className="w-full grid grid-cols-[2rem_1fr_3rem_3rem] gap-2 px-3 py-1 hover:bg-[var(--btn-hover-bg)] transition-colors text-left"
     >
       <span className="font-mono text-xs text-[var(--text-muted)]">{index}</span>
       <span
