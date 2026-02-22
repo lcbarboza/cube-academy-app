@@ -27,6 +27,8 @@ export interface ScrambleState {
   displayState: CubeState
   /** Final cube state after all moves applied */
   finalState: CubeState
+  /** Whether the current scramble was applied from history (not randomly generated) */
+  isAppliedScramble: boolean
 }
 
 export interface ScrambleActions {
@@ -34,6 +36,10 @@ export interface ScrambleActions {
   generateNewScramble: () => void
   /** Generate and set a new random scramble with animation at 4x speed */
   generateNewScrambleAnimated: () => void
+  /** Apply a specific scramble from history */
+  applyScramble: (scrambleString: string) => void
+  /** Clear the applied scramble state (call after solve is completed) */
+  clearAppliedScramble: () => void
   /** Start auto-playback */
   play: () => void
   /** Pause auto-playback */
@@ -68,6 +74,7 @@ export function ScrambleProvider({ children }: ScrambleProviderProps) {
   const [speed, setSpeedState] = useState<SpeedOption>(4)
   const [isAnimating, setIsAnimating] = useState(false)
   const [currentMove, setCurrentMove] = useState<string | null>(null)
+  const [isAppliedScramble, setIsAppliedScramble] = useState(false)
 
   const shouldAutoPlayRef = useRef(false)
 
@@ -98,6 +105,7 @@ export function ScrambleProvider({ children }: ScrambleProviderProps) {
     setIsPlaying(false)
     setIsAnimating(false)
     setCurrentMove(null)
+    setIsAppliedScramble(false)
   }, [])
 
   // Generate new scramble with animation at 4x speed
@@ -111,6 +119,7 @@ export function ScrambleProvider({ children }: ScrambleProviderProps) {
     setIsAnimating(false)
     setCurrentMove(null)
     setSpeedState(4)
+    setIsAppliedScramble(false)
     shouldAutoPlayRef.current = true
   }, [])
 
@@ -201,6 +210,24 @@ export function ScrambleProvider({ children }: ScrambleProviderProps) {
     setCurrentIndex(-1)
   }, [])
 
+  // Apply a specific scramble from history
+  const applyScramble = useCallback((scrambleString: string) => {
+    const newMoves = parseScramble(scrambleString)
+    setScramble(scrambleString)
+    setMoves(newMoves)
+    // Jump to final state immediately (show the scrambled cube)
+    setCurrentIndex(newMoves.length - 1)
+    setIsPlaying(false)
+    setIsAnimating(false)
+    setCurrentMove(null)
+    setIsAppliedScramble(true)
+  }, [])
+
+  // Clear the applied scramble state (call after solve is completed or new scramble generated)
+  const clearAppliedScramble = useCallback(() => {
+    setIsAppliedScramble(false)
+  }, [])
+
   const value: ScrambleContextValue = {
     // State
     scramble,
@@ -213,9 +240,12 @@ export function ScrambleProvider({ children }: ScrambleProviderProps) {
     cubeStates,
     displayState,
     finalState,
+    isAppliedScramble,
     // Actions
     generateNewScramble,
     generateNewScrambleAnimated,
+    applyScramble,
+    clearAppliedScramble,
     play,
     pause,
     stepForward,

@@ -1,9 +1,10 @@
 import { LazyCubeViewer } from '@/components/cube'
 import { SolveHistoryPanel } from '@/components/history'
 import { SEO, pageSEO } from '@/components/seo'
+import { SessionRenameModal, SessionSelector } from '@/components/session'
 import { TimerDisplay } from '@/components/timer'
 import { Logo } from '@/components/ui'
-import { useScramble, useSolveHistory } from '@/contexts'
+import { useScramble, useSession, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { useTimer } from '@/hooks/useTimer'
 import { useWakeLock } from '@/hooks/useWakeLock'
@@ -16,7 +17,9 @@ export function TimerPage() {
   const { t, i18n } = useTranslation()
   const { isDark, toggleTheme } = useTheme()
   const { addSolve, stats } = useSolveHistory()
+  const { renameSession } = useSession()
   const [isHistoryExpanded, setIsHistoryExpanded] = useState(false)
+  const [renameModal, setRenameModal] = useState<{ sessionId: string; name: string } | null>(null)
 
   // Get SEO content for current language
   const seoContent = pageSEO.timer[i18n.language as keyof typeof pageSEO.timer] || pageSEO.timer.en
@@ -30,7 +33,10 @@ export function TimerPage() {
     isAnimating,
     isPlaying,
     speed,
+    isAppliedScramble,
     onAnimationComplete,
+    applyScramble,
+    clearAppliedScramble,
     generateNewScrambleAnimated,
   } = useScramble()
 
@@ -38,8 +44,10 @@ export function TimerPage() {
     (timeMs: number) => {
       // Save the solve to history with the current scramble
       addSolve(timeMs, scramble)
+      // Clear applied scramble flag if it was set
+      clearAppliedScramble()
     },
-    [addSolve, scramble],
+    [addSolve, scramble, clearAppliedScramble],
   )
 
   const timer = useTimer(handleSolveComplete)
@@ -86,6 +94,22 @@ export function TimerPage() {
     setIsHistoryExpanded((prev) => !prev)
   }, [])
 
+  const handleRenameRequest = useCallback((sessionId: string, name: string) => {
+    setRenameModal({ sessionId, name })
+  }, [])
+
+  const handleRenameConfirm = useCallback(
+    (sessionId: string, newName: string) => {
+      renameSession(sessionId, newName)
+      setRenameModal(null)
+    },
+    [renameSession],
+  )
+
+  const handleRenameCancel = useCallback(() => {
+    setRenameModal(null)
+  }, [])
+
   return (
     <div className="h-screen flex flex-col relative" onKeyDown={handleKeyDown}>
       {/* SEO Meta Tags */}
@@ -106,6 +130,10 @@ export function TimerPage() {
           <h1 className="font-display font-semibold text-lg tracking-widest text-[var(--neon-magenta)] uppercase m-0">
             {t('timer.title', 'Timer')}
           </h1>
+          <SessionSelector onRenameRequest={handleRenameRequest} />
+          {isAppliedScramble && (
+            <span className="applied-scramble-badge">{t('session.appliedScramble', 'Retry')}</span>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -269,10 +297,21 @@ export function TimerPage() {
         {/* Expandable History Panel */}
         <div className={`hud-history-panel ${isHistoryExpanded ? 'hud-history-expanded' : ''}`}>
           <div className="max-w-5xl mx-auto px-6">
-            <SolveHistoryPanel compact />
+            <SolveHistoryPanel compact onApplyScramble={applyScramble} />
           </div>
         </div>
       </div>
+
+      {/* Session Rename Modal */}
+      {renameModal && (
+        <SessionRenameModal
+          isOpen={!!renameModal}
+          sessionId={renameModal.sessionId}
+          currentName={renameModal.name}
+          onConfirm={handleRenameConfirm}
+          onCancel={handleRenameCancel}
+        />
+      )}
     </div>
   )
 }

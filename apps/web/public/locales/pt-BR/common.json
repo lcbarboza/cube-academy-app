@@ -56,6 +56,7 @@
     "best": "Melhor",
     "sessionBest": "Melhor da Sessão",
     "backToTimer": "Timer Padrão",
+    "standardMode": "Padrão",
     "instructions": "Segure ESPAÇO por 300ms até ficar verde, depois solte para iniciar. Pressione qualquer tecla para parar.",
     "time": "Tempo",
     "number": "#"
@@ -64,6 +65,7 @@
     "title": "Histórico",
     "solves": "resoluções",
     "solve": "Resolução",
+    "solveDetails": "Detalhes da resolução",
     "empty": "Complete uma resolução para ver seu histórico aqui.",
     "clear": "Limpar sessão",
     "confirmClear": "Limpar todas as resoluções? Esta ação não pode ser desfeita.",
@@ -72,6 +74,7 @@
     "date": "Data",
     "penalty": "Penalidade",
     "delete": "Excluir Resolução",
+    "applyScramble": "Tentar este Scramble",
     "mo3": "mo3",
     "ao5": "ao5",
     "ao12": "ao12",
@@ -79,8 +82,26 @@
     "bestAo5": "melhor ao5",
     "bestAo12": "melhor ao12"
   },
+  "session": {
+    "selectSession": "Selecionar sessão",
+    "sessionList": "Lista de sessões",
+    "defaultSession": "Sessão 1",
+    "newSession": "Nova Sessão",
+    "rename": "Renomear sessão",
+    "renameSession": "Renomear Sessão",
+    "sessionName": "Nome da Sessão",
+    "enterName": "Digite o nome da sessão",
+    "appliedScramble": "Repetir",
+    "delete": "Excluir sessão",
+    "deleteSession": "Excluir Sessão",
+    "deleteConfirmMessage": "Tem certeza que deseja excluir esta sessão? Todas as resoluções serão permanentemente excluídas.",
+    "deleteConfirm": "Excluir"
+  },
   "common": {
-    "close": "Fechar"
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "confirm": "Confirmar"
   },
   "settings": {
     "lightMode": "Modo claro",

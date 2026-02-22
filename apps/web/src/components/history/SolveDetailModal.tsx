@@ -1,7 +1,7 @@
 import { formatTimeFinal } from '@/hooks/useTimer'
 import type { Solve, SolvePenalty } from '@/types/solve'
 import { getEffectiveTime } from '@/types/solve'
-import { X } from 'lucide-react'
+import { RotateCcw, X } from 'lucide-react'
 import { useCallback, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +12,7 @@ interface SolveDetailModalProps {
   onClose: () => void
   onUpdatePenalty: (penalty: SolvePenalty) => void
   onDelete: () => void
+  onApplyScramble?: (scramble: string) => void
 }
 
 export function SolveDetailModal({
@@ -20,6 +21,7 @@ export function SolveDetailModal({
   onClose,
   onUpdatePenalty,
   onDelete,
+  onApplyScramble,
 }: SolveDetailModalProps) {
   const { t } = useTranslation()
 
@@ -67,6 +69,11 @@ export function SolveDetailModal({
       onClose()
     }
   }, [onDelete, onClose, t])
+
+  const handleApplyScramble = useCallback(() => {
+    onApplyScramble?.(solve.scramble)
+    onClose()
+  }, [onApplyScramble, solve.scramble, onClose])
 
   const formatDate = (timestamp: string): string => {
     const date = new Date(timestamp)
@@ -186,6 +193,20 @@ export function SolveDetailModal({
             </button>
           </div>
         </div>
+
+        {/* Apply Scramble button */}
+        {onApplyScramble && (
+          <button
+            type="button"
+            onClick={handleApplyScramble}
+            className="w-full py-2 px-4 rounded-lg font-mono text-sm mb-3 flex items-center justify-center gap-2
+              bg-[var(--neon-magenta)]/10 border border-[var(--neon-magenta)]/30
+              text-[var(--neon-magenta)] hover:bg-[var(--neon-magenta)]/20 transition-all"
+          >
+            <RotateCcw className="w-4 h-4" />
+            {t('history.applyScramble', 'Retry this Scramble')}
+          </button>
+        )}
 
         {/* Delete button */}
         <button

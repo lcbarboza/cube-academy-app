@@ -1,8 +1,9 @@
 import { SolveDetailModal } from '@/components/history'
 import { SEO, pageSEO } from '@/components/seo'
+import { SessionRenameModal, SessionSelector } from '@/components/session'
 import { TimerDisplay } from '@/components/timer'
 import { Logo } from '@/components/ui'
-import { useScramble, useSolveHistory } from '@/contexts'
+import { useScramble, useSession, useSolveHistory } from '@/contexts'
 import { useTheme } from '@/hooks/useTheme'
 import { formatTimeFinal } from '@/hooks/useTimer'
 import { useTimer } from '@/hooks/useTimer'
@@ -19,8 +20,10 @@ export function ProTimerPage() {
   const { t, i18n } = useTranslation()
   const { isDark, toggleTheme } = useTheme()
   const { addSolve, solves, stats, deleteSolve, updatePenalty, clearSession } = useSolveHistory()
+  const { renameSession } = useSession()
   const [selectedSolve, setSelectedSolve] = useState<{ solve: Solve; index: number } | null>(null)
   const [isMobileHistoryExpanded, setIsMobileHistoryExpanded] = useState(false)
+  const [renameModal, setRenameModal] = useState<{ sessionId: string; name: string } | null>(null)
 
   // Get SEO content for current language
   const seoContent =
@@ -29,18 +32,27 @@ export function ProTimerPage() {
     pageSEO.timer.en
 
   // Use shared scramble context
-  const { scramble, generateNewScramble, generateNewScrambleAnimated } = useScramble()
+  const {
+    scramble,
+    applyScramble,
+    isAppliedScramble,
+    clearAppliedScramble,
+    generateNewScramble,
+    generateNewScrambleAnimated,
+  } = useScramble()
 
   const handleSolveComplete = useCallback(
     (timeMs: number) => {
       addSolve(timeMs, scramble)
+      // Clear applied scramble flag if it was set
+      clearAppliedScramble()
       // Automatically generate a new scramble after completing a solve
       // Use a small delay to let the user see their time before the scramble changes
       setTimeout(() => {
         generateNewScramble()
       }, 100)
     },
-    [addSolve, scramble, generateNewScramble],
+    [addSolve, scramble, clearAppliedScramble, generateNewScramble],
   )
 
   const timer = useTimer(handleSolveComplete)
@@ -82,6 +94,22 @@ export function ProTimerPage() {
     setIsMobileHistoryExpanded((prev) => !prev)
   }, [])
 
+  const handleRenameRequest = useCallback((sessionId: string, name: string) => {
+    setRenameModal({ sessionId, name })
+  }, [])
+
+  const handleRenameConfirm = useCallback(
+    (sessionId: string, newName: string) => {
+      renameSession(sessionId, newName)
+      setRenameModal(null)
+    },
+    [renameSession],
+  )
+
+  const handleRenameCancel = useCallback(() => {
+    setRenameModal(null)
+  }, [])
+
   // Calculate the previous best single (excluding the last solve)
   // This is used for delta comparison so that when you get a new PR,
   // it compares against the previous PR, not itself
@@ -114,6 +142,10 @@ export function ProTimerPage() {
           <h1 className="font-display font-semibold text-xs md:text-sm tracking-widest text-[var(--neon-cyan)] uppercase">
             {t('proTimer.title', 'Pro Timer')}
           </h1>
+          <SessionSelector onRenameRequest={handleRenameRequest} />
+          {isAppliedScramble && (
+            <span className="applied-scramble-badge">{t('session.appliedScramble', 'Retry')}</span>
+          )}
         </div>
 
         <div className="flex items-center gap-1 md:gap-2">
@@ -508,6 +540,18 @@ export function ProTimerPage() {
             deleteSolve(selectedSolve.solve.id)
             handleCloseModal()
           }}
+          onApplyScramble={applyScramble}
+        />
+      )}
+
+      {/* Session Rename Modal */}
+      {renameModal && (
+        <SessionRenameModal
+          isOpen={!!renameModal}
+          sessionId={renameModal.sessionId}
+          currentName={renameModal.name}
+          onConfirm={handleRenameConfirm}
+          onCancel={handleRenameCancel}
         />
       )}
     </div>

@@ -56,6 +56,7 @@
     "best": "Best",
     "sessionBest": "Session Best",
     "backToTimer": "Standard Timer",
+    "standardMode": "Standard",
     "instructions": "Hold SPACE for 300ms until green, then release to start. Press any key to stop.",
     "time": "Time",
     "number": "#"
@@ -64,6 +65,7 @@
     "title": "History",
     "solves": "solves",
     "solve": "Solve",
+    "solveDetails": "Solve details",
     "empty": "Complete a solve to see your history here.",
     "clear": "Clear session",
     "confirmClear": "Clear all solves? This cannot be undone.",
@@ -72,6 +74,7 @@
     "date": "Date",
     "penalty": "Penalty",
     "delete": "Delete Solve",
+    "applyScramble": "Retry this Scramble",
     "mo3": "mo3",
     "ao5": "ao5",
     "ao12": "ao12",
@@ -79,8 +82,26 @@
     "bestAo5": "best ao5",
     "bestAo12": "best ao12"
   },
+  "session": {
+    "selectSession": "Select session",
+    "sessionList": "Session list",
+    "defaultSession": "Session 1",
+    "newSession": "New Session",
+    "rename": "Rename session",
+    "renameSession": "Rename Session",
+    "sessionName": "Session Name",
+    "enterName": "Enter session name",
+    "appliedScramble": "Retry",
+    "delete": "Delete session",
+    "deleteSession": "Delete Session",
+    "deleteConfirmMessage": "Are you sure you want to delete this session? All solves will be permanently deleted.",
+    "deleteConfirm": "Delete"
+  },
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirm": "Confirm"
   },
   "settings": {
     "lightMode": "Light mode",

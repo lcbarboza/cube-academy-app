@@ -10,9 +10,11 @@ import { SolveDetailModal } from './SolveDetailModal'
 interface SolveHistoryPanelProps {
   /** Compact mode for HUD-style display */
   compact?: boolean
+  /** Callback when user wants to retry a scramble */
+  onApplyScramble?: (scramble: string) => void
 }
 
-export function SolveHistoryPanel({ compact = false }: SolveHistoryPanelProps) {
+export function SolveHistoryPanel({ compact = false, onApplyScramble }: SolveHistoryPanelProps) {
   const { t } = useTranslation()
   const { solves, stats, updatePenalty, deleteSolve, clearSession } = useSolveHistory()
   const [selectedSolve, setSelectedSolve] = useState<{ solve: Solve; index: number } | null>(null)
@@ -100,6 +102,7 @@ export function SolveHistoryPanel({ compact = false }: SolveHistoryPanelProps) {
             onClose={handleCloseModal}
             onUpdatePenalty={handleUpdatePenalty}
             onDelete={handleDeleteSolve}
+            onApplyScramble={onApplyScramble}
           />
         )}
       </>
@@ -177,6 +180,7 @@ export function SolveHistoryPanel({ compact = false }: SolveHistoryPanelProps) {
           onClose={handleCloseModal}
           onUpdatePenalty={handleUpdatePenalty}
           onDelete={handleDeleteSolve}
+          onApplyScramble={onApplyScramble}
         />
       )}
     </div>

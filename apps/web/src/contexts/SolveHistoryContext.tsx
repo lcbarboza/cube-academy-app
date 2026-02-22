@@ -1,3 +1,4 @@
+import { migrateSessionData, persistMigration, saveSolves } from '@/lib/session-migration'
 import {
   calculateAo5,
   calculateAo12,
@@ -9,25 +10,28 @@ import {
 import type { SessionStats, Solve, SolvePenalty } from '@/types/solve'
 import { createSolve } from '@/types/solve'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-
-const STORAGE_KEY = 'cube-academy-solves'
+import { useSession } from './SessionContext'
 
 interface SolveHistoryState {
-  /** Array of all solves in the session */
+  /** Array of solves for the active session (filtered) */
   solves: Solve[]
+  /** Array of all solves across all sessions */
+  allSolves: Solve[]
   /** Computed statistics for the current session */
   stats: SessionStats
 }
 
 interface SolveHistoryActions {
-  /** Add a new solve to the history */
+  /** Add a new solve to the history (automatically uses active session) */
   addSolve: (timeMs: number, scramble: string) => void
   /** Delete a solve by ID */
   deleteSolve: (id: string) => void
   /** Update the penalty for a solve */
   updatePenalty: (id: string, penalty: SolvePenalty) => void
-  /** Clear all solves in the session */
+  /** Clear all solves in the current session */
   clearSession: () => void
+  /** Delete all solves for a specific session */
+  deleteSessionSolves: (sessionId: string) => void
 }
 
 type SolveHistoryContextValue = SolveHistoryState & SolveHistoryActions
@@ -36,35 +40,6 @@ const SolveHistoryContext = createContext<SolveHistoryContextValue | null>(null)
 
 interface SolveHistoryProviderProps {
   children: React.ReactNode
-}
-
-/**
- * Load solves from localStorage
- */
-function loadSolves(): Solve[] {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored) {
-      const parsed = JSON.parse(stored)
-      if (Array.isArray(parsed)) {
-        return parsed
-      }
-    }
-  } catch (error) {
-    console.error('Failed to load solves from localStorage:', error)
-  }
-  return []
-}
-
-/**
- * Save solves to localStorage
- */
-function saveSolves(solves: Solve[]): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(solves))
-  } catch (error) {
-    console.error('Failed to save solves to localStorage:', error)
-  }
 }
 
 /**
@@ -83,57 +58,85 @@ function calculateStats(solves: Solve[]): SessionStats {
 }
 
 export function SolveHistoryProvider({ children }: SolveHistoryProviderProps) {
-  // Lazy initialization from localStorage
-  const [solves, setSolves] = useState<Solve[]>(() => loadSolves())
+  const { activeSessionId } = useSession()
 
-  // Calculate stats whenever solves change
+  // Lazy initialization with migration
+  const [allSolves, setAllSolves] = useState<Solve[]>(() => {
+    const result = migrateSessionData()
+    persistMigration(result)
+    return result.solves
+  })
+
+  // Filter solves by active session
+  const solves = useMemo(
+    () => allSolves.filter((solve) => solve.sessionId === activeSessionId),
+    [allSolves, activeSessionId],
+  )
+
+  // Calculate stats for the active session
   const stats = useMemo(() => calculateStats(solves), [solves])
 
-  // Persist to localStorage whenever solves change
+  // Persist to localStorage whenever all solves change
   useEffect(() => {
-    saveSolves(solves)
-  }, [solves])
+    saveSolves(allSolves)
+  }, [allSolves])
 
   // Add a new solve with ao5/ao12 snapshots
-  const addSolve = useCallback((timeMs: number, scramble: string) => {
-    setSolves((prev) => {
-      // Create a temporary solve to compute stats including the new solve
-      const tempSolve = createSolve(timeMs, scramble)
-      const allSolvesWithNew = [...prev, tempSolve]
+  const addSolve = useCallback(
+    (timeMs: number, scramble: string) => {
+      setAllSolves((prev) => {
+        // Get session solves for stats calculation
+        const sessionSolves = prev.filter((s) => s.sessionId === activeSessionId)
 
-      // Compute ao5 and ao12 snapshots including the new solve
-      const ao5Snapshot = calculateAo5(allSolvesWithNew)
-      const ao12Snapshot = calculateAo12(allSolvesWithNew)
+        // Create a temporary solve to compute stats including the new solve
+        const tempSolve = createSolve(timeMs, scramble, activeSessionId)
+        const sessionSolvesWithNew = [...sessionSolves, tempSolve]
 
-      // Create the actual solve with snapshots
-      const newSolve = createSolve(timeMs, scramble, { ao5Snapshot, ao12Snapshot })
+        // Compute ao5 and ao12 snapshots including the new solve
+        const ao5Snapshot = calculateAo5(sessionSolvesWithNew)
+        const ao12Snapshot = calculateAo12(sessionSolvesWithNew)
 
-      return [...prev, newSolve]
-    })
-  }, [])
+        // Create the actual solve with snapshots
+        const newSolve = createSolve(timeMs, scramble, activeSessionId, {
+          ao5Snapshot,
+          ao12Snapshot,
+        })
+
+        return [...prev, newSolve]
+      })
+    },
+    [activeSessionId],
+  )
 
   // Delete a solve by ID
   const deleteSolve = useCallback((id: string) => {
-    setSolves((prev) => prev.filter((solve) => solve.id !== id))
+    setAllSolves((prev) => prev.filter((solve) => solve.id !== id))
   }, [])
 
   // Update penalty for a solve
   const updatePenalty = useCallback((id: string, penalty: SolvePenalty) => {
-    setSolves((prev) => prev.map((solve) => (solve.id === id ? { ...solve, penalty } : solve)))
+    setAllSolves((prev) => prev.map((solve) => (solve.id === id ? { ...solve, penalty } : solve)))
   }, [])
 
-  // Clear all solves
+  // Clear all solves in the current session
   const clearSession = useCallback(() => {
-    setSolves([])
+    setAllSolves((prev) => prev.filter((solve) => solve.sessionId !== activeSessionId))
+  }, [activeSessionId])
+
+  // Delete all solves for a specific session
+  const deleteSessionSolves = useCallback((sessionId: string) => {
+    setAllSolves((prev) => prev.filter((solve) => solve.sessionId !== sessionId))
   }, [])
 
   const value: SolveHistoryContextValue = {
     solves,
+    allSolves,
     stats,
     addSolve,
     deleteSolve,
     updatePenalty,
     clearSession,
+    deleteSessionSolves,
   }
 
   return <SolveHistoryContext.Provider value={value}>{children}</SolveHistoryContext.Provider>
